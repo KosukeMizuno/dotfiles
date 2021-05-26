@@ -19,4 +19,3 @@ USER ${USERNAME}
 WORKDIR /home/${USERNAME}/
 
 ENV DOTPATH /home/${USERNAME}/dotfiles
-CMD ["/bin/bash"]

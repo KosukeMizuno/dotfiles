@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  centos8:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - USERNAME=u1
+        - USERPASSWD=xxx
+    tty: true
+    volumes:
+      - .:/home/u1/dotfiles:ro
+    
