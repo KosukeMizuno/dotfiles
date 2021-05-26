@@ -1,0 +1,2 @@
+- `sudo docker stop dot && sudo docker rm dot`
+- `sudo ./build.sh && sudo docker run --name=dot -u=u1 -it dotfiles_portable:1 "bash"`
