@@ -24,7 +24,7 @@ mkdir -p "$HOME/.local/share/fonts"
 
 
 ## tmux
-if [ -z $(command -v tmux) ]; then
+if ${DOTINSTALL_TMUX:-true} && [ -z $(command -v tmux) ]; then
     _pwd=$PWD
 
     # libevent
@@ -62,31 +62,33 @@ fi
 # alacritty windows-terminal
 
 # font
-if [ $(fc-list | grep Cica | wc -l) -eq 0 ]; then
-    echo "Installing Cica font..."
-    url=https://github.com/miiton/Cica/releases/download/v5.0.2/Cica_v5.0.2_with_emoji.zip
-    dname=$(mktemp -d --suffix=$(basename $url .zip))
-    wget $url -P /tmp
-    unzip /tmp/$(basename $url) -d $dname
-    cp $dname/*.ttf $HOME/.local/share/fonts/
-    fc-cache -fv
-fi
-if [ $(fc-list | grep HackGen | wc -l) -eq 0 ]; then
-    echo "Installing HackGen font..."
-    url=https://github.com/yuru7/HackGen/releases/download/v2.3.2/HackGenNerd_v2.3.2.zip
-    dname=$(mktemp -d --suffix=$(basename $url .zip))
-    wget $url -P /tmp
-    unzip /tmp/$(basename $url) -d $dname
-    cp $dname/HackGenNerd_v2.3.2/*.ttf $HOME/.local/share/fonts/
-    fc-cache -fv
-fi
-if [ $(fc-list | grep "MesloLGS NF" | wc -l) -eq 0 ]; then
-    echo "Installing Meslo font..."
-    wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $HOME/.local/share/fonts
-    wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P $HOME/.local/share/fonts
-    wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P $HOME/.local/share/fonts
-    wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P $HOME/.local/share/fonts
-    fc-cache -fv
+if ${DOTINSTALL_FONTS:-true}; then
+    if [ $(fc-list | grep Cica | wc -l) -eq 0 ]; then
+        echo "Installing Cica font..."
+        url=https://github.com/miiton/Cica/releases/download/v5.0.2/Cica_v5.0.2_with_emoji.zip
+        dname=$(mktemp -d --suffix=$(basename $url .zip))
+        wget $url -P /tmp
+        unzip /tmp/$(basename $url) -d $dname
+        cp $dname/*.ttf $HOME/.local/share/fonts/
+        fc-cache -fv
+    fi
+    if [ $(fc-list | grep HackGen | wc -l) -eq 0 ]; then
+        echo "Installing HackGen font..."
+        url=https://github.com/yuru7/HackGen/releases/download/v2.3.2/HackGenNerd_v2.3.2.zip
+        dname=$(mktemp -d --suffix=$(basename $url .zip))
+        wget $url -P /tmp
+        unzip /tmp/$(basename $url) -d $dname
+        cp $dname/HackGenNerd_v2.3.2/*.ttf $HOME/.local/share/fonts/
+        fc-cache -fv
+    fi
+    if [ $(fc-list | grep "MesloLGS NF" | wc -l) -eq 0 ]; then
+        echo "Installing Meslo font..."
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $HOME/.local/share/fonts
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P $HOME/.local/share/fonts
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P $HOME/.local/share/fonts
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P $HOME/.local/share/fonts
+        fc-cache -fv
+    fi
 fi
 
 
@@ -109,6 +111,8 @@ if [ -z $(command -v git) ]; then
     exit 1
     # gitなかったら後段無理なので終了
 fi
+
+## other things
 # git-remind
 if [ -z $(command -v git-remind) ]; then
     url=https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
@@ -125,8 +129,6 @@ if [ -z $(command -v fzf) ]; then
     $HOME/.local/opt/fzf/install --bin
     ln -s $HOME/.local/opt/fzf/bin/fzf $HOME/.local/bin/fzf
 fi
-
-## other things
 # neofetch
 if [ -z $(command -v neofetch) ]; then
     git clone https://github.com/dylanaraps/neofetch $HOME/.local/opt/neofetch
@@ -161,50 +163,68 @@ install_asdf(){
 }
 
 ## go & go-tools
-install_asdf go golang
-install_asdf ghq
-install_asdf direnv
-install_goget () {
-    # $1 - command
-    # $2 - url
-    [ -z $(command -v $1) ] && go get -u $2
-}
-install_goget gomi github.com/b4b4r07/gomi
-asdf reshim golang
+if ${DOTINSTALL_GOLANG:-true}; then
+    install_asdf go golang
+    install_asdf ghq
+    install_asdf direnv
+    install_goget () {
+        # $1 - command
+        # $2 - url
+        [ -z $(command -v $1) ] && go get -u $2
+    }
+    install_goget gomi github.com/b4b4r07/gomi
+    asdf reshim golang
+fi
 
 ## Rust
 # Note: rust & rust-based tools are installed without asdf.
-if [ ! -f $HOME/.cargo/env ]; then
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+if ${DOTINSTALL_RUST:-true}; then
+    if [ ! -f $HOME/.cargo/env ]; then
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    fi
+    source $HOME/.cargo/env
+    install_cargo () {
+        # $1 - command
+        # $2 - crate name, default: $1
+        [ -z $(command -v $1) ] && cargo install ${2:-$1}
+    }
+    install_cargo exa
+    install_cargo rg ripgrep
+    install_cargo bat
 fi
-source $HOME/.cargo/env
-install_cargo () {
-    # $1 - command
-    # $2 - crate name, default: $1
-    [ -z $(command -v $1) ] && cargo install ${2:-$1}
-}
-install_cargo exa
-install_cargo rg ripgrep
-install_cargo bat
 
 ## Node.js
-install_asdf node nodejs lts
-install_npm () {
-    [ -z $(command -v $1) ] && npm install -g $1
-}
-install_npm tldr
-asdf reshim nodejs
+if ${DOTINSTALL_NODEJS:-true}; then
+    install_asdf node nodejs lts
+    install_npm () {
+        [ -z $(command -v $1) ] && npm install -g $1
+    }
+    install_npm tldr
+    asdf reshim nodejs
+fi
 
 ## Python
-install_asdf python python 3.8.9
+# TODO: どうせvenv使うしasdf非使用にしたい
+if ${DOTINSTALL_PYTHON:-true}; then
+    install_asdf python python 3.8.9
 
-# poetry
-[ -f $HOME/.poetry/env ] && source $HOME/.poetry/env
-if [ -z $(command -v poetry) ]; then
-    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
-    source $HOME/.poetry/env
+    # poetry
+    [ -f $HOME/.poetry/env ] && source $HOME/.poetry/env
+    if [ -z $(command -v poetry) ]; then
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+        source $HOME/.poetry/env
+    fi
+
+    # jupyter
+
 fi
 
 ## Perl
+if ${DOTINSTALL_PERL:-true}; then
+    # TODO
+fi
 
 ## LaTeX
+if ${DOTINSTALL_LATEX:-true}; then
+    # TODO
+fi
