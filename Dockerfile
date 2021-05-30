@@ -30,3 +30,4 @@ RUN mkdir -p $PREFIX/src
 WORKDIR $PREFIX/src
 
 WORKDIR /home/${USERNAME}/dotfiles
+RUN /home/${USERNAME}/dotfiles/bin/install.sh

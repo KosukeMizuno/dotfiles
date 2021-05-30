@@ -13,6 +13,12 @@ PATH="$DOTPATH/bin:$PATH"
 ## proxy settings (if needed)
 # skip
 
+## bash
+
+
+## zsh
+# TODO
+
 ## ssh (copy)
 if [ ! -d "$HOME/.ssh" ]; then mkdir "$HOME/.ssh"; fi
 if [ ! -f "$HOME/.ssh/config" ]; then cp "$DOTPATH/ssh/config_template" "$HOME/.ssh/config"; fi
@@ -37,8 +43,6 @@ deploy_ln "$DOTPATH/git/gitignore_global" "$HOME/.config/git/ignore"
 # perl
 
 # latex
-
-# zsh
 
 # tmux
 
