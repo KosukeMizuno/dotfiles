@@ -29,30 +29,4 @@ ENV PKG_CONFIG_PATH $PREFIX/.local/lib64/pkgconfig:$PREFIX/lib/pkgconfig
 RUN mkdir -p $PREFIX/src
 WORKDIR $PREFIX/src
 
-#### proxy settings (if needed)
-## とりあえずproxy環境がないので飛ばす
-
-
-# go: ghq direnv trash
-
-# git
-
-# rust: exa bat ripgrep
-
-# nodejs
-
-# python
-
-# jupyter
-
-# perl
-
-# latex
-
-# zsh
-
-# tmux
-
-# nvim
-
-# terminal: alacritty windows-terminal
+WORKDIR /home/${USERNAME}/dotfiles

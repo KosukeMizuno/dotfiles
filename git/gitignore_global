@@ -1,0 +1,21 @@
+#### GLOBAL IGNORE 
+
+# OS specific
+.DS_Store
+
+# direnv
+.envrc
+
+# vim
+Session.vim
+tags
+
+# general
+*.bak
+*.orig
+*.tmp
+
+# MS Office
+~$*.doc*
+~$*.xls*
+~$*.ppt*

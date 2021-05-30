@@ -4,7 +4,7 @@ services:
   centos8:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./Dockerfile
       args:
         - USERNAME=u1
         - USERPASSWD=xxx
