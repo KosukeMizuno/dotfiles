@@ -30,9 +30,10 @@ WORKDIR /home/${USERNAME}/
 ENV DOTPATH /home/${USERNAME}/dotfiles
 
 ENV PREFIX /home/${USERNAME}/.local
-ENV PATH $PREFIX/.local/bin:$PATH
-ENV LD_LIBRARY_PATH $PREFIX/.local/lib64:$PREFIX/.local/lib:/usr/lib64:/usr/lib:/lib64:/lib
-ENV PKG_CONFIG_PATH $PREFIX/.local/lib64/pkgconfig:$PREFIX/lib/pkgconfig
+ENV PATH $PREFIX/bin:$PATH
+ENV LD_RUN_PATH $PREFIX/lib64:$PREFIX/lib:/usr/lib64:/usr/lib:/lib64:/lib
+ENV LD_LIBRARY_PATH $PREFIX/lib64:$PREFIX/lib:/usr/lib64:/usr/lib:/lib64:/lib
+ENV PKG_CONFIG_PATH $PREFIX/lib64/pkgconfig:$PREFIX/lib/pkgconfig
 
 RUN mkdir -p $PREFIX/src
 WORKDIR $PREFIX/src
