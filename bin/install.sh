@@ -10,6 +10,8 @@ if [ -z "$DOTPATH" ]; then
 fi
 PATH="$DOTPATH/bin:$PATH"
 
+
+#### 順番はあとで適当に変えたい
 ## bash
 
 ## zsh
@@ -24,7 +26,35 @@ PATH="$DOTPATH/bin:$PATH"
 # alacritty windows-terminal
 
 # font
+[ ! -d $HOME/.local/share/fonts ] && mkdir -p "$HOME/.local/share/fonts"
+if [ $(fc-list | grep Cica | wc -l) -eq 0 ]; then
+    echo "Installing Cica font..."
+    url=https://github.com/miiton/Cica/releases/download/v5.0.2/Cica_v5.0.2_with_emoji.zip
+    dname=$(mktemp -d --suffix=$(basename $url .zip))
+    wget $url -P /tmp
+    unzip /tmp/$(basename $url) -d $dname
+    cp $dname/*.ttf $HOME/.local/share/fonts/
+fi
+if [ $(fc-list | grep HackGen | wc -l) -eq 0 ]; then
+    echo "Installing HackGen font..."
+    url=https://github.com/yuru7/HackGen/releases/download/v2.3.2/HackGenNerd_v2.3.2.zip
+    dname=$(mktemp -d --suffix=$(basename $url .zip))
+    wget $url -P /tmp
+    unzip /tmp/$(basename $url) -d $dname
+    cp $dname/HackGenNerd_v2.3.2/*.ttf $HOME/.local/share/fonts/
+fi
+if [ $(fc-list | grep "MesloLGS NF" | wc -l) -eq 0 ]; then
+    echo "Installing Meslo font..."
+    wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $HOME/.local/share/fonts
+    wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P $HOME/.local/share/fonts
+    wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P $HOME/.local/share/fonts
+    wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P $HOME/.local/share/fonts
+fi
+fc-cache -fv
 
+
+
+exit
 
 ## ssh
 if [ -z $(command -v ssh) ]; then
