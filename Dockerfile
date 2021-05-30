@@ -3,7 +3,7 @@ LABEL maintainer "Kosuke Mizuno <dotmapu@gmail.com>"
 
 RUN yum update -y
 ENV TZ Asia/Tokyo
-RUN yum install -y sudo; yum clean all
+RUN yum groupinstall -y "Development Tools"; yum install -y sudo git wget openssh ; yum clean all
 
 # make a user who can sudo
 ARG USERNAME=u1
@@ -18,4 +18,41 @@ RUN echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 USER ${USERNAME}
 WORKDIR /home/${USERNAME}/
 
+#### install tools ####
 ENV DOTPATH /home/${USERNAME}/dotfiles
+
+ENV PREFIX /home/${USERNAME}/.local
+ENV PATH $PREFIX/.local/bin:$PATH
+ENV LD_LIBRARY_PATH $PREFIX/.local/lib64:$PREFIX/.local/lib:/usr/lib64:/usr/lib:/lib64:/lib
+ENV PKG_CONFIG_PATH $PREFIX/.local/lib64/pkgconfig:$PREFIX/lib/pkgconfig
+
+RUN mkdir -p $PREFIX/src
+WORKDIR $PREFIX/src
+
+#### proxy settings (if needed)
+## とりあえずproxy環境がないので飛ばす
+
+
+# go: ghq direnv trash
+
+# git
+
+# rust: exa bat ripgrep
+
+# nodejs
+
+# python
+
+# jupyter
+
+# perl
+
+# latex
+
+# zsh
+
+# tmux
+
+# nvim
+
+# terminal: alacritty windows-terminal

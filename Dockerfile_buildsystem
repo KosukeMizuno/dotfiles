@@ -1,0 +1,88 @@
+FROM centos:centos8.3.2011
+LABEL maintainer "Kosuke Mizuno <dotmapu@gmail.com>"
+
+RUN yum update -y
+ENV TZ Asia/Tokyo
+RUN yum groupinstall -y "Development Tools"; yum clean all
+
+# make a user who can sudo
+ARG USERNAME=u1
+ARG USERPASSWD=xxx
+
+RUN useradd ${USERNAME} \
+   && echo "root:${USERPASSWD}" | chpasswd \
+   && echo "${USERNAME}:${USERPASSWD}" | chpasswd
+RUN echo "Defaults visiblepw" >> /etc/sudoers
+RUN echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+USER ${USERNAME}
+WORKDIR /home/${USERNAME}/
+
+#### install tools ####
+ENV DOTPATH /home/${USERNAME}/dotfiles
+
+ENV PREFIX /home/${USERNAME}/.local
+ENV PATH $PREFIX/.local/bin:$PATH
+ENV LD_LIBRARY_PATH $PREFIX/.local/lib64:$PREFIX/.local/lib::/usr/lib64:/usr/lib:/lib64:/lib
+ENV PKG_CONFIG_PATH $PREFIX/.local/lib64/pkgconfig:$PREFIX/lib/pkgconfig
+
+RUN mkdir -p $PREFIX/src
+WORKDIR $PREFIX/src
+
+#### proxy settings (if needed)
+## とりあえずproxy環境がないので飛ばす
+
+#### wget
+## [x] nettle
+# gnutlsから使う場合にgmpサポートを有効にする必要があるらしい
+# libhogweedが失敗？とかいうメッセージ出てる。何故か通ってるけど。
+WORKDIR $PREFIX/src
+RUN curl -O https://ftp.gnu.org/gnu/nettle/nettle-3.4.1.tar.gz && tar zxvf nettle-3.4.1.tar.gz
+WORKDIR $PREFIX/src/nettle-3.4.1
+RUN ./configure --prefix=$PREFIX --enable-mini-gmp && make && make install
+
+## [x] gmp
+WORKDIR $PREFIX/src
+RUN curl -O https://gmplib.org/download/gmp/gmp-6.2.1.tar.xz && tar xvf gmp-6.2.1.tar.xz
+WORKDIR $PREFIX/src/gmp-6.2.1
+RUN ./configure --prefix=$PREFIX && make && make install; make check
+
+## gnutls
+# gmpが見つからないとかずっと言われる。。。 
+# -> PKG_CONFIG_PATHをちゃんと設定したら`pkg-config --list-all`で認識されるようになった
+# それでも configure するとgmpは見つからない。。。
+WORKDIR $PREFIX/src
+RUN curl -O https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-3.6.16.tar.xz && tar xvf gnutls-3.6.16.tar.xz
+WORKDIR $PREFIX/src/gnutls-3.6.16
+#RUN ./configure --prefix=$PREFIX
+
+## wget
+#WORKDIR $PREFIX/src
+#RUN curl -O https://ftp.gnu.org/gnu/wget/wget-1.21.tar.gz && tar zxvf wget-1.21.tar.gz
+#WORKDIR $PREFIX/src/wget-1.21
+#RUN ./configure --prefix=$PREFIX
+
+
+# go: ghq direnv trash
+
+# git
+
+# rust: exa bat ripgrep
+
+# nodejs
+
+# python
+
+# jupyter
+
+# perl
+
+# latex
+
+# zsh
+
+# tmux
+
+# nvim
+
+# terminal: alacritty windows-terminal
