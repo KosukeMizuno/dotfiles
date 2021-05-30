@@ -38,6 +38,9 @@ deploy_ln "$DOTPATH/git/gitignore_global" "$HOME/.config/git/ignore"
 
 # python
 
+# poetry
+deploy_ln "$DOTPATH/python/pypoetry/config.toml" "$HOME/.config/pypoetry/config.toml"
+
 # jupyter
 
 # perl

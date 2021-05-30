@@ -8,8 +8,5 @@ export PATH="$HOME/.poetry/bin:$PATH"
 #### RUST
 export PATH="$HOME/.cargo/bin:$PATH"
 
-#### GO
-export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
 
 

@@ -3,7 +3,16 @@ LABEL maintainer "Kosuke Mizuno <dotmapu@gmail.com>"
 
 RUN yum update -y
 ENV TZ Asia/Tokyo
-RUN yum groupinstall -y "Development Tools"; yum install -y sudo git wget openssh ; yum clean all
+
+RUN yum install -y sudo git wget openssh tree
+RUN yum groupinstall -y "Development Tools"
+RUN yum install -y yum-utils
+
+# python dependencies, 名前解決がおかしくて失敗するやつが混ざってるので個別指定＆エラーを無視して進める
+RUN yum install openssl-devel bzip2-devel readline-devel sqlite-devel; \
+    yum-builddep -y python3 ; exit 0
+
+RUN yum clean all
 
 # make a user who can sudo
 ARG USERNAME=u1
@@ -30,4 +39,3 @@ RUN mkdir -p $PREFIX/src
 WORKDIR $PREFIX/src
 
 WORKDIR /home/${USERNAME}/dotfiles
-RUN /home/${USERNAME}/dotfiles/bin/install.sh
