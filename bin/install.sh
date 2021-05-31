@@ -208,19 +208,49 @@ fi
 if ${DOTINSTALL_PYTHON:-true}; then
     _pwd=$PWD
 
-    # libffi-devel
-    url=https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz
-    wget $url -P /tmp
-    dname=$(mktemp -d)
-    tar zxvf /tmp/$(basename $url) -C $dname
-    progname=$(ls $dname)
-    mkdir -p $HOME/.local/src/$progname
-    cp -lR $dname/$progname/* $HOME/.local/src/$progname
-    cd $HOME/.local/src/$progname
-    ./configure --prefix=$HOME/.local
-    make
-    make install
+    # 依存を手動で解決してみようと思ったけど結局色々うまく行かない
+    # *-devel系のパッケージはおとなしく入れるべきか
+    # yum install libffi-devel zlib-devel
 
+    # # libffi-devel
+    # url=https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz
+    # wget $url -P /tmp
+    # dname=$(mktemp -d)
+    # tar zxvf /tmp/$(basename $url) -C $dname
+    # progname=$(ls $dname)
+    # mkdir -p $HOME/.local/src/$progname
+    # cp -lR $dname/$progname/* $HOME/.local/src/$progname
+    # cd $HOME/.local/src/$progname
+    # ./configure --prefix=$HOME/.local
+    # make
+    # make install
+    # 
+    # # zlib
+    # url=http://www.zlib.net/zlib-1.2.11.tar.gz
+    # wget $url -P /tmp
+    # dname=$(mktemp -d)
+    # tar zxvf /tmp/$(basename $url) -C $dname
+    # progname=$(ls $dname)
+    # mkdir -p $HOME/.local/src/$progname
+    # cp -lR $dname/$progname/* $HOME/.local/src/$progname
+    # cd $HOME/.local/src/$progname
+    # ./configure --prefix=$HOME/.local --shared
+    # make
+    # make install
+    # 
+    # # openssl
+    # url=https://www.openssl.org/source/openssl-1.1.1k.tar.gz
+    # wget $url -P /tmp
+    # dname=$(mktemp -d)
+    # tar zxvf /tmp/$(basename $url) -C $dname
+    # progname=$(ls $dname)
+    # mkdir -p $HOME/.local/src/$progname
+    # cp -lR $dname/$progname/* $HOME/.local/src/$progname
+    # cd $HOME/.local/src/$progname
+    # ./config --prefix=$HOME/.local/opt/ssl --openssldir=$HOME/.local/opt/ssl shared zlib #enable-tls1_3
+    # make
+    # make install
+    
     # python
     #   Note: Following modules built successfully but were removed because they could not be imported: _ctypes
     #           と表示されるが、import ctypesとかできる。謎。
@@ -232,13 +262,11 @@ if ${DOTINSTALL_PYTHON:-true}; then
     mkdir -p $HOME/.local/src/$progname
     cp -lR $dname/$progname/* $HOME/.local/src/$progname
     cd $HOME/.local/src/$progname
-    ./configure --prefix=$HOME/.local  # --enable-shared # --enable-optimizations --with-lto
+    ./configure --prefix=$HOME/.local --enable-shared --enable-optimizations --with-lto
     make -j8
     make altinstall
-
     cd $_pwd
     
-
     # poetry
     [ -f $HOME/.poetry/env ] && source $HOME/.poetry/env
     if [ -z $(command -v poetry) ]; then

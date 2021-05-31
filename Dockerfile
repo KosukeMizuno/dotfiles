@@ -8,7 +8,8 @@ RUN yum groupinstall -y "Development Tools"
 RUN yum install -y sudo git wget openssh tree man cmake yum-utils
 
 # python dependencies, 名前解決がおかしくて失敗するやつが混ざってるので個別指定＆エラーを無視して進める
-RUN yum install -y openssl-devel bzip2-devel readline-devel sqlite-devel; \
+RUN yum install -y bzip2-devel readline-devel sqlite-devel; \
+    yum install -y openssl-devel libffi-devel zlib-devel; \
     yum-builddep -y python3 ; exit 0
 
 RUN yum clean all
