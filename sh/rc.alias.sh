@@ -37,8 +37,7 @@ alias grj="git remind status -n --all | fzf --ansi --cycle --preview=\"git -C {}
 alias grs='git remind status --all'
 
 # ghq
-alias ghj='cd $(ghq list | fzf --ansi --cycle --preview "bat --color=always --style=grid --line-range :80 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
-alias gj=ghj
+alias gj='cd $(ghq list | fzf --ansi --cycle --preview "bat --color=always --style=grid --line-range :80 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
 
 # github cli
 alias gx="hub browse"

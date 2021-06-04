@@ -3,18 +3,22 @@
 #### install.sh ####
 # 必要なツールがなければ知らせる＆可能ならインストールする
 
-# check DOTPATH
+# check DOTPATH and PREFIX
 if [ -z "$DOTPATH" ]; then
-    echo "Ensure $DOTPATH is set."
+    echo "Ensure \$DOTPATH is set."
     exit 1
 fi
-PATH="$DOTPATH/bin:$HOME/.local/bin:$PATH"
+if [ -z "$PREFIX" ]; then
+    echo "Ensure \$PREFIX is set."
+    exit 1
+fi
+PATH="$DOTPATH/bin:$PREFIX/bin:$PATH"
 
 # check local path
-mkdir -p "$HOME/.local/bin"
-mkdir -p "$HOME/.local/src"
-mkdir -p "$HOME/.local/opt"
-mkdir -p "$HOME/.local/share/fonts"
+mkdir -p "$PREFIX/bin"
+mkdir -p "$PREFIX/src"
+mkdir -p "$PREFIX/opt"
+mkdir -p "$PREFIX/share/fonts"
 
 #### 順番はあとで適当に変えたい
 ## bash
@@ -28,26 +32,26 @@ if ${DOTINSTALL_TMUX:-true} && [ -z $(command -v tmux) ]; then
     _pwd=$PWD
 
     # libevent
-    if [ ! -f "$HOME/.local/lib/libevent_core-2.1.so.7" ]; then
-        [ -d $HOME/.local/src/libevent-2.1.12-stable ] && rm $HOME/.local/src/libevent-2.1.12-stable -rf
+    if [ ! -f "$PREFIX/lib/libevent_core-2.1.so.7" ]; then
+        [ -d $PREFIX/src/libevent-2.1.12-stable ] && rm $PREFIX/src/libevent-2.1.12-stable -rf
         url=https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
         wget $url -P /tmp
-        tar zxvf /tmp/$(basename $url) -C $HOME/.local/src
+        tar zxvf /tmp/$(basename $url) -C $PREFIX/src
     fi
-    cd $HOME/.local/src/libevent-2.1.12-stable
+    cd $PREFIX/src/libevent-2.1.12-stable
     [ -d build ] && rm build/ -rf
     mkdir build && cd build
-    cmake -DCMAKE_INSTALL_PREFIX=$HOME/.local ..
+    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
     make
     make install
 
     # tmux-3.2
-    if [ ! -d "$HOME/.local/src/tmux" ]; then
+    if [ ! -d "$PREFIX/src/tmux" ]; then
         url=https://github.com/tmux/tmux/releases/download/3.2/tmux-3.2.tar.gz
         wget $url -P /tmp
-        tar zxvf /tmp/$(basename $url) -C $HOME/.local/src
+        tar zxvf /tmp/$(basename $url) -C $PREFIX/src
     fi
-    ./configure --prefix=$HOME/.local
+    ./configure --prefix=$PREFIX
     make
     make install
 
@@ -69,7 +73,7 @@ if ${DOTINSTALL_FONTS:-true}; then
         dname=$(mktemp -d --suffix=$(basename $url .zip))
         wget $url -P /tmp
         unzip /tmp/$(basename $url) -d $dname
-        cp $dname/*.ttf $HOME/.local/share/fonts/
+        cp $dname/*.ttf $PREFIX/share/fonts/
         fc-cache -fv
     fi
     if [ $(fc-list | grep HackGen | wc -l) -eq 0 ]; then
@@ -78,20 +82,18 @@ if ${DOTINSTALL_FONTS:-true}; then
         dname=$(mktemp -d --suffix=$(basename $url .zip))
         wget $url -P /tmp
         unzip /tmp/$(basename $url) -d $dname
-        cp $dname/HackGenNerd_v2.3.2/*.ttf $HOME/.local/share/fonts/
+        cp $dname/HackGenNerd_v2.3.2/*.ttf $PREFIX/share/fonts/
         fc-cache -fv
     fi
     if [ $(fc-list | grep "MesloLGS NF" | wc -l) -eq 0 ]; then
         echo "Installing Meslo font..."
-        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $HOME/.local/share/fonts
-        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P $HOME/.local/share/fonts
-        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P $HOME/.local/share/fonts
-        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P $HOME/.local/share/fonts
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $PREFIX/share/fonts
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P $PREFIX/share/fonts
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P $PREFIX/share/fonts
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P $PREFIX/share/fonts
         fc-cache -fv
     fi
 fi
-
-
 
 
 ## ssh
@@ -117,36 +119,33 @@ fi
 if [ -z $(command -v git-remind) ]; then
     url=https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz
     wget $url -P /tmp
-    dname=$HOME/.local/opt/$(basename $url .tar.gz)
+    dname=$PREFIX/opt/$(basename $url .tar.gz)
     mkdir -p $dname
     tar zxvf /tmp/$(basename $url) -C $dname
-    ln -s $dname/git-remind $HOME/.local/bin/git-remind
+    ln -s $dname/git-remind $PREFIX/bin/git-remind
 fi
 
-## fzf
+# fzf
 if [ -z $(command -v fzf) ]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git $HOME/.local/opt/fzf
-    $HOME/.local/opt/fzf/install --bin
-    ln -s $HOME/.local/opt/fzf/bin/fzf $HOME/.local/bin/fzf
+    git clone --depth 1 https://github.com/junegunn/fzf.git $PREFIX/opt/fzf
+    $PREFIX/opt/fzf/install --bin
+    ln -s $PREFIX/opt/fzf/bin/fzf $PREFIX/bin/fzf
 fi
 # neofetch
 if [ -z $(command -v neofetch) ]; then
-    git clone https://github.com/dylanaraps/neofetch $HOME/.local/opt/neofetch
-    cd $HOME/.local/opt/neofetch
-    make PREFIX=$HOME/.local install
+    git clone https://github.com/dylanaraps/neofetch $PREFIX/opt/neofetch
+    cd $PREFIX/opt/neofetch
+    make PREFIX=$PREFIX install
     cd -
 fi
 
 ## asdf
 if [ -f "$HOME/.asdf/asdf.sh" ]; then
     source "$HOME/.asdf/asdf.sh"
-elif [ -f "$HOME/ghq/github.com/asdf-vm/asdf/asdf.sh" ]; then
-    source "$HOME/ghq/github.com/asdf-vm/asdf/asdf.sh"
 fi
 if [ -z $(command -v asdf) ]; then
     echo "command asdf was not found. Installing..."
-    git clone https://github.com/asdf-vm/asdf.git $HOME/ghq/github.com/asdf-vm/asdf
-    ln -s $HOME/ghq/github.com/asdf-vm/asdf $HOME/.asdf
+    git clone https://github.com/asdf-vm/asdf.git $HOME/.asdf
     git -C $HOME/.asdf checkout "$(git describe --abbrev=0 --tags)"
     source $HOME/.asdf/asdf.sh
 fi
@@ -165,13 +164,14 @@ install_asdf(){
 ## go & go-tools
 if ${DOTINSTALL_GOLANG:-true}; then
     install_asdf go golang
-    install_asdf ghq
     install_asdf direnv
     install_goget () {
         # $1 - command
         # $2 - url
         [ -z $(command -v $1) ] && go get -u $2
     }
+    install_goget ghq github.com/x-motemen/ghq
+    install_goget hub github.com/github/hub
     install_goget gomi github.com/b4b4r07/gomi
     asdf reshim golang
 fi
@@ -204,68 +204,31 @@ if ${DOTINSTALL_NODEJS:-true}; then
 fi
 
 ## Python
-# TODO: どうせvenv使うしasdf非使用にしたい
 if ${DOTINSTALL_PYTHON:-true}; then
     _pwd=$PWD
 
-    # 依存を手動で解決してみようと思ったけど結局色々うまく行かない
-    # *-devel系のパッケージはおとなしく入れるべきか
-    # yum install libffi-devel zlib-devel
-
-    # # libffi-devel
-    # url=https://github.com/libffi/libffi/releases/download/v3.3/libffi-3.3.tar.gz
-    # wget $url -P /tmp
-    # dname=$(mktemp -d)
-    # tar zxvf /tmp/$(basename $url) -C $dname
-    # progname=$(ls $dname)
-    # mkdir -p $HOME/.local/src/$progname
-    # cp -lR $dname/$progname/* $HOME/.local/src/$progname
-    # cd $HOME/.local/src/$progname
-    # ./configure --prefix=$HOME/.local
-    # make
-    # make install
-    # 
-    # # zlib
-    # url=http://www.zlib.net/zlib-1.2.11.tar.gz
-    # wget $url -P /tmp
-    # dname=$(mktemp -d)
-    # tar zxvf /tmp/$(basename $url) -C $dname
-    # progname=$(ls $dname)
-    # mkdir -p $HOME/.local/src/$progname
-    # cp -lR $dname/$progname/* $HOME/.local/src/$progname
-    # cd $HOME/.local/src/$progname
-    # ./configure --prefix=$HOME/.local --shared
-    # make
-    # make install
-    # 
-    # # openssl
-    # url=https://www.openssl.org/source/openssl-1.1.1k.tar.gz
-    # wget $url -P /tmp
-    # dname=$(mktemp -d)
-    # tar zxvf /tmp/$(basename $url) -C $dname
-    # progname=$(ls $dname)
-    # mkdir -p $HOME/.local/src/$progname
-    # cp -lR $dname/$progname/* $HOME/.local/src/$progname
-    # cd $HOME/.local/src/$progname
-    # ./config --prefix=$HOME/.local/opt/ssl --openssldir=$HOME/.local/opt/ssl shared zlib #enable-tls1_3
-    # make
-    # make install
-    
     # python
     #   Note: Following modules built successfully but were removed because they could not be imported: _ctypes
     #           と表示されるが、import ctypesとかできる。謎。
-    url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
-    wget $url -P /tmp
-    dname=$(mktemp -d)
-    tar zxvf /tmp/$(basename $url) -C $dname
-    progname=$(ls $dname)
-    mkdir -p $HOME/.local/src/$progname
-    cp -lR $dname/$progname/* $HOME/.local/src/$progname
-    cd $HOME/.local/src/$progname
-    ./configure --prefix=$HOME/.local --enable-shared --enable-optimizations --with-lto
-    make -j8
-    make altinstall
-    cd $_pwd
+    if [ -z $(command -v python3.8) ]; then
+        url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
+        wget $url -P /tmp
+        dname=$(mktemp -d)
+        tar zxvf /tmp/$(basename $url) -C $dname
+        progname=$(ls $dname)
+        mkdir -p $PREFIX/src/$progname
+        cp -lR $dname/$progname/* $PREFIX/src/$progname
+        cd $PREFIX/src/$progname
+        ./configure --prefix=$PREFIX --enable-shared --enable-optimizations --with-lto
+        make -j8
+        make altinstall
+        cd $_pwd
+    fi
+    PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/.venv_default}"
+    if [ ! -d "$PYTHON_DEFAULT_VENV" ]; then
+        $(ls $PREFIX/bin | grep python | grep -v config) -m venv $PYTHON_DEFAULT_VENV
+    fi
+    source $PYTHON_DEFAULT_VENV/bin/activate
     
     # poetry
     [ -f $HOME/.poetry/env ] && source $HOME/.poetry/env
@@ -274,16 +237,22 @@ if ${DOTINSTALL_PYTHON:-true}; then
         source $HOME/.poetry/env
     fi
 
-    # jupyter
-
+    # python tools, jupyter
+    # TODO: requirements.txtベースにしたい
+    pip install --upgrade pip autopep8 isort
+    pip install jupyterlab
+    pip install numpy scipy matplotlib cython tqdm better_exceptions numba
+    pip install qutip
 fi
 
 ## Perl
 if ${DOTINSTALL_PERL:-true}; then
     # TODO
+    echo ""
 fi
 
 ## LaTeX
 if ${DOTINSTALL_LATEX:-true}; then
     # TODO
+    echo ""
 fi

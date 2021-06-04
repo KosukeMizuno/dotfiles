@@ -7,9 +7,10 @@ ENV TZ Asia/Tokyo
 RUN yum groupinstall -y "Development Tools"
 RUN yum install -y sudo git wget openssh tree man cmake yum-utils
 
-# python dependencies, 名前解決がおかしくて失敗するやつが混ざってるので個別指定＆エラーを無視して進める
-RUN yum install -y bzip2-devel readline-devel sqlite-devel; \
-    yum install -y openssl-devel libffi-devel zlib-devel; \
+# python dependencies
+## 名前解決がおかしくて失敗するやつが混ざってるので個別指定＆エラーを無視して進める
+## 下記はpyenvのwikiから: https://github.com/pyenv/pyenv/wiki#suggested-build-environment
+RUN yum install -y bzip2-devel bzip2 readline-devel sqlite sqlite-devel openssl-devel libffi-devel zlib-devel tk-devel xz-devel; \
     yum-builddep -y python3 ; exit 0
 
 RUN yum clean all
