@@ -23,12 +23,11 @@ export PATH="$HOME/.poetry/bin:$PATH"
 # RUST
 export PATH="$HOME/.cargo/bin:$PATH"
 
-
 #### COMPLETION ####
 # # lazyloader
 # source "$DOTPATH/bin/lazyenv.bash"
-# 
+#
 # # fzf
 # source $PREFIX/opt/fzf/shell/completion.bash
 # source $PREFIX/opt/fzf/shell/key-bindings.bash
-# 
+#

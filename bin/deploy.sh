@@ -22,7 +22,7 @@ deploy_ln "$DOTPATH/sh/.bash_profile" "$HOME/.bash_profile"
 
 ## ssh (copy)
 if [ ! -d "$HOME/.ssh" ]; then mkdir "$HOME/.ssh"; fi
-if [ ! -f "$HOME/.ssh/config" ]; then cp "$DOTPATH/ssh/config_template" "$HOME/.ssh/config"; fi
+if [ ! -f "$HOME/.ssh/config" ]; then cp "$DOTPATH/.ssh/config_template" "$HOME/.ssh/config"; fi
 if [ ! -f "$HOME/.ssh/id_ed25519" ]; then ssh-keygen -t ed25519 -N '' -f "$HOME/.ssh/id_ed25519"; fi
 find "$HOME/.ssh" -type d -print0 | xargs -0 chmod 700
 find "$HOME/.ssh" -type f -print0 | xargs -0 chmod 600

@@ -22,7 +22,6 @@ mkdir -p "$PREFIX/share/fonts"
 ## zsh
 # TODO
 
-
 ## tmux
 if ${DOTINSTALL_TMUX:-true} && [ -z "$(command -v tmux)" ]; then
     _pwd=$PWD
@@ -142,7 +141,7 @@ if [ -z "$(command -v asdf)" ]; then
     git -C "$HOME/.asdf" checkout "$(git describe --abbrev=0 --tags)"
     source "$HOME/.asdf/asdf.sh"
 fi
-install_asdf(){
+install_asdf() {
     # $1 - command
     # $2 - plugin name, default: $1
     # $3 - version, default: latest
@@ -158,7 +157,7 @@ install_asdf(){
 if ${DOTINSTALL_GOLANG:-true}; then
     install_asdf go golang
     install_asdf direnv
-    install_goget () {
+    install_goget() {
         # $1 - command
         # $2 - url
         [ -z "$(command -v $1)" ] && go get -u "$2"
@@ -166,6 +165,7 @@ if ${DOTINSTALL_GOLANG:-true}; then
     install_goget ghq github.com/x-motemen/ghq
     install_goget hub github.com/github/hub
     install_goget gomi github.com/b4b4r07/gomi
+    install_goget mvdan.cc/sh/v3/cmd/shfmt
     asdf reshim golang
 fi
 
@@ -176,7 +176,7 @@ if ${DOTINSTALL_RUST:-true}; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     fi
     source "$HOME/.cargo/env"
-    install_cargo () {
+    install_cargo() {
         # $1 - command
         # $2 - crate name, default: $1
         [ -z "$(command -v $1)" ] && cargo install "${2:-$1}"
@@ -189,7 +189,7 @@ fi
 ## Node.js
 if ${DOTINSTALL_NODEJS:-true}; then
     install_asdf node nodejs lts
-    install_npm () {
+    install_npm() {
         [ -z "$(command -v $1)" ] && npm install -g "$1"
     }
     install_npm tldr
@@ -223,7 +223,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
         $(ls "$PREFIX/bin" | grep python | grep -v config) -m venv "$PYTHON_DEFAULT_VENV"
     fi
     source "$PYTHON_DEFAULT_VENV/bin/activate"
-    
+
     # poetry
     [ -f "$HOME/.poetry/env" ] && source "$HOME/.poetry/env"
     if [ -z "$(command -v poetry)" ]; then
@@ -250,7 +250,6 @@ if ${DOTINSTALL_LATEX:-true}; then
     # TODO
     echo ""
 fi
-
 
 ## nvim
 if ${DOTINSTALL_NVIM:-true}; then
