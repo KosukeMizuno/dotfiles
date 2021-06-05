@@ -11,7 +11,8 @@ fi
 source "$DOTPATH/sh/path.sh"
 PATH="$DOTPATH/bin:$PATH"
 
-deploy_ln "$DOTPATH/.config" "$XDG_CONFIG_HOME"
+# ensure local path
+mkdir -p "$XDG_CONFIG_HOME"
 
 ## bash
 deploy_ln "$DOTPATH/sh/.bashrc" "$HOME/.bashrc"
@@ -29,9 +30,17 @@ find "$HOME/.ssh" -type f -print0 | xargs -0 chmod 600
 
 ## git
 # XDG_CONFIG_HOME/git/gitconfig より ~/.gitconfig が優先されるのでリンクしておく
+deploy_ln "$DOTPATH/git" "$XDG_CONFIG_HOME/git"
 deploy_ln "$XDG_CONFIG_HOME/git/gitconfig" "$HOME/.gitconfig"
 
+## tmux
+deploy_ln "$DOTPATH/tmux" "$XDG_CONFIG_HOME/tmux"
+
+## nvim
+deploy_ln "$DOTPATH/nvim" "$XDG_CONFIG_HOME/nvim"
+
 ## python
+deploy_ln "$DOTPATH/pypoetry" "$XDG_CONFIG_HOME/pypoetry"
 
 # jupyter
 
@@ -40,3 +49,4 @@ deploy_ln "$XDG_CONFIG_HOME/git/gitconfig" "$HOME/.gitconfig"
 
 
 ## terminal: alacritty windows-terminal
+deploy_ln "$DOTPATH/alacritty" "$XDG_CONFIG_HOME/alacritty"

@@ -19,17 +19,8 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 [ -f "$HOME/.asdf/asdf.sh" ] && source "$HOME/.asdf/asdf.sh"
 
 # PYTHON
-export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/.venv_default}"
+export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/venvs/default}"
 export PATH="$HOME/.poetry/bin:$PATH"
 
 # RUST
 export PATH="$HOME/.cargo/bin:$PATH"
-
-#### COMPLETION ####
-# # lazyloader
-# source "$DOTPATH/bin/lazyenv.bash"
-#
-# # fzf
-# source $PREFIX/opt/fzf/shell/completion.bash
-# source $PREFIX/opt/fzf/shell/key-bindings.bash
-#

@@ -5,13 +5,14 @@
 
 # check DOTPATH and PREFIX
 if [ -z "$DOTPATH" ]; then
-    echo "Ensure \$DOTPATH is set."
+    echo "Ensure \$DOTPATH is set." 1>&2
     exit 1
 fi
 source "$DOTPATH/sh/path.sh"
 PATH="$DOTPATH/bin:$PATH"
 
-# check local path
+# ensure local path
+mkdir -p "$XDG_CONFIG_HOME"
 mkdir -p "$PREFIX/bin"
 mkdir -p "$PREFIX/src"
 mkdir -p "$PREFIX/opt"
@@ -90,18 +91,18 @@ fi
 
 ## ssh
 if [ -z "$(command -v ssh)" ]; then
-    echo "command ssh was not found."
+    echo "command ssh was not found." 1>&2
 fi
 if [ -z "$(command -v wget)" ]; then
-    echo "command wget was not found."
+    echo "command wget was not found." 1>&2
 fi
 if [ -z "$(command -v curl)" ]; then
-    echo "command curl was not found."
+    echo "command curl was not found." 1>&2
 fi
 
 ## git
 if [ -z "$(command -v git)" ]; then
-    echo "command git was not found."
+    echo "command git was not found." 1>&2
     exit 1
     # gitなかったら後段無理なので終了
 fi
@@ -165,7 +166,7 @@ if ${DOTINSTALL_GOLANG:-true}; then
     install_goget ghq github.com/x-motemen/ghq
     install_goget hub github.com/github/hub
     install_goget gomi github.com/b4b4r07/gomi
-    install_goget mvdan.cc/sh/v3/cmd/shfmt
+    install_goget shfmt mvdan.cc/sh/v3/cmd/shfmt
     asdf reshim golang
 fi
 
@@ -193,6 +194,7 @@ if ${DOTINSTALL_NODEJS:-true}; then
         [ -z "$(command -v $1)" ] && npm install -g "$1"
     }
     install_npm tldr
+    npm install -g neovim
     asdf reshim nodejs
 fi
 
@@ -215,10 +217,10 @@ if ${DOTINSTALL_PYTHON:-true}; then
         cd "$PREFIX/src/$progname"
         ./configure --prefix="$PREFIX" --enable-shared --enable-optimizations --with-lto
         make -j8
-        make install  # Note: $PREFIXへの(初)インストールなのでaltinstallではなくinstall
+        make install # Note: $PREFIXへの(初)インストールなのでaltinstallではなくinstall
         cd $_pwd
     fi
-    PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/.venv_default}"
+    PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/venvs/default}"
     if [ ! -d "$PYTHON_DEFAULT_VENV" ]; then
         python3 -m venv "$PYTHON_DEFAULT_VENV"
     fi
@@ -253,8 +255,34 @@ fi
 
 ## nvim
 if ${DOTINSTALL_NVIM:-true}; then
-    ghq get -l neovim/neovim
-    git checkout nightly
-    make CMAKE_INSTALL_PREFIX="$PREFIX"
-    make install
+    _pwd=$(pwd)
+
+    # cd neovim source
+    if ghq list | grep -q "neovim/neovim"; then
+        cd "$(ghq list -p | grep neovim/neovim)"
+        git fetch
+    else
+        ghq get -l neovim/neovim
+    fi
+
+    # check update
+    NVIM_TARGET_BRANCH="nightly"
+    if [ "$(git rev-parse HEAD)" != "$(git rev-parse $NVIM_TARGET_BRANCH)" ] || [ -z "$(command -v nvim)" ]; then
+        git checkout $NVIM_TARGET_BRANCH
+        make CMAKE_INSTALL_PREFIX="$PREFIX"
+        make install
+    fi
+
+    # python
+    if [ -n "$(command -v python3)" ]; then
+        VENV_FOR_NEOVIM="$PREFIX/opt/python3_nvim"
+        if [ ! -d "$VENV_FOR_NEOVIM" ]; then
+            python3 -m venv "$VENV_FOR_NEOVIM"
+        fi
+        "$VENV_FOR_NEOVIM/bin/pip" install --upgrade pip neovim pynvim
+    else
+        echo "python3 was not found. Creating venv for nvim failed." 1>&2
+    fi
+
+    cd "$_pwd"
 fi
