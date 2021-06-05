@@ -5,7 +5,7 @@ RUN yum update -y
 ENV TZ Asia/Tokyo
 
 RUN yum groupinstall -y "Development Tools"
-RUN yum install -y sudo git wget openssh tree man cmake yum-utils
+RUN yum install -y sudo git wget openssh tree man cmake yum-utils bash-completion
 
 # python dependencies
 ## 名前解決がおかしくて失敗するやつが混ざってるので個別指定＆エラーを無視して進める

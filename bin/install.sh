@@ -215,19 +215,19 @@ if ${DOTINSTALL_PYTHON:-true}; then
         cd "$PREFIX/src/$progname"
         ./configure --prefix="$PREFIX" --enable-shared --enable-optimizations --with-lto
         make -j8
-        make altinstall
+        make install  # Note: $PREFIXへの(初)インストールなのでaltinstallではなくinstall
         cd $_pwd
     fi
     PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/.venv_default}"
     if [ ! -d "$PYTHON_DEFAULT_VENV" ]; then
-        $(ls "$PREFIX/bin" | grep python | grep -v config) -m venv "$PYTHON_DEFAULT_VENV"
+        python3 -m venv "$PYTHON_DEFAULT_VENV"
     fi
     source "$PYTHON_DEFAULT_VENV/bin/activate"
 
     # poetry
     [ -f "$HOME/.poetry/env" ] && source "$HOME/.poetry/env"
     if [ -z "$(command -v poetry)" ]; then
-        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
         source "$HOME/.poetry/env"
     fi
 

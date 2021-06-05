@@ -1,3 +1,4 @@
+#!/bin/bash
 #### BASHRC ####
 
 echo "Loading bashrc"

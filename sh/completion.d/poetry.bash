@@ -1,0 +1,1 @@
+eval "$(poetry completions bash)"

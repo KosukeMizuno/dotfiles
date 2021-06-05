@@ -1,3 +1,4 @@
+#!/bin/bash
 #### BASH_PROFILE ####
 
 echo "Loading bash_profile"
@@ -20,3 +21,7 @@ fi
 if [ -f "$HOME/.bashrc" ]; then
     source "$HOME/.bashrc"
 fi
+
+# enable completion
+# TODO: 遅いのでlazyloadingさせる
+source "$DOTPATH/sh/completion.sh"
