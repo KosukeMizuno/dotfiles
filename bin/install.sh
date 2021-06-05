@@ -12,7 +12,10 @@ if [ -z "$PREFIX" ]; then
     echo "Ensure \$PREFIX is set."
     exit 1
 fi
-PATH="$DOTPATH/bin:$PREFIX/bin:$PATH"
+PATH="$DOTPATH/bin:$PATH"
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
 # check local path
 mkdir -p "$PREFIX/bin"
@@ -32,18 +35,18 @@ if ${DOTINSTALL_TMUX:-true} && [ -z $(command -v tmux) ]; then
     _pwd=$PWD
 
     # libevent
-    if [ ! -f "$PREFIX/lib/libevent_core-2.1.so.7" ]; then
+    if [ -z $(ldconfig -p | grep libevent_core-2.1.so.7) ]; then
         [ -d $PREFIX/src/libevent-2.1.12-stable ] && rm $PREFIX/src/libevent-2.1.12-stable -rf
         url=https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz
         wget $url -P /tmp
         tar zxvf /tmp/$(basename $url) -C $PREFIX/src
+        cd $PREFIX/src/libevent-2.1.12-stable
+        [ -d build ] && rm build/ -rf
+        mkdir build && cd build
+        cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
+        make
+        make install
     fi
-    cd $PREFIX/src/libevent-2.1.12-stable
-    [ -d build ] && rm build/ -rf
-    mkdir build && cd build
-    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
-    make
-    make install
 
     # tmux-3.2
     if [ ! -d "$PREFIX/src/tmux" ]; then
@@ -51,6 +54,7 @@ if ${DOTINSTALL_TMUX:-true} && [ -z $(command -v tmux) ]; then
         wget $url -P /tmp
         tar zxvf /tmp/$(basename $url) -C $PREFIX/src
     fi
+    cd $PREFIX/src/tmux-3.2
     ./configure --prefix=$PREFIX
     make
     make install
@@ -211,6 +215,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
     #   Note: Following modules built successfully but were removed because they could not be imported: _ctypes
     #           と表示されるが、import ctypesとかできる。謎。
     if [ -z $(command -v python3.8) ]; then
+        echo "python3.8 was not found. Installing..."
         url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
         wget $url -P /tmp
         dname=$(mktemp -d)

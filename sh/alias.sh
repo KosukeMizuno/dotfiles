@@ -1,7 +1,8 @@
-
+#### rc.alias.sh ####
+# define aliases
 
 # modern cli tools
-if [ -n $(command -v exa) ]; then
+if [ -z "$(command -v exa)" ]; then
     alias ls='exa -lhb --git --icons'
     alias ll='exa -hb --git --icons'
     alias la='exa -lhbHSg --git --icons'

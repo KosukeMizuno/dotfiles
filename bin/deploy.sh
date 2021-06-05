@@ -9,12 +9,15 @@ if [ -z "$DOTPATH" ]; then
     exit 1
 fi
 PATH="$DOTPATH/bin:$PATH"
+XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
-## proxy settings (if needed)
-# skip
+deploy_ln "$DOTPATH/.config" "$XDG_CONFIG_HOME"
 
 ## bash
-
+deploy_ln "$DOTPATH/sh/.bashrc" "$HOME/.bashrc"
+deploy_ln "$DOTPATH/sh/.bash_profile" "$HOME/.bash_profile"
 
 ## zsh
 # TODO
@@ -26,29 +29,19 @@ if [ ! -f "$HOME/.ssh/id_ed25519" ]; then ssh-keygen -t ed25519 -N '' -f "$HOME/
 find "$HOME/.ssh" -type d -print | xargs chmod 700
 find "$HOME/.ssh" -type f -print | xargs chmod 600
 
-## git (link)
-deploy_ln "$DOTPATH/git/gitconfig" "$HOME/.gitconfig"
-deploy_ln "$DOTPATH/git/gitignore_global" "$HOME/.config/git/ignore"
+## git
+# XDG_CONFIG_HOME/git/gitconfig より ~/.gitconfig が優先されるのでリンクしておく
+deploy_ln "$XDG_CONFIG_HOME/git/gitconfig" "$HOME/.gitconfig"
 
-# go: ghq direnv trash
-
-# rust: exa bat ripgrep
-
-# nodejs
-
-# python
-
-# poetry
-deploy_ln "$DOTPATH/python/pypoetry/config.toml" "$HOME/.config/pypoetry/config.toml"
+## python
 
 # jupyter
 
-# perl
 
-# latex
+## latex
 
-# tmux
+## nvim
+deploy_ln "$DOTPATH/nvim" "$XDG_CONFIG_HOME/nvim"
 
-# nvim
 
-# terminal: alacritty windows-terminal
+## terminal: alacritty windows-terminal
