@@ -23,6 +23,7 @@
 	email = dotmapu@gmail.com
 [core]
 	quotepath = false
+	symlinks = true
 	editor = 'nvim'
 [pull]
 	ff = only

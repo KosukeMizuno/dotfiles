@@ -1,8 +1,12 @@
 #### rc.alias.sh ####
 # define aliases
 
+# reload rc
+alias rc='source $HOME/.bashrc' 
+alias rc_profile='source $HOME/.bash_profile'
+
 # modern cli tools
-if [ -z "$(command -v exa)" ]; then
+if [ -n "$(command -v exa)" ]; then
     alias ls='exa -lhb --git --icons'
     alias ll='exa -hb --git --icons'
     alias la='exa -lhbHSg --git --icons'

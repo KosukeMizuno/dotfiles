@@ -17,7 +17,7 @@
 #
 ######################################################################
 
-echo "deploy_ln $@"
+echo "deploy_ln $*"
 
 mode="backup"
 while getopts fbsd OPT
@@ -35,11 +35,12 @@ src=$1
 dst=$2
 
 # check dst exists or not.
-if [ ! -f "$dst" ] || [ ! -d "$dst" ]; then  
+if [ ! -f "$dst" ] && [ ! -d "$dst" ]; then  
     echo "  dst doesn't exists ==> Make symbolic link."
     if [ ! $dry ]; then
         dirdst=$(dirname "$dst")
         [ ! -d "$dirdst" ] && mkdir -p "$dirdst"
+        echo "ln -s $src $dst"
         ln -s "$src" "$dst"
     fi
     exit

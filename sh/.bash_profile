@@ -1,7 +1,9 @@
 #### BASH_PROFILE ####
 
+echo "Loading bash_profile"
+
 # dotfiles
-export DOTPATH="$HOME/dotfiles"
+export DOTPATH="${DOTPATH:-$HOME/dotfiles}"
 source "$DOTPATH/sh/path.sh"
 
 # load local bash_profile if exists
