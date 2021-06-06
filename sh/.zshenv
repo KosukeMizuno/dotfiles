@@ -1,7 +1,9 @@
 ##### ZSHENV ####
 
 export DOTPATH="${DOTPATH:-$HOME/dotfiles}"
-export ZDOTDIR="${ZDOTDIR:-$DOTPATH/sh}"
+export ZDOTDIR="${ZDOTDIR:-$HOME}"
+# Note: preztoのインストールフォルダが`ZDOTDIR/.zprezto`を仮定していて、
+#       git-submoduleで入れると面倒なのでHOME下にいれることにした
 
 # export ZSH_DO_PROFILING=""
 if [ -n "${ZSH_DO_PROFILING:-}" ]; then
