@@ -154,8 +154,7 @@ lazy = 1
 on_cmd = ['CtrlPLspDocumentSymbol', 'CtrlPLspWorkspaceSymbol']
 
 [[plugins]]
-# repo = 'mattn/ctrlp-ghq'
-repo = 'KosukeMizuno/ctrlp-ghq'
+repo = 'mattn/ctrlp-ghq'
 lazy = 1
 on_source = ['ctrlp.vim']
 hook_source = '''
@@ -165,7 +164,6 @@ let g:ctrlp_ghq_cache_enabled = 0
 # }}}
 
 [[plugins]]  # Denite.nvim  {{{2
-# TODO: 使いこなせてないなあ。。。
 repo = 'Shougo/denite.nvim'  # {{{3
 lazy = 1
 on_cmd = ['Denite', 'DeniteCursorWord', 'DeniteBufferDir', 'DeniteProjectDir']

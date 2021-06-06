@@ -22,9 +22,6 @@ repo = 'Shougo/neco-vim'
 lazy = 1
 on_ft = 'vim'
 
-[[plugins]]
-repo = 'fszymanski/deoplete-emoji'
-
 
 #### Neosnippet ####
 [[plugins]]
@@ -68,4 +65,3 @@ on_event = 'InsertEnter'
 hook_source = '''
 call deoplete#custom#source('lsp', 'rank', 9000)
 '''
-
