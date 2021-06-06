@@ -5,7 +5,8 @@
 - `sudo docker-compose exec centos8 bash --login`
 
 ## How to install
-- `~/dotfiles/bin/install.sh && source ~/.asdf/asdf.sh`
+- `git clone --recursive <this repo> ~/dotfiles`
+- `cd ~/dotfiles && make`
 
 ## Directory Structure
 
@@ -61,3 +62,4 @@ python2って要る？
 ## Acknowledgement
 
 - `./bin/lazyenv.bash` was copied from <https://github.com/takezoh/lazyenv>
+- zsh-related rc scripts `./sh/.z*` was initially copied from [sorin-ionescu/prezto](https://github.com/sorin-ionescu/prezto) and then customized.

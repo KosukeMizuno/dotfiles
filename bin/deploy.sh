@@ -19,7 +19,8 @@ deploy_ln "$DOTPATH/sh/.bashrc" "$HOME/.bashrc"
 deploy_ln "$DOTPATH/sh/.bash_profile" "$HOME/.bash_profile"
 
 ## zsh
-# TODO
+deploy_ln "$DOTPATH/sh/.zshenv" "$HOME/.zshenv"
+
 
 ## ssh (copy)
 if [ ! -d "$HOME/.ssh" ]; then mkdir "$HOME/.ssh"; fi

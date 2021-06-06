@@ -33,6 +33,10 @@ if ${DOTINSTALL_ZSH:-true} && [ -z "$(command -v zsh)" ]; then
     make
     make install
 
+    # 他のツールはinstallとdeployを分離しているが、
+    # zshは起動後に$HOME/.z**が無いと色々生成されるのでここでdeployしてしまう
+    deploy_ln "$DOTPATH/sh/.zshenv" "$HOME/.zshenv"
+
     cd _pwd
 fi
 
