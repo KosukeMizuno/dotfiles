@@ -19,8 +19,12 @@ deploy_ln "$DOTPATH/sh/.bashrc" "$HOME/.bashrc"
 deploy_ln "$DOTPATH/sh/.bash_profile" "$HOME/.bash_profile"
 
 ## zsh
-deploy_ln "$DOTPATH/sh/.zshenv" "$HOME/.zshenv"
-
+deploy_ln "$DOTPATH/sh/.zlogin"    "$HOME/.zlogin"
+deploy_ln "$DOTPATH/sh/.zlogout"   "$HOME/.zlogout"
+deploy_ln "$DOTPATH/sh/.zpreztorc" "$HOME/.zpreztorc"
+deploy_ln "$DOTPATH/sh/.zprofile"  "$HOME/.zprofile"
+deploy_ln "$DOTPATH/sh/.zshenv"    "$HOME/.zshenv"
+deploy_ln "$DOTPATH/sh/.zshrc"     "$HOME/.zshrc"
 
 ## ssh (copy)
 if [ ! -d "$HOME/.ssh" ]; then mkdir "$HOME/.ssh"; fi

@@ -21,21 +21,33 @@ mkdir -p "$PREFIX/share/fonts"
 #### 順番はあとで適当に変えたい
 
 ## zsh
-if ${DOTINSTALL_ZSH:-true} && [ -z "$(command -v zsh)" ]; then
+if ${DOTINSTALL_ZSH:-true}; then
     _pwd=$PWD
 
-    [ -d "$PREFIX/src/zsh-5.8" ] && rm -rf "$PREFIX/src/zsh-5.8"
-    url="https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download"
-    wget $url -P /tmp
-    tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
-    cd "$PREFIX/src/zsh-5.8"
-    ./configure --prefix="$PREFIX"
-    make
-    make install
+    if [ -z "$(command -v zsh)" ]; then
+        [ -d "$PREFIX/src/zsh-5.8" ] && rm -rf "$PREFIX/src/zsh-5.8"
+        url="https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download"
+        wget $url -P /tmp
+        tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
+        cd "$PREFIX/src/zsh-5.8"
+        ./configure --prefix="$PREFIX"
+        make
+        make install
+    fi
+
+    # zprezto
+    if [ ! -d "$HOME/.zprezto" ]; then
+        git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"
+    fi
 
     # 他のツールはinstallとdeployを分離しているが、
     # zshは起動後に$HOME/.z**が無いと色々生成されるのでここでdeployしてしまう
-    deploy_ln "$DOTPATH/sh/.zshenv" "$HOME/.zshenv"
+    deploy_ln "$DOTPATH/sh/.zlogin"    "$HOME/.zlogin"
+    deploy_ln "$DOTPATH/sh/.zlogout"   "$HOME/.zlogout"
+    deploy_ln "$DOTPATH/sh/.zpreztorc" "$HOME/.zpreztorc"
+    deploy_ln "$DOTPATH/sh/.zprofile"  "$HOME/.zprofile"
+    deploy_ln "$DOTPATH/sh/.zshenv"    "$HOME/.zshenv"
+    deploy_ln "$DOTPATH/sh/.zshrc"     "$HOME/.zshrc"
 
     cd _pwd
 fi
