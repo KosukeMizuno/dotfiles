@@ -1,11 +1,15 @@
-#!/bin/bash
 #### rc.alias.sh ####
 # define aliases
 
 #### COMMAND LINE HELPER
 # reload rc
-alias rc='source $HOME/.bashrc'
-alias rc_profile='source $HOME/.bash_profile'
+if [ -n "$BASH" ]; then
+    alias rc='echo "sourcing ~/.bashrc ..."; source $HOME/.bashrc'
+    alias rc_profile='echo "sourcing ~/.bash_profile ..."; source $HOME/.bash_profile'
+elif [ -n "$ZSH_NAME" ]; then
+    alias rc='echo "sourcing ~/.zshrc ..."; source $HOME/.zshrc'
+    alias rc_profile='echo "sourcing ~/.zprofile ..."; source $HOME/.zprofile'
+fi
 
 # PATHを一覧で出す
 function echo_path(){
@@ -33,10 +37,15 @@ function wincmd()
 
 #### FILER ####
 if [ -n "$(command -v exa)" ]; then
-    alias ls='exa -lhb --git --icons'
-    alias ll='exa -hb --git --icons'
-    alias la='exa -alhbHSg --git --icons'
-    alias lla='exa -alhbHSg --git --icons'
+    if [ -n "$USE_ICON_IN_TERM" ] && $USE_ICON_IN_TERM; then
+        ICON_FLG=" --icons"
+    else
+        ICON_FLG=""
+    fi
+    alias ls="exa -lhb --git${ICON_FLG}"
+    alias ll="exa -hb --git${ICON_FLG}"
+    alias la="exa -alhbHSg --git${ICON_FLG}"
+    alias lla="exa -alhbHSg --git${ICON_FLG}"
 else
     alias ls='ls'
     alias ll='ls -l'
@@ -65,6 +74,17 @@ alias x=open_filer
 alias ta="tmux a"
 alias tl="tmux ls"
 
+# tmux-resurrectの再起動時にもたもたしていると新しいセッションができてしまうことがあるので、
+# 最新を破棄＆古いセッションファイルを最新にして読み込めるようにする
+function tmux-select-resurrect-session {
+    TMUXRESURRECTDIR="$HOME/.tmux/resurrect"
+    unlink "$TMUXRESURRECTDIR/last"
+    PREVCMD="cat $TMUXRESURRECTDIR/{}"
+    SESSIONFILE=$(\ls $TMUXRESURRECTDIR | fzf --preview=$PREVCMD --tac)
+    echo $SESSIONFILE
+    ln -s "$TMUXRESURRECTDIR/$SESSIONFILE" "$TMUXRESURRECTDIR/last"
+}
+
 #### Git ####
 # git (abbreveations)
 alias gc="git commit"
@@ -90,6 +110,25 @@ fi
 
 # github cli
 alias gx="hub browse"
+
+#### FZF ####
+export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
+export FZF_DEFAULT_OPTS='--ansi --height 40% --reverse --border --inline-info'
+
+# kill with fzf
+fkill() {
+    target=$(ps -ef | sed 1d | fzf)
+    if [[ -n "$target" ]]; then
+        echo "target --> $target"
+        echo "$target" | awk '{print $2}' | xargs kill -${1:-9}
+    fi
+}
+
+# cd with fzf
+if [ -n "$(command -v exa)" ]; then
+    alias fcd="exa --only-dirs | fzf --ansi --cycle --height 50% --preview='ls -1 --color=always {}' | cd"
+    alias cdf=fcd
+fi
 
 #### PYTHON ####
 alias i=ipython
