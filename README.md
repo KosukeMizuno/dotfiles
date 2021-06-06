@@ -35,12 +35,14 @@ $DOTPATH/.config/git/ignore  -- global ignore
 ### Bash & Zsh
 ```
 ~/.bashrc             ==> $DOTPATH/sh/bashrc
-~/.bashrc_local        -- 手動で配置する。各環境用の設定を書く（あればbashrcの中で読まれる, git管理対象外）
+~/.shrc_local        -- 手動で配置する。各環境用の設定を書く（あればbashrcの中で読まれる, git管理対象外）
 ~/.bash_profile       ==> $DOTPATH/sh/bash_profile 
-~/.bash_profile_local  -- 手動で配置する。各環境用の設定を書く（あればbash_profileの中で読まれる, git管理対象外）
+~/.sh_profile_local  -- 手動で配置する。各環境用の設定を書く（あればbash_profileの中で読まれる, git管理対象外）
 
 ~/.sh_secure         -- 手動で書く。git管理したくないもの（あればbash_profileの中で読まれる, git管理対象外）
 ```
+
+`$ZSH_DO_PROFILING`に何か設定された状態でzshを起動すると、`.zshenv`の中で`zsh/zprof`が有効化されてプロファイリングが走る
 
 ### Python
 

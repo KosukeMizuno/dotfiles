@@ -9,7 +9,7 @@ source "$DOTPATH/sh/path.sh"
 
 # load local bash_profile if exists
 if [ -f "$HOME/.bash_profile_local" ]; then
-    source "$HOME/.bash_profile_local"
+    source "$HOME/.sh_profile_local"
 fi
 
 # load secure things if exists

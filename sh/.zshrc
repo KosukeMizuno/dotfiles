@@ -23,3 +23,27 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+
+#### ZSHRC ####
+
+# common
+source "$DOTPATH/sh/common.sh"
+
+# alias
+source "$DOTPATH/sh/alias.sh"
+
+# load local bashrc
+if [ -f "$HOME/.shrc_local" ]; then
+	source "$HOME/.shrc_local"
+fi
+
+#### PROFILING ####
+# zshenv の最初にあるzprofも併せて有効化する必要がある
+if [ -n "${ZSH_DO_PROFILING:-}" ]; then
+    if (which zprof > /dev/null 2>&1) ; then
+        zprof
+    fi
+fi
+
+# vim: set ft=sh :
