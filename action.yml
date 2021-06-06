@@ -1,0 +1,6 @@
+# action.yml
+name: 'Centos'
+description: 'TBW'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
