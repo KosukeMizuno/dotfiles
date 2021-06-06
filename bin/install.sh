@@ -34,7 +34,7 @@ if ${DOTINSTALL_ZSH:-true}; then
         [ -d "$PREFIX/src/zsh-5.8" ] && rm -rf "$PREFIX/src/zsh-5.8"
         url="https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download"
         wget $url -P /tmp
-        tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
+        tar xvf "/tmp/$(basename $url)" -C "$PREFIX/src"
         cd "$PREFIX/src/zsh-5.8"
         ./configure --prefix="$PREFIX"
         make
@@ -70,9 +70,7 @@ if ${DOTINSTALL_TMUX:-true} && [ -z "$(command -v tmux)" ]; then
         wget $url -P /tmp
         tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
         cd "$PREFIX/src/libevent-2.1.12-stable"
-        [ -d build ] && rm build/ -rf
-        mkdir build && cd build
-        cmake -DCMAKE_INSTALL_PREFIX="$PREFIX" ..
+        ./configure --prefix=$PREFIX
         make
         make install
     fi
@@ -243,14 +241,16 @@ if ${DOTINSTALL_PYTHON:-true}; then
     #   Note: Following modules built successfully but were removed because they could not be imported: _ctypes
     #           と表示されるが、import ctypesとかできる。謎。
     if [ -z "$(command -v python3.8)" ]; then
-        echo "python3.8 was not found. Installing..."
-        url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
-        wget $url -P /tmp
-        dname=$(mktemp -d)
-        tar zxvf "/tmp/$(basename $url)" -C "$dname"
-        progname=$(ls "$dname")
-        mkdir -p "$PREFIX/src/$progname"
-        cp -lR "$dname/$progname/*" "$PREFIX/src/$progname"
+        if [ ! -d "$PREFIX/src/cpython-3.8.10" ]; then
+            echo "python3.8 was not found. Installing..."
+            url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
+            wget $url -P /tmp
+            dname=$(mktemp -d)
+            tar zxvf "/tmp/$(basename $url)" -C "$dname"
+            progname=$(ls "$dname")
+            mkdir -p "$PREFIX/src/$progname"
+            cp -lR "$dname/$progname" "$PREFIX/src"
+        fi
         cd "$PREFIX/src/$progname"
         ./configure --prefix="$PREFIX" --enable-shared --enable-optimizations --with-lto
         make -j8
