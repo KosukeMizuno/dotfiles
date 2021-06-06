@@ -21,7 +21,20 @@ mkdir -p "$PREFIX/share/fonts"
 #### 順番はあとで適当に変えたい
 
 ## zsh
-# TODO
+if ${DOTINSTALL_ZSH:-true} && [ -z "$(command -v zsh)" ]; then
+    _pwd=$PWD
+
+    [ -d "$PREFIX/src/zsh-5.8" ] && rm -rf "$PREFIX/src/zsh-5.8"
+    url="https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download"
+    wget $url -P /tmp
+    tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
+    cd "$PREFIX/src/zsh-5.8"
+    ./configure --prefix="$PREFIX"
+    make
+    make install
+
+    cd _pwd
+fi
 
 ## tmux
 if ${DOTINSTALL_TMUX:-true} && [ -z "$(command -v tmux)" ]; then
