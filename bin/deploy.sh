@@ -41,6 +41,9 @@ deploy_ln "$DOTPATH/nvim" "$XDG_CONFIG_HOME/nvim"
 
 ## python
 deploy_ln "$DOTPATH/pypoetry" "$XDG_CONFIG_HOME/pypoetry"
+deploy_ln "$DOTPATH/pycodestyle" "$XDG_CONFIG_HOME/pycodestyle"
+mkdir -p "$HOME/.ipython/profile_default"
+deploy_ln "$DOTPATH/ipython_startup" "$HOME/.ipython/profile_default/starup"
 
 # jupyter
 

@@ -1,0 +1,771 @@
+#### セッション管理 ####  {{{1
+
+[[plugins]]
+repo = 'mhinz/vim-startify'
+hook_add = '''
+let g:startify_bookmarks = ['~/dotfiles/nvim/init.vim']
+let g:startify_session_autoload = 1
+let g:startify_session_persistence = 1
+let g:startify_lists = [
+      \ { 'type': 'sessions',  'header': ['   Sessions']       },
+      \ { 'type': 'dir',       'header': ['   MRU '. getcwd()] },
+      \ { 'type': 'files',     'header': ['   MRU']            },
+      \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
+      \ { 'type': 'commands',  'header': ['   Commands']       },
+      \ ]
+'''
+
+
+[[plugins]]
+repo = 'zhimsel/vim-stay'
+
+#### 移動系 ####  {{{1
+
+[[plugins]]
+repo = 'yuttie/comfortable-motion.vim'
+lazy = 1
+on_func = 'comfortable_motion#flick'
+hook_source = '''
+let g:comfortable_motion_no_default_key_mappings = 1
+'''
+
+[[plugins]]
+repo = 'rhysd/clever-f.vim'
+lazy = 1
+on_map = {n=['f', 'F', 't', 'T'], x=['f', 'F', 't', 'T'], o=['f', 'F', 't', 'T']}
+on_func = 'clever_f#reset'
+hook_source = '''
+let g:clever_f_smart_case = 1
+'''
+
+[[plugins]]
+repo = 'easymotion/vim-easymotion'
+lazy = 1
+on_map = '<Plug>'
+hook_source = '''
+let g:EasyMotion_do_mapping = 0  " Disable default mappings
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_use_migemo = 1
+
+" s連打で戻れるように除く＆押しにくいもの除去＆group prefixは右手に集中させる
+let g:EasyMotion_keys = 'adghlweruiozxcvnmjk'
+
+" 三文字以上の英単語, 空行以外の行末, CamelCase, _, #
+"" CamelCaseと_#の後は2文字以上あれば候補にする
+let g:EasyMotion_re_wordheads = '\v' .
+    \       '(<\a\a\a)' . '|' .
+    \       '(.$)' . '|' .
+    \       '(\l)\zs(\u\a)' . '|' .
+    \       '(_\zs\a\a)' . '|' .
+    \       '(#\zs\a\a)'
+let g:EasyMotion_re_wordends = '\v' .
+    \       '(\a\a\zs\a>)' . '|' .
+    \       '(^.)' . '|' .
+    \       '(\a\a\a\zs\l\u\a)' . '|' .
+    \       '(\a\a\zs\a_\u\a)' . '|' .
+    \       '(\a\a\zs\a#\u\a)'
+nnoremap <Plug>(easymotion-jumptoheads) <cmd>let g:EasyMotion_re_anywhere = g:EasyMotion_re_wordheads<CR><cmd>call EasyMotion#JumpToAnywhere(0,2)<CR>
+nnoremap <Plug>(easymotion-jumptoends) <cmd>let g:EasyMotion_re_anywhere = g:EasyMotion_re_wordends<CR><cmd>call EasyMotion#JumpToAnywhere(0,2)<CR>
+
+" 一時的にLSPを停止＆再開
+augroup ToggleEasyMotionGroup
+  autocmd!
+  autocmd User EasyMotionPromptBegin silent! call lsp#disable()
+  autocmd User EasyMotionPromptEnd   silent! call lsp#enable()
+augroup END
+'''
+
+[[plugins]]
+repo = 'haya14busa/vim-edgemotion'
+lazy = 1
+on_map = '<Plug>(edgemotion-'
+
+[[plugins]]
+repo = 'KosukeMizuno/vim-cursorholdmark'
+hook_add = '''
+let g:cursorholdmark_mark = 'l'
+let g:cursorholdmark_time = 4000
+'''
+
+[[plugins]]
+repo = 'andymass/vim-matchup'
+lazy = 0
+hook_add = '''
+let g:matchup_matchparen_enabled = 0
+'''
+
+
+#### 検索/ファジーファインダ/構造 ####  {{{1
+
+[[plugins]]  # ctrlp  {{{2
+repo = 'ctrlpvim/ctrlp.vim'
+depends = 'ctrlp-py-matcher'
+lazy = 1
+on_cmd = ['CtrlP', 'CtrlPBuffer', 'CtrlPLine',
+          'CtrlPMRUFiles', 'CtrlPQuickfix',
+          'CtrlPMenu', 'CtrlPCmdline', 'CtrlPCmdPalette']
+hook_source = '''
+" yankroundと共存させるために、後でkeymap.vim内で手動マップを行う
+" 読み込み時にはマップしないよう設定する
+let g:ctrlp_map = ''
+let g:ctrlp_working_path_mode = 'ra'
+
+" gitignoreを遵守
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+" 行き来できるモード
+let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+    \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir',
+    \ 'cmdline', 'menu', 'help']
+
+" matcher
+" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+'''
+
+[[plugins]]
+repo = 'FelikZ/ctrlp-py-matcher'
+
+[[plugins]]
+repo = 'sgur/ctrlp-extensions.vim'
+lazy = 1
+# ctrlp-extensions.vim は after/plugin/ctrlp.vim で定義されるので、ctrlp本体より先にスクリプトを配置させる
+on_source = ['ctrlp.vim']
+hook_source = '''
+let g:ctrlp_yankring_disable = 1
+'''
+
+[[plugins]]
+repo = 'fisadev/vim-ctrlp-cmdpalette'
+lazy = 1
+on_source = 'ctrlp.vim'
+
+[[plugins]]
+repo = 'zeero/vim-ctrlp-help'
+depends = ['ctrlp.vim', 'vimdoc-ja']
+lazy = 1
+on_cmd = 'CtrlPHelp'
+
+[[plugins]]
+repo = 'mattn/ctrlp-lsp'
+depends = 'ctrlp.vim'
+on_source = 'vim-lsp'
+lazy = 1
+on_cmd = ['CtrlPLspDocumentSymbol', 'CtrlPLspWorkspaceSymbol']
+
+[[plugins]]
+# repo = 'mattn/ctrlp-ghq'
+repo = 'KosukeMizuno/ctrlp-ghq'
+lazy = 1
+on_source = ['ctrlp.vim']
+hook_source = '''
+let g:ctrlp_ghq_cache_enabled = 0
+'''
+
+# }}}
+
+[[plugins]]  # Denite.nvim  {{{2
+# TODO: 使いこなせてないなあ。。。
+repo = 'Shougo/denite.nvim'  # {{{3
+lazy = 1
+on_cmd = ['Denite', 'DeniteCursorWord', 'DeniteBufferDir', 'DeniteProjectDir']
+on_func  = ['denite#']
+hook_post_update = '''
+UpdateRemotePlugins
+'''
+hook_source = '''
+'''  # }}}
+[plugins.ftplugin]
+denite = '''  " {{{3
+  nnoremap <silent><buffer><expr> <Space><Space> denite#do_map('toggle_select')
+
+  nnoremap <silent><buffer><expr> qw denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <Space>w denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <Esc><Esc> denite#do_map('quit')
+
+  nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+  " nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
+  " nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
+  nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+'''  # }}}
+denite-filter = '''  " {{{3
+  " inoremap <silent><buffer> <ESC> <ESC>
+  " imap <silent><buffer> jj <Plug>(denite_filter_quit)
+
+  nnoremap <silent><buffer><expr> <Esc><Esc> denite#do_map('quit')
+  nnoremap <silent><buffer><expr> qw denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <Space>w denite#do_map('quit')
+  nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
+  inoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
+'''  # }}}
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+lazy = 1
+on_source = 'denite.nvim'
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+lazy = 1
+on_source = 'denite.nvim'
+
+# }}}
+
+[[plugins]]
+repo = 'jremmen/vim-ripgrep'
+lazy = 1
+on_cmd = ['Rg', 'RgRoot']
+
+[[plugins]]
+repo = 'liuchengxu/vista.vim'  # {{{
+# 起動時にairlineが読み込もうとするのでlazyloadingさせられない
+# lazy = 1
+# on_cmd = ['Vista', 'Vista!', 'Vista!!']
+hook_add = '''
+let g:vista#renderer#enable_icon = g:rc_enable_icon
+'''
+[plugins.ftplugin]
+# TODO: 以下の設定は有効になっていない
+vista_kind = '''
+  nnoremap <buffer> qw :<C-u>bd<CR>
+  nnoremap <buffer> <Plug>(toggle_vista) <cmd>Vista!<CR>
+'''  # }}}
+
+[[plugins]]  # Fern.vim  # {{{
+repo = 'lambdalisue/fern.vim'
+# なんかlazyloadさせようとするとstackoverflowっぽい挙動になりまくるのでlazyやめとく
+#lazy = 1
+#on_cmd = ['Fern', 'FernDo']
+#hook_post_source = '''
+#call dein#source('fern-git-status.vim')
+#call dein#source('fern-mapping-git.vim')
+#call dein#source('fern-mapping-project-top.vim')
+#'''
+
+[[plugins]]
+repo = 'lambdalisue/nerdfont.vim'
+if = 'g:rc_enable_icon'
+
+[[plugins]]
+repo = 'lambdalisue/glyph-palette.vim'
+if = 'g:rc_enable_icon'
+
+[[plugins]]
+repo = 'lambdalisue/fern-renderer-nerdfont.vim'
+if = 'g:rc_enable_icon'
+
+[[plugins]]
+repo = 'lambdalisue/fern-git-status.vim'
+#lazy = 1
+#augroup = 'fern-git-status-internal'
+
+[[plugins]]
+repo = 'lambdalisue/fern-mapping-git.vim'
+#lazy = 1
+
+[[plugins]]
+repo = 'lambdalisue/fern-mapping-project-top.vim'
+#lazy = 1
+
+[plugins.ftplugin]
+fern = '''
+setlocal nonumber norelativenumber
+setlocal foldcolumn=0
+
+nmap <buffer> <Leader>H <Plug>(fern-action-project-top:reveal)
+nmap <buffer> o <Plug>(fern-action-open:edit)
+nmap <buffer> qw <cmd>quit<CR>
+'''
+
+# }}}
+
+# }}}
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'  # {{{
+lazy = 1
+on_cmd = 'OpenBrowserSearch'
+hook_source = '''
+let g:openbrowser_search_engines = {
+  \    'alc': 'https://eow.alc.co.jp/search?q={query}',
+  \    'weblio': 'https://ejje.weblio.jp/content/{query}',
+  \    'google': 'https://google.com/search?q={query}',
+  \    'python': 'https://docs.python.org/dev/search.html?q={query}&check_keywords=yes&area=default',
+  \    'wikipedia': 'https://en.wikipedia.org/wiki/{query}',
+  \    'wikipedia-ja': 'https://ja.wikipedia.org/wiki/{query}',
+  \}
+'''  #}}}
+
+
+#### Yank/Paste ####  {{{1
+[[plugins]]
+repo = 'machakann/vim-highlightedyank'
+lazy = 1
+on_event = 'TextYankPost'
+
+[[plugins]]
+repo = 'LeafCage/yankround.vim'
+depends = 'ctrlp.vim'
+lazy = 1
+on_map = {n='<Plug>', x='<Plug>'}
+on_func = 'yankround#is_active'
+hook_source = '''
+let g:yankround_use_region_hl = 1  " highlight put text
+'''
+
+[[plugins]]
+repo = 'junegunn/vim-peekaboo'
+lazy = 1
+on_map = {n=['"', '@', '<Plug>(peekaboo)'],
+          x=['"', '<Plug>(peekaboo)'],
+          i=['<C-r>', '<Plug>(peekaboo)']}
+augroup = 'peekaboo_init'
+
+
+#### 編集補助 ####  {{{1
+
+# なんか動いてないので止めとく
+# [[plugins]]
+# repo = 'monaqa/dial.nvim'  # {{{
+# lazy = 1
+# on_map = {n='<Plug>', x='<Plug>'}
+# on_lua = 'dial'
+# hook_post_source = '''
+# lua << EOF
+# local dial = require("dial")
+# 
+# dial.config.searchlist.normal = {
+#     "number#decimal#int",
+#     "number#hex",
+#     "color#hex",
+#     "date#[%Y/%m/%d]",
+#     "date#[%Y-%m-%d]",
+#     "date#[%H:%M:%S]",
+#     "date#[%H:%M]",
+#     "markup#markdown#header"
+# }
+# dial.config.searchlist.visual = {
+#     "number#decimal#int",
+#     "number#hex",
+#     "color#hex",
+#     "date#[%Y/%m/%d]",
+#     "date#[%Y-%m-%d]",
+#     "date#[%H:%M:%S]",
+#     "date#[%H:%M]",
+#     "char#alph#small#word",
+#     "char#alph#capital#word",
+#     "markup#markdown#header"
+# }
+# EOF
+# '''  # }}}
+
+[[plugins]]
+repo = 'AndrewRadev/switch.vim'  # {{{
+lazy = 1
+on_cmd = ['Switch', 'SwitchReverse', 'SwitchExtend']
+hook_source = '''
+let g:switch_mapping = ''
+'''  # }}}
+
+[[plugins]]
+repo = 'osyo-manga/vim-jplus'
+lazy = 1
+on_map = {n='<Plug>(jplus-', x='<Plug>(jplus-'}
+
+[[plugins]]
+repo = 'reedes/vim-litecorrect'
+lazy = 1
+on_func = 'litecorrect#init'
+
+[[plugins]]
+repo = 'simnalamburt/vim-mundo'
+lazy = 1
+on_cmd = ['MundoToggle']
+
+[[plugins]]
+repo = 'tyru/caw.vim'
+lazy = 1
+on_map = {n='gc', x='gc'}
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+lazy = 1
+on_map = {n='<Plug>(Easy', x='<Plug>(Easy'}
+on_cmd = 'EasyAlign'
+
+#### etc ####  {{{1
+
+[[plugins]]
+repo = 'antoinemadec/FixCursorHold.nvim'
+
+[[plugins]]
+repo = 'kana/vim-repeat'
+hook_add = '''
+let g:repeat_no_default_key_mappings = 1
+for i in ['.', 'u', '<C-r>', 'g-', 'g+']
+  " undo関連でfolding開いてほしい
+  " && U は要らないので除く
+  silent! execute 'nmap' opt i  '<Plug>(repeat-'.i.')zv'
+endfor
+'''
+
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+lazy = 1
+on_cmd = ['Deol', 'DeolCd', 'DeolEdit']
+hook_source = '''
+let g:deol#custom_map = {
+      \ 'edit': 'e',
+      \ 'start_insert': 'i',
+      \ 'start_insert_first': 'I',
+      \ 'start_append': 'a',
+      \ 'start_append_last': 'A',
+      \ 'execute_line': '<CR>',
+      \ 'previous_prompt': '<C-p>',
+      \ 'next_prompt': '<C-n>',
+      \ 'paste_prompt': '<C-y>',
+      \ 'bg': '<C-z>',
+      \ 'quit': 'qw',
+      \ }
+'''
+
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
+lazy = 1
+on_cmd = ['Linediff']
+
+[[plugins]]
+repo = 'liuchengxu/vim-which-key'
+lazy = 1
+on_cmd = ['WhichKey', 'WhichKeyVisual']
+
+[[plugins]]
+repo = 'lambdalisue/suda.vim'
+lazy = 1
+on_cmd = ['SudaRead', 'SudaWrite']
+
+[[plugins]]
+repo = 'tyru/capture.vim'
+lazy = 1
+on_cmd = ['Capture', 'Capture!']
+
+[[plugins]]
+repo = 'tweekmonster/helpful.vim'
+lazy = 1
+on_cmd = 'HelpfulVersion'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'  # {{{
+lazy = 1
+on_map = {n='<Plug>', x='<Plug>'}
+on_cmd = 'QuickRun'
+hook_source = '''
+let g:quickrun_no_default_key_mappings = 1
+
+let g:quickrun_config = {
+    \ 'python.pytest': {
+    \     'command': 'pytest',
+    \     'cmdopt': '-s -v',
+    \     'outputter/buffer/filetype': 'pytest_result'
+    \ }
+  \ }
+'''
+
+[plugins.ftplugin]
+quickrun = '''
+setlocal wrap
+nnoremap <buffer> qw <cmd>bd<CR>
+'''  # }}}
+
+[[plugins]]
+repo = 'thinca/vim-qfreplace'
+lazy = 1
+on_ft = 'qf'
+on_cmd = 'Qfreplace'
+
+[[plugins]]
+repo = 'wellle/visual-split.vim'  # {{{
+lazy = 1
+on_map = {n=['<C-w>gr', '<C-w>gss', '<C-w>gsa', '<C-w>gsb'],
+          x=['<C-w>gr', '<C-w>gss', '<C-w>gsa', '<C-w>gsb']}
+on_cmd = ['VSResize', 'VSSplit', 'VSSplitAbove', 'VSSplitBelow']
+# }}}
+
+[[plugins]]
+repo = 'simeji/winresizer'
+lazy = 1
+on_cmd = 'WinResizerStartResize'
+
+[[plugins]]
+repo = 'kana/vim-submode'  # {{{
+lazy = 1
+on_map = {n='x'}
+hook_source = '''
+let g:submode_keep_leaving_key = 1
+'''
+hook_post_source = '''
+function! s:joined_x(reverse)
+  undojoin
+  if a:reverse
+    normal! "zX
+  else
+    normal! "zx
+  end
+endfunction
+function! s:joined_p()
+  undojoin
+  normal! "zp
+endfunction
+nnoremap <silent> <Plug>(joined-x) <cmd>call <SID>joined_x(0)<CR>
+nnoremap <silent> <Plug>(joined-X) <cmd>call <SID>joined_x(1)<CR>
+nnoremap <silent> <Plug>(joined-p) <cmd>call <SID>joined_p()<CR>
+call submode#enter_with('joined-x', 'n', '',   'x', '"zx')
+call submode#enter_with('joined-x', 'n', '',   'X', '"zX')
+call submode#map(       'joined-x', 'n', 'r',  'x', '<Plug>(joined-x)')
+call submode#map(       'joined-x', 'n', 'r',  'X', '<Plug>(joined-X)')
+call submode#map(       'joined-x', 'n', 'rx', 'p', '<Plug>(joined-p)')
+'''
+# }}}
+
+
+#### エディタの見た目に関するもの ####  {{{1
+[[plugins]]
+repo = 'nvim-treesitter/nvim-treesitter'  #{{{
+if = 'has("nvim-0.5")'
+lazy = 1
+on_event = 'BufRead'
+hook_source = '''
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    disable = {
+      'lua',
+      'toml',
+      'bash',
+    }
+  }
+}
+EOF
+'''
+hook_post_update = '''
+  TSUpdate
+'''  # }}}
+
+[[plugins]]
+# rtp内に移植して改造
+repo = 'phanviet/vim-monokai-pro'
+
+# [[plugins]]
+# repo = 'flazz/vim-colorschemes'
+
+[[plugins]]
+repo = 'marko-cerovac/material.nvim'
+if = 'has("nvim-0.5")'
+hook_add = '''
+let g:material_style = 'deep ocean'
+let g:material_italic_comments = 0
+let g:material_italic_keywords = 0
+let g:material_italic_functions = 0
+let g:material_contrast = 1
+let g:material_borders = 1
+'''
+
+[[plugins]]
+repo = 'ryanoasis/vim-devicons'
+if = 'g:rc_enable_icon'
+
+[[plugins]]
+repo = 'lambdalisue/readablefold.vim'
+
+[[plugins]]
+repo = 'Konfekt/FastFold'
+hook_add = '''
+  let g:fastfold_skip_filetypes = ['vim', 'tex']
+  let g:fastfold_fold_movement_commands = []
+'''
+
+# [[plugins]]
+# 絵が乱れがちなのでしばらく切ってみる
+# repo = 'Xuyuanp/scrollbar.nvim'
+# if = 'has("nvim-0.5")'
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+# repo = '~/ghq/github.com/KosukeMizuno/context_filetype.vim'
+lazy = 1
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'  # {{{
+lazy = 1
+depends = ['context_filetype.vim']
+on_ft = ['help', 'vim', 'markdown', 'toml', 'lua']
+on_cmd = ['PreciousSwitch']
+hook_add = '''
+" textobjがiBなのは inner-Block のつもり
+let g:textobj_precious_no_default_key_mappings = v:false
+omap iB <Plug>(textobj-precious-i)
+xmap iB <Plug>(textobj-precious-i)
+'''
+hook_source = '''
+" helpではsyntaxのみ設定する
+let g:precious_enable_switchers = {
+    \  "help": { "setfiletype": 0 }
+    \}
+function! s:switch_context_syntax() abort
+  if has_key(g:precious_enable_switchers, &ft)
+        \ && !g:precious_enable_switchers[&ft]['setfiletype']
+    let &l:syntax = precious#context_filetype()
+  endif
+endfunction
+augroup MyPreciousGroup
+  autocmd!
+  autocmd User PreciousFileType call s:switch_context_syntax()
+augroup END
+'''
+# }}}
+
+[[plugins]]
+repo = 'itchyny/vim-highlighturl'
+hook_add = '''
+" highlightedyankより優先度を下げる
+let g:highlighturl_url_priority = 0
+let g:highlighturl_url_cursor_priority = 0
+'''
+
+[[plugins]]
+repo = 'bronson/vim-trailing-whitespace'
+hook_add = '''
+let g:extra_whitespace_ignored_filetypes = ['markdown', 'startify', 'tex', 'Mundo', 'help', 'quickrun']
+'''
+
+[[plugins]]
+repo = 'junegunn/goyo.vim'  # {{{
+lazy = 1
+on_cmd = ['Goyo', 'Goyo!']
+hook_source = '''
+let g:goyo_width=100
+let g:goyo_height=75
+
+function! s:goyo_enter()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status off
+  endif
+  set noshowmode
+  set noshowcmd
+  set cmdheight=1
+  set scrolloff=999
+endfunction
+
+function! s:goyo_leave()
+  if executable('tmux') && strlen($TMUX)
+    silent !tmux set status on
+  endif
+  set showmode
+  set showcmd
+  set cmdheight=2
+  set scrolloff=5
+endfunction
+
+augroup MyGoyoEvents
+  autocmd!
+  autocmd User GoyoEnter nested call <SID>goyo_enter()
+  autocmd User GoyoLeave nested call <SID>goyo_leave()
+augroup END
+'''
+# }}}
+
+## STATUS LINE  {{{2
+# TODO: なんか軽いやつに乗り換えたい
+# lightline とか lua系とか
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+hook_add = '''
+if empty($SSH_CLIENT)
+  let g:airline_theme = 'molokai'
+else
+  let g:airline_theme = 'base16'
+endif
+let g:airline_powerline_fonts = g:rc_enable_icon
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+
+" nviim>0.5ならbarbar.nvimが担当する
+let g:airline#extensions#tabline#enabled = !has('nvim-0.5')
+let g:airline#extensions#tabline#buffer_idx_mode = 0
+let g:airline#extensions#tabline#buffer_nr_show = 0
+'''
+
+[[plugins]]
+repo = 'romgrk/barbar.nvim'
+if = 'has("nvim-0.5")'
+hook_add = '''
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.icons = g:rc_enable_icon
+'''
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+# TODO: この設定だと読みこまれない。他のicon系プラグインも同様
+if = 'g:rc_enable_icon'
+
+#### GIT/GitHub ####  {{{1
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+hook_add = '''
+let g:gitgutter_map_keys = 0  " disable default keymaps
+'''
+
+[[plugins]]
+repo = 'lambdalisue/gina.vim'
+hook_add = '''
+" 終了後にgitgutter更新 (deinのftpluginでは*指定が使えないのでここに書く)
+augroup myginagroup
+  autocmd!
+  autocmd Filetype gina-* autocmd BufLeave * :GitGutterAll
+augroup END
+'''
+
+[[plugins]]
+repo = 'mattn/vim-gist'
+lazy = 1
+on_cmd = ['Gist']
+depends = ['webapi-vim']
+
+[[plugins]]
+repo = 'tyru/open-browser-github.vim'
+lazy = 1
+on_cmd = 'OpenGithubProject'
+depends = 'open-browser.vim'
+
+[[plugins]]
+repo = 'APZelos/blamer.nvim'
+lazy = 1
+on_cmd = 'BlamerToggle'
+
+[[plugins]]
+repo = 'rhysd/git-messenger.vim'
+lazy = 1
+on_cmd = ['GitMessenger', 'GitMessengerClose']
+
+
+
+#### Library ####  {{{1
+[[plugins]]
+repo = 'godlygeek/tabular'
+lazy = 1
+
+[[plugins]]
+repo = 'mattn/webapi-vim'
+
+[[plugins]]
+repo = 'thinca/vim-ft-help_fold'
+

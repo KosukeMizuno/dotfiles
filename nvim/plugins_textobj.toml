@@ -1,0 +1,165 @@
+#### TEXTOBJ ####
+[[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+## バッファ全体
+# aE, iE （デフォルト(ae,ie)がvimtexと干渉するので変更）
+repo = 'kana/vim-textobj-entire'
+lazy = 1
+on_map = {x='<Plug>', o='<Plug>'}
+hook_add = '''
+let g:textobj_entire_no_default_key_mappings=1
+omap aE <Plug>(textobj-entire-a)
+omap iE <Plug>(textobj-entire-i)
+xmap aE <Plug>(textobj-entire-a)
+xmap iE <Plug>(textobj-entire-i)
+'''
+
+[[plugins]]
+## カーソル行
+# al, il
+repo = 'kana/vim-textobj-line'
+lazy = 1
+on_map = {x=['al', 'il'], o=['al', 'il']}
+
+[[plugins]]
+## カーソル位置と同じインデント
+# ai, ii, aI, iI
+repo = 'kana/vim-textobj-indent'
+lazy = 1
+on_map = {x=['ai', 'ii', 'aI', 'iI'],
+          o=['ai', 'ii', 'aI', 'iI']}
+
+[[plugins]]
+## 折りたたみ
+# az, iz
+repo = 'kana/vim-textobj-fold'
+lazy = 1
+on_map = {x=['az', 'iz'], o=['az', 'iz']}
+
+[[plugins]]
+## 矩形範囲
+# Aw AW As Ap Ab AB At A< A> A[ A] A( A) A{ A} A" A' A`
+# Iw IW Is Ip Ib IB It I< I> I[ I] I( I) I{ I} I" I' I`
+repo = 'osyo-manga/vim-textobj-blockwise'
+lazy = 1
+on_map = {x=['Aw', 'AW', 'As', 'Ap', 'Ab', 'AB', 'At', 'A<', 'A>', 'A[', 'A]', 'A(', 'A)', 'A{', 'A}', 'A"', "A'", 'A`'],
+          o=['Aw', 'AW', 'As', 'Ap', 'Ab', 'AB', 'At', 'A<', 'A>', 'A[', 'A]', 'A(', 'A)', 'A{', 'A}', 'A"', "A'", 'A`']}
+
+[[plugins]]
+## 連続したスペース
+# aS, iS
+repo = 'saihoooooooo/vim-textobj-space'
+lazy = 1
+on_map = {x=['aS', 'iS'], o=['aS', 'iS']}
+
+[[plugins]]
+## function for C, java, vim
+# af, if
+repo = 'kana/vim-textobj-function'
+lazy = 1
+on_ft = ['c', 'java', 'vim']
+
+[[plugins]]
+## 関数の引数
+# a,  i,
+repo = 'sgur/vim-textobj-parameter'
+lazy = 1
+on_map = {x=['a,', 'i,'], o=['a,', 'i,']}
+
+[[plugins]]
+## デリミタ区切り
+# ad, id
+repo = 'machakann/vim-textobj-delimited'
+lazy = 1
+on_map = {x=['ad', 'id', 'aD', 'iD'],
+          o=['ad', 'id', 'aD', 'iD']}
+
+[[plugins]]
+## コメント
+# ac, ic, aC, iC
+repo = 'glts/vim-textobj-comment'
+lazy = 1
+on_map = {x=['ac', 'ic', 'aC', 'iC'],
+          o=['ac', 'ic', 'aC', 'iC']}
+
+[[plugins]]
+## word in word: snake_case, camelCase, PascalCase, kebab-case
+# am, im
+repo = 'rhysd/vim-textobj-wiw'
+lazy = 1
+on_map = {x=['am', 'im'], o=['am', 'im']}
+
+[[plugins]]
+## toml file for dein.vim
+# iP, aP, ir, ah
+repo = 'KosukeMizuno/vim-textobj-dein'
+# repo = 'KosukeMizuno/vim-textobj-dein'
+lazy = 1
+on_ft = 'toml'
+
+[[plugins]]
+## number  {{{
+# an: dicimal number in various notation, e.g., 11, 3.14, -5, +6.02e23
+# in: dicimal digits in integer
+repo = 'tkhren/vim-textobj-numeral'
+lazy = 1
+on_map = {x='<Plug>', o='<Plug>'}
+hook_add = '''
+let g:textobj_numeral_no_default_key_mappings = 1
+xmap an <Plug>(textobj-numeral-a)
+omap an <Plug>(textobj-numeral-a)
+xmap in <Plug>(textobj-numeral-i)
+omap in <Plug>(textobj-numeral-i)
+'''
+
+[[plugins]]
+repo = 'terryma/vim-expand-region'
+lazy = 1
+on_map = {n='<Plug>(expand_region_', v='<Plug>(expand_region_'}
+
+[[plugins]]
+repo = 'mattn/vim-textobj-url'
+lazy = 1
+on_map = {x=['au', 'iu'], o=['au', 'iu']}
+
+[[plugins]]
+repo = 'glts/vim-textobj-indblock'
+lazy = 1
+on_map = {x=['ao', 'io', 'aO', 'iO'],
+          o=['ao', 'io', 'aO', 'iO']}
+
+[[plugins]]
+repo = 'anyakichi/vim-textobj-xbrackets'
+lazy = 1
+on_map = {x=['iv', 'iysb', 'iys(', 'ixsB', 'ixs{', 'iys){', 'ixB', 'ix{', 'iy[', 'ixs){', 'ix<', 'iys[', 'i0', 'i9', 'ixb', 'ix)', 'ix(', 'iyB', 'iy{', 'iVb', 'iV)', 'iV(', 'ixs[', 'ixs<', 'ix[', 'iVB', 'iV}', 'iV{', 'ixsb', 'ixs(', 'iy<', 'iys<', 'iysB', 'iys{', 'iyb', 'iy('],
+          o=['iv', 'iysb', 'iys(', 'ixsB', 'ixs{', 'iys){', 'ixB', 'ix{', 'iy[', 'ixs){', 'ix<', 'iys[', 'i0', 'i9', 'ixb', 'ix)', 'ix(', 'iyB', 'iy{', 'iVb', 'iV)', 'iV(', 'ixs[', 'ixs<', 'ix[', 'iVB', 'iV}', 'iV{', 'ixsb', 'ixs(', 'iy<', 'iys<', 'iysB', 'iys{', 'iyb', 'iy(']}
+
+
+
+#### OPERATOR ####
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+## レジスタを汚さずに文字列置換
+# r にマップしている
+repo = 'kana/vim-operator-replace'
+lazy = 1
+on_map = {n='<Plug>', x='<Plug>'}
+
+[[plugins]]
+## 末尾のホワイトスペースを除去
+# g= にマップしている
+repo = 'rhysd/vim-operator-trailingspace-killer'
+lazy = 1
+on_map = {n='<Plug>', x='<Plug>'}
+
+[[plugins]]
+repo = 'machakann/vim-sandwich'
+lazy = 1
+on_map = {n=['sa', 'sd', 'sr', 'sdb', 'srb'],
+          x=['ib', 'ab', 'is', 'as'],
+          o=['ib', 'ab', 'is', 'as']}
+

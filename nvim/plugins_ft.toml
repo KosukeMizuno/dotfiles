@@ -1,0 +1,292 @@
+#### plugins for specific filetype ####
+
+# _: common setting  # {{{1
+# ftplugin '_' will be called after specific ftplugin configs.
+[ftplugin]
+_ = '''
+  " コメント継続しない
+  setlocal formatoptions-=r
+  setlocal formatoptions-=o
+
+  " 自動折返し無効化
+  if &l:textwidth != 70 && &filetype !=# 'help'
+      setlocal textwidth=0
+  endif
+'''
+
+# Git related filetypes  {{{1
+[[plugins]]  # gitignore  #{{{
+repo = 'gisphm/vim-gitignore'
+#}}}
+
+[plugins.ftplugin]
+gitcommit_gina-commit = '''  " {{{
+  SetIndent 2
+  setlocal spell
+
+  " TODO: なぜかコケることがあるので囲っとく
+  "       gina.vimとかfugitiveからcommitするのは大丈夫だけど、
+  "       shellからgit commit でエディタとしてvimを呼ぶとコケるっぽい
+  try
+    call litecorrect#init()
+  catch /E117/
+    echo "Initializing litecorrect was failed."
+  endtry
+
+  " インサートモードでZZを保存にマップ
+  inoremap <buffer> ZZ <ESC>:<C-u>wq<CR>
+
+  startinsert
+'''  # }}}
+
+gitconfig = '''  " {{{
+  SetIndent 4
+  setlocal noexpandtab
+'''  # }}}
+
+# json  # {{{1
+[[plugins]]
+repo = 'elzr/vim-json'
+
+# TOML  # {{{1
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[plugins.ftplugin]
+toml = '''
+  " repo = 'xxx' の行で gxするとリポジトリを開くようにする
+  nmap <buffer> gx mz"zyir:<C-u>OpenBrowserSearch <C-r>z<CR>`z
+'''
+
+# csv  # {{{1
+[[plugins]]
+repo = 'mechatroner/rainbow_csv'
+lazy = 1
+on_ft = ['csv']
+
+# Markdown  {{{1
+[[plugins]]
+repo = 'KosukeMizuno/vim-markdown'  # {{{2
+# repo = 'gabrielelana/vim-markdown'
+depends = ['tabular']
+lazy = 1
+on_ft = 'markdown'
+hook_source = '''
+let g:markdown_list_switch_order = 'toggle'
+let g:markdown_mapping_switch_status = '<Plug>(markdown-switch-status)'
+let g:markdown_enable_spell_checking = 0
+let g:markdown_enable_input_abbreviations = 0
+'''
+# }}}2
+[plugins.ftplugin]
+markdown = '''  " {{{2
+  setlocal wrap
+  call SetCompletionState(v:false)
+  call litecorrect#init()
+
+  if expand('%') =~? "todo\.md$"
+    setlocal ft=markdown.todo
+  endif
+
+  inoremap <buffer> ,, \
+'''
+
+todo = '''  " {{{2
+  setlocal cmdheight=1
+  setlocal scrolloff=1
+
+  " 常に保存し続ける
+  augroup myrc_todo
+    autocmd! * <buffer>
+    autocmd TextChanged <buffer> silent! write
+    autocmd InsertLeave <buffer> silent! write
+  augroup END
+  " Undotreeがおもすぎるのでうっかり起動しないように切る
+  nnoremap U <Nop>
+
+  " space+t ==> Todo list を toggle
+  nmap <buffer> <Leader>t <Plug>(markdown-switch-status)
+  " space+T ==> Todo list を Done list（次の段落）に追いやる
+  nmap <buffer> <Leader>T <Space>t"zdd}"zp{{j
+
+  " o, O で新しい行を作ったときに `- [ ]` を挿入する
+  nnoremap <Plug>(o-newline) o- [ ]<Space>
+  nnoremap <Plug>(O-newline) O- [ ]<Space>
+
+  " indent設定はチェックボックスを考慮した大きさにする
+  setlocal breakindentopt=min:20,shift:6
+'''  # }}}
+
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+lazy = 1
+on_ft = ['markdown']
+build = 'sh -c "cd app && yarn install"'
+hook_source = '''
+let g:mkdp_preview_options = {
+  \   'katex': {
+  \     'macros': {
+  \       "\\bra":"\\left\\langle{#1}\\right|",
+  \       "\\ket":"\\left|#1\\right\\rangle",
+  \       "\\braket":"\\left\\langle{#1}\\middle|#2\\right\\rangle",
+  \       "\\bramket":"\\left\\langle{#1}\\middle|#2\\middle|#3\\right\\rangle",
+  \       "\\ketbra":"\\left|#1\\middle\\rangle\\!\\middle\\langle#2\\right|",
+  \       "\\SI":"#1\\,\\mathrm{#2}a"
+  \     }
+  \   }
+  \ }
+'''
+[plugins.ftplugin]
+markdown = '''
+  nnoremap <buffer> yop <cmd>MarkdownPreviewToggle<CR>
+'''
+
+# LaTeX  # {{{1
+[[plugins]]
+repo = 'lervag/vimtex'  # {{{2
+lazy = 1
+on_ft = ['tex', 'bib']
+depends = ['deoplete.nvim']
+hook_source = '''
+  let g:tex_flavor = 'latex'
+  let g:vimtex_compiler_latexmk = { 'continuous' : 0 }
+  let g:vimtex_quickfix_open_on_warning = 0  " warningのみならquickfixを開かない
+  let g:vimtex_subfile_start_local = 1  " subfileパッケージが使われていれば開いているファイルをコンパイルする
+
+  "" Open sumatrapdf
+  "let g:vimtex_view_general_viewer  = '/mnt/c/Users/MIZUNO/AppData/Local/SumatraPDF/SumatraPDF.exe'
+  "let g:vimtex_view_general_options = '-reuse-instance -forward-search @tex @line @pdf'
+
+  "" wslのパスを上手く読み込めないのでwslpathをかませるスクリプトから呼ぶ
+  "" パスにスペースが含まれる場合（Googleドライブ）動かない
+  "" synctexを使いたいが、なぜか動かない。。。
+  " let g:vimtex_view_general_viewer  = '/home/mizuno/dotfiles/openpdf.sh'
+  " let g:vimtex_view_general_options = '-reuse-instance @pdf'
+
+  inoremap <buffer> ,, \
+'''
+
+[[plugins]]
+repo = 'KosukeMizuno/tex-conceal.vim'  # {{{2
+lazy = 1
+on_ft = 'tex'
+depends = ['vimtex']
+hook_source = '''
+let g:tex_conceal_frac=1
+let g:tex_conceal="abdgms"
+set concealcursor=""
+'''
+#}}}
+[plugins.ftplugin]
+tex = '''  " {{{2
+  " vimtexのオムニ補完をdeopleteから呼び出す
+  "" lspに任せるようになったので止める
+  " call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})
+
+  " 折返しあり
+  setlocal wrap
+
+  " 打ち間違い補正
+  call litecorrect#init()
+
+  " コロンを区切り文字として扱う
+  setlocal iskeyword-=:
+
+  " Space + CTRL-B で 目次を出す
+  nnoremap <buffer> <C-b> :<C-u>VimtexTocToggle<CR>
+
+  " コンパイル前に保存する＆Quickfixを閉じる
+  nmap <buffer> <LocalLeader>ll <cmd>update<CR><cmd>cclose<CR><Plug>(vimtex-compile)
+
+  " ,, で \ にする
+  inoremap <buffer> ,, \
+'''
+
+bib = '''  " {{{2
+  setlocal nowrap
+'''
+
+# vim script and config related filetypes  # {{{1
+vim = '''  " {{{2
+  SetIndent 2
+'''
+
+help = '''  " {{{2
+  SetIndent 8
+  setlocal norelativenumber nonumber
+  setlocal listchars=tab:\ \ 
+  setlocal conceallevel=2 concealcursor=nc
+
+  nnoremap <buffer> K g<C-]>zv
+  nnoremap <buffer> <CR> g<C-]>zv
+  nnoremap <buffer> <BS> <C-t>zv
+  nnoremap <buffer> <nowait> d <C-d>
+  nnoremap <buffer> <nowait> u <C-u>
+'''
+
+qf = '''  " {{{2
+  "" quickfix/location どちらも filetype=qf になる
+  setlocal norelativenumber
+  setlocal scrolloff=0
+
+  " qw でリストが残っていても閉じれるようにする
+  nnoremap <buffer> qw :<C-u>bd<CR>
+  " 開く
+  nnoremap <buffer> <CR> <CR>zv
+  nnoremap <buffer> o <CR>zv
+
+  " qr でqfreplaceを起動
+  nnoremap <buffer> qr :<C-u>Qfreplace<CR>:cclose<CR>
+'''
+
+neosnippet = '''  " {{{2
+  setlocal noexpandtab
+'''
+
+# Python  # {{{1
+python = '''  " {{{2
+  setlocal nowrap
+
+  setlocal foldmethod=expr
+  if has('nvim-0.5')
+    setlocal foldexpr=nvim_treesitter#foldexpr()
+  else
+    setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
+  endif
+
+  let s:pyls_config = {'pyls': {'plugins': {
+    \   'pycodestyle': {'enabled': v:true},
+    \   'pydocstyle': {'enabled': v:true},
+    \   'pylint': {'enabled': v:false},
+    \   'flake8': {'enabled': v:false},
+    \   'mypy': {'enabled': v:false},
+    \   'jedi_definition': {
+    \     'follow_imports': v:true,
+    \     'follow_builtin_imports': v:true,
+    \   },
+    \ } } }
+  augroup LspPython
+    autocmd!
+    autocmd User lsp_setup call lsp#register_server({
+        \ 'name': 'pyls-all',
+        \ 'cmd': { server_info -> ['pyls'] },
+        \ 'whitelist': ['python'],
+        \ 'workspace_config': s:pyls_config
+        \})
+  augroup END
+
+  if expand('%') =~? "test\\S*\.py$"
+    setlocal ft=python.pytest
+  endif
+'''
+pytest = '''  " {{{2
+'''
+
+# shell script  # {{{1
+sh = '''
+  SetIndent 4
+
+  setlocal foldmethod=expr
+  setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
+'''  # }}}
+

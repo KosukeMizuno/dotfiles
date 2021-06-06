@@ -1,0 +1,71 @@
+##### Deoplete ####
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+lazy = 1
+on_event = 'InsertEnter'
+depends = ['context_filetype.vim']
+hook_source = '''
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option({
+  \ 'auto_complete_delay': 0,
+  \ 'smart_case': v:true,
+  \ })
+'''
+
+[[plugins]]
+repo = 'Shougo/neco-syntax'
+lazy = 1
+on_event = 'InsertEnter'
+
+[[plugins]]
+repo = 'Shougo/neco-vim'
+lazy = 1
+on_ft = 'vim'
+
+[[plugins]]
+repo = 'fszymanski/deoplete-emoji'
+
+
+#### Neosnippet ####
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+lazy = 1
+on_event = 'InsertEnter'
+on_cmd = 'NeoSnippetClearMarkers'
+depends = ['deoplete.nvim', 'neosnippet-snippets', 'context_filetype.vim']
+hook_source = '''
+let g:neosnippet#snippets_directory = '~/dotfiles/nvim/snippets'
+" neosnippetを一番上にする
+call deoplete#custom#source('neosnippet', 'rank', 9999)
+'''
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+
+#### LSP ####
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_add = '''
+let g:lsp_auto_enable = 1
+let g:lsp_diagnostics_virtual_text_enabled = 0
+let g:lsp_diagnostics_highlights_enabled = 0
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_echo_delay = 0
+let g:lsp_document_code_actions_signs_enabled = 1
+let g:lsp_document_code_actions_signs_delay = 0
+'''
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+
+[[plugins]]
+repo = 'lighttiger2505/deoplete-vim-lsp'
+depends = ['deoplete.nvim', 'vim-lsp']
+lazy = 1
+on_event = 'InsertEnter'
+hook_source = '''
+call deoplete#custom#source('lsp', 'rank', 9000)
+'''
+

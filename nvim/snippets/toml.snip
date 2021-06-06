@@ -1,0 +1,18 @@
+snippet plugins
+abbr [[plugins]]
+	[[plugins]]
+	repo = '${1}'
+	hook_add = '''
+	${2}
+	'''
+
+snippet plugins_lazy
+abbr [[plugins]]
+	[[plugins]]
+	repo = '${1}'
+	lazy = 1
+	on_${2}
+	hook_add = '''
+	${3}
+	'''
+

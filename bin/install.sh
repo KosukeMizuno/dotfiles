@@ -258,16 +258,25 @@ if ${DOTINSTALL_NVIM:-true}; then
     _pwd=$(pwd)
 
     # cd neovim source
+    if [ -z "$(command -v python3)" ]; then
+        echo "ghq was not found." 1>&2
+        exit 1
+    fi
     if ghq list | grep -q "neovim/neovim"; then
         cd "$(ghq list -p | grep neovim/neovim)"
+        echo "fetching neovim/neovim  ..."
         git fetch
     else
+        echo "cloning neovim/neovim  ..."
         ghq get -l neovim/neovim
     fi
 
     # check update
     NVIM_TARGET_BRANCH="nightly"
+    echo "neovim HEAD: $(git rev-parse HEAD)"
+    echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
     if [ "$(git rev-parse HEAD)" != "$(git rev-parse $NVIM_TARGET_BRANCH)" ] || [ -z "$(command -v nvim)" ]; then
+        echo "Building nvim-nightly..."
         git checkout $NVIM_TARGET_BRANCH
         make CMAKE_INSTALL_PREFIX="$PREFIX"
         make install
@@ -283,6 +292,19 @@ if ${DOTINSTALL_NVIM:-true}; then
     else
         echo "python3 was not found. Creating venv for nvim failed." 1>&2
     fi
+
+    # dein.vim
+    if ! (ghq list | grep -q "Shougo/dein.vim"); then
+        ghq get Shougo/dein.vim
+    else
+        DEIN_DIR=$(ghq list -p | grep "Shougo/dein.vim")
+        git -C "$DEIN_DIR" fetch
+        git -C "$DEIN_DIR" checkout master
+    fi
+
+    mkdir -p "$HOME/.local/share/nvim/undo"
+    mkdir -p "$HOME/.local/share/nvim/backup"
+    mkdir -p "$HOME/.local/share/nvim/swap"
 
     cd "$_pwd"
 fi
