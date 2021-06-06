@@ -65,7 +65,6 @@ fi
 
 #### こっからした自分の
 # TODO: 上の部分を整理する
-echo "Loading zprofile"
 
 # dotfiles
 export DOTPATH="${DOTPATH:-$HOME/dotfiles}"
@@ -83,7 +82,3 @@ fi
 if [ -f "$HOME/.sh_secure" ]; then
     source "$HOME/.sh_secure"
 fi
-
-# enable completion
-# TODO: 遅いのでlazyloadingさせる
-source "$DOTPATH/sh/completion.sh"

@@ -1,14 +1,21 @@
-# README
+# KosukeMizuno/DOTFILES
 
-## with docker-compose
-- `sudo docker-compose up --build -d && sudo docker-compose exec centos8 bash`
-- `sudo docker-compose exec centos8 bash --login`
+Multi-platform dotfiles with automatic instalation and deploying scripts.
+
+- [ ] windows
+- [x] centos
+- [ ] other linux system
 
 ## How to install
 - ```sh
-  export DOTPATH=$HOME/dotfiles; 
+  export DOTPATH=$HOME/dotfiles
   git clone --recursive <this repo> $DOTPATH && cd $DOTPATH && make
+  chsh -s zsh
   ```
+
+### with docker-compose
+- `sudo docker-compose up --build -d && sudo docker-compose exec centos8 bash`
+- `sudo docker-compose exec centos8 bash --login`
 
 ## Directory Structure
 
@@ -37,10 +44,18 @@ $DOTPATH/.config/git/ignore  -- global ignore
 ### Bash & Zsh
 ```
 ~/.bashrc             ==> $DOTPATH/sh/bashrc
-~/.shrc_local        -- 手動で配置する。各環境用の設定を書く（あればbashrcの中で読まれる, git管理対象外）
 ~/.bash_profile       ==> $DOTPATH/sh/bash_profile 
-~/.sh_profile_local  -- 手動で配置する。各環境用の設定を書く（あればbash_profileの中で読まれる, git管理対象外）
 
+~/.p10k.zsh   -- 手動管理。なければ初めにコピーされるが、それぞれの環境で`p10k configure`する。
+~/.zlogin     ==> リンク
+~/.zlogout    ==> リンク
+~/.zpreztorc  ==> リンク
+~/.zprofile   ==> リンク
+~/.zshenv     ==> リンク
+~/.zshrc      ==> リンク
+
+~/.shrc_local        -- 手動で配置する。各環境用の設定を書く（あればbashrcの中で読まれる, git管理対象外）
+~/.sh_profile_local  -- 手動で配置する。各環境用の設定を書く（あればbash_profileの中で読まれる, git管理対象外）
 ~/.sh_secure         -- 手動で書く。git管理したくないもの（あればbash_profileの中で読まれる, git管理対象外）
 ```
 

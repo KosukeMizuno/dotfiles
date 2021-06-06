@@ -1,7 +1,7 @@
-#!/bin/bash
 #### BASH_PROFILE ####
 
-echo "Loading bash_profile"
+ZSHEXE="$PREFIX/bin/zsh"
+[ -x "$ZSHEXE" ] && exec $ZSHEXE
 
 # dotfiles
 export DOTPATH="${DOTPATH:-$HOME/dotfiles}"
@@ -27,4 +27,6 @@ fi
 
 # enable completion
 # TODO: 遅いのでlazyloadingさせる
-source "$DOTPATH/sh/completion.sh"
+for sc in "$DOTPATH"/sh/bash_completion.d/*.bash; do
+    source "$sc"
+done
