@@ -1,0 +1,13 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to say hello
+    steps:
+      # このリポジトリのプライベートアクションを使用するには
+      # リポジトリをチェックアウトする
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Centos action step
+        uses: ./ # Uses an action in the root directory
