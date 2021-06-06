@@ -19,7 +19,8 @@ export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 [ -f "$HOME/.asdf/asdf.sh" ] && source "$HOME/.asdf/asdf.sh"
 
 # PYTHON
-export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/venvs/default}"
+export PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
+export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
 export PATH="$HOME/.poetry/bin:$PATH"
 
 # RUST

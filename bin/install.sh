@@ -251,7 +251,8 @@ if ${DOTINSTALL_PYTHON:-true}; then
         make install # Note: $PREFIXへの(初)インストールなのでaltinstallではなくinstall
         cd $_pwd
     fi
-    PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/venvs/default}"
+    PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
+    PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
     if [ ! -d "$PYTHON_DEFAULT_VENV" ]; then
         python3 -m venv "$PYTHON_DEFAULT_VENV"
     fi

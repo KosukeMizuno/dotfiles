@@ -140,12 +140,24 @@ alias cdf=__fzf_cd
 alias i=ipython
 
 # TODO: 対処療法的なのでちゃんとmsysとlinuxを判別したい
-PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$HOME/venvs/default}"
+PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
+PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
 if [ -n "$(command -v cygpath)" ]; then
     alias activate_default="source $PYTHON_DEFAULT_VENV/Scripts/activate"
 else
     alias activate_default="source $PYTHON_DEFAULT_VENV/bin/activate"
 fi
+__fzf_activate_python_venv() {
+    target=$(\ls "$PYTHON_VENV_DIR" | fzf)
+    if [ -d "$PYTHON_VENV_DIR/$target" ]; then
+        if [ -n "$(command -v cygpath)" ]; then
+            source "$PYTHON_VENV_DIR/$target/Scripts/activate"
+        else
+            source "$PYTHON_VENV_DIR/$target/bin/activate"
+        fi
+    fi
+}
+alias activate=__fzf_activate_python_venv
 
 # esapy
 alias esafu='esa up --no-browser "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'
