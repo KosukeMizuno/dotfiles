@@ -8,7 +8,7 @@ export DOTPATH="${DOTPATH:-$HOME/dotfiles}"
 source "$DOTPATH/sh/path.sh"
 
 # enable direnv
-eval "$(direnv hook zsh)"
+eval "$(direnv hook bash)"
 
 # load local bash_profile if exists
 if [ -f "$HOME/.bash_profile_local" ]; then

@@ -64,9 +64,17 @@ HISTORY_IGNORE_GIT="gc|gcm|gcam|gf|gs|ga|gl|gd|gp|grj|grs|gj|gx"
 HISTORY_IGNORE_EDITOR="nano|vim|nvim|code|editor_or_fg"
 export HISTORY_IGNORE="($HISTORY_IGNORE_EDITOR|$HISTORY_IGNORE_GIT|$HISTORY_IGNORE_COMMAND)"
 
+# Ctrl+r で履歴から検索 with fzf
+function select-history() {
+    BUFFER=$(history -n -r 1 | FZF_DEFAULT_OPTS="" fzf --no-sort +m --query "$LBUFFER" --prompt="History > ")
+    CURSOR=$#BUFFER
+}
+zle -N select-history
+bindkey '^r' select-history
+
 # テキストエディタを Ctrl+x Ctrl+j で呼び出す
 # suspended job に居たら新しく立ち上げずそちらを起動
-# TODO: windowsでの動作確認
+# TODO: windowsでの動作確認or無効化
 editor_or_fg (){
     EDITOR_PROG=${EDITOR:-nvim}
     if [[ $# -gt 0 ]]; then

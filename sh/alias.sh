@@ -76,7 +76,7 @@ alias tl="tmux ls"
 
 # tmux-resurrectの再起動時にもたもたしていると新しいセッションができてしまうことがあるので、
 # 最新を破棄＆古いセッションファイルを最新にして読み込めるようにする
-function tmux-select-resurrect-session {
+tmux-select-resurrect-session() {
     TMUXRESURRECTDIR="$HOME/.tmux/resurrect"
     unlink "$TMUXRESURRECTDIR/last"
     PREVCMD="cat $TMUXRESURRECTDIR/{}"
@@ -113,7 +113,7 @@ alias gx="hub browse"
 
 #### FZF ####
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-export FZF_DEFAULT_OPTS='--ansi --height 40% --reverse --border --inline-info'
+export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
 
 # kill with fzf
 fkill() {
@@ -125,10 +125,16 @@ fkill() {
 }
 
 # cd with fzf
-if [ -n "$(command -v exa)" ]; then
-    alias fcd="exa --only-dirs | fzf --ansi --cycle --height 50% --preview='ls -1 --color=always {}' | cd"
-    alias cdf=fcd
-fi
+__fzf_cd() {
+    if [ -n "$(command -v exa)" ]; then
+        target=$(exa -a --only-dirs | fzf --ansi --cycle --height 50% --preview='exa --color=always {}')
+    else
+        target=$(ls -d */ .*/ | fzf --ansi --cycle --height 50% --preview='ls --color=always {}')
+    fi
+    cd "$target" || exit 1
+}
+alias fcd=__fzf_cd
+alias cdf=__fzf_cd
 
 #### PYTHON ####
 alias i=ipython
