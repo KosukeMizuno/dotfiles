@@ -271,14 +271,15 @@ if ${DOTINSTALL_NVIM:-true}; then
         ghq get -l neovim/neovim
     fi
 
-    # check update
+    # check update & build
     NVIM_TARGET_BRANCH="nightly"
     echo "neovim HEAD: $(git rev-parse HEAD)"
     echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
     if [ "$(git rev-parse HEAD)" != "$(git rev-parse $NVIM_TARGET_BRANCH)" ] || [ -z "$(command -v nvim)" ]; then
         echo "Building nvim-nightly..."
+        make distclean
         git checkout $NVIM_TARGET_BRANCH
-        make CMAKE_INSTALL_PREFIX="$PREFIX"
+        make CMAKE_INSTALL_PREFIX="$PREFIX" CMAKE_BUILD_TYPE=Release
         make install
     fi
 
@@ -298,13 +299,18 @@ if ${DOTINSTALL_NVIM:-true}; then
         ghq get Shougo/dein.vim
     else
         DEIN_DIR=$(ghq list -p | grep "Shougo/dein.vim")
-        git -C "$DEIN_DIR" fetch
-        git -C "$DEIN_DIR" checkout master
+        git -C "$DEIN_DIR" pull master
     fi
 
     mkdir -p "$HOME/.local/share/nvim/undo"
     mkdir -p "$HOME/.local/share/nvim/backup"
     mkdir -p "$HOME/.local/share/nvim/swap"
+
+    # 一度起動してdeinにプラグインをダウンロードさせる
+    nvim +q
+    nvim "+call dein#check_update()"
+    # インストールが必要なものを入れる
+    nvim +UpdateRemotePlugins "+TSInstall all" +q
 
     cd "$_pwd"
 fi

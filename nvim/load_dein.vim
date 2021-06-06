@@ -1,6 +1,6 @@
 """" Load dein.vim """"
 let g:dein#auto_recache = v:true
-let g:dein#lazy_rplugins = v:true
+" let g:dein#lazy_rplugins = v:true
 
 " Add the dein installation directory into runtimepath
 let s:cache_dir = expand('~/.cache/dein')
