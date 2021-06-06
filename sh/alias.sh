@@ -35,7 +35,7 @@ function wincmd()
 if [ -n "$(command -v exa)" ]; then
     alias ls='exa -lhb --git --icons'
     alias ll='exa -hb --git --icons'
-    alias la='exa -lhbHSg --git --icons'
+    alias la='exa -alhbHSg --git --icons'
     alias lla='exa -alhbHSg --git --icons'
 else
     alias ls='ls'
