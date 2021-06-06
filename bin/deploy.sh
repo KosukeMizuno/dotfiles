@@ -25,6 +25,7 @@ deploy_ln "$DOTPATH/sh/.zpreztorc" "$HOME/.zpreztorc"
 deploy_ln "$DOTPATH/sh/.zprofile"  "$HOME/.zprofile"
 deploy_ln "$DOTPATH/sh/.zshenv"    "$HOME/.zshenv"
 deploy_ln "$DOTPATH/sh/.zshrc"     "$HOME/.zshrc"
+[ ! -f "$HOME/.p10k.zsh" ] && cp "$DOTPATH/sh/.p10k.zsh_template" "$HOME/.p10k.zsh"
 
 ## ssh (copy)
 if [ ! -d "$HOME/.ssh" ]; then mkdir "$HOME/.ssh"; fi
