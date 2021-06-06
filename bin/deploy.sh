@@ -30,18 +30,18 @@ find "$HOME/.ssh" -type f -print0 | xargs -0 chmod 600
 
 ## git
 # XDG_CONFIG_HOME/git/gitconfig より ~/.gitconfig が優先されるのでリンクしておく
-deploy_ln "$DOTPATH/git" "$XDG_CONFIG_HOME/git"
+deploy_ln "$DOTPATH/.config/git" "$XDG_CONFIG_HOME/git"
 deploy_ln "$XDG_CONFIG_HOME/git/gitconfig" "$HOME/.gitconfig"
 
 ## tmux
-deploy_ln "$DOTPATH/tmux" "$XDG_CONFIG_HOME/tmux"
+deploy_ln "$DOTPATH/.config/tmux" "$XDG_CONFIG_HOME/tmux"
 
 ## nvim
 deploy_ln "$DOTPATH/nvim" "$XDG_CONFIG_HOME/nvim"
 
 ## python
-deploy_ln "$DOTPATH/pypoetry" "$XDG_CONFIG_HOME/pypoetry"
-deploy_ln "$DOTPATH/pycodestyle" "$XDG_CONFIG_HOME/pycodestyle"
+deploy_ln "$DOTPATH/.config/pypoetry" "$XDG_CONFIG_HOME/pypoetry"
+deploy_ln "$DOTPATH/.config/pycodestyle" "$XDG_CONFIG_HOME/pycodestyle"
 mkdir -p "$HOME/.ipython/profile_default"
 deploy_ln "$DOTPATH/ipython_startup" "$HOME/.ipython/profile_default/starup"
 
@@ -52,4 +52,4 @@ deploy_ln "$DOTPATH/ipython_startup" "$HOME/.ipython/profile_default/starup"
 
 
 ## terminal: alacritty windows-terminal
-deploy_ln "$DOTPATH/alacritty" "$XDG_CONFIG_HOME/alacritty"
+deploy_ln "$DOTPATH/.config/alacritty" "$XDG_CONFIG_HOME/alacritty"

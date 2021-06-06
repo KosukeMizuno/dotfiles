@@ -299,18 +299,17 @@ if ${DOTINSTALL_NVIM:-true}; then
         ghq get Shougo/dein.vim
     else
         DEIN_DIR=$(ghq list -p | grep "Shougo/dein.vim")
-        git -C "$DEIN_DIR" pull master
+        git -C "$DEIN_DIR" pull
     fi
 
     mkdir -p "$HOME/.local/share/nvim/undo"
     mkdir -p "$HOME/.local/share/nvim/backup"
     mkdir -p "$HOME/.local/share/nvim/swap"
 
-    # 一度起動してdeinにプラグインをダウンロードさせる
+    # nvimの初回ダウンロード等が必要なもの
     nvim +q
-    nvim "+call dein#check_update()"
-    # インストールが必要なものを入れる
-    nvim +UpdateRemotePlugins "+TSInstall all" +q
+    nvim "+call dein#check_update()" +q
+    nvim "+UpdateRemotePlugins" "+TSInstall all" +q
 
     cd "$_pwd"
 fi
