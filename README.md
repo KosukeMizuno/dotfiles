@@ -10,8 +10,13 @@ Multi-platform dotfiles with automatic instalation and deploying scripts.
 - ```sh
   export DOTPATH=$HOME/dotfiles
   git clone --recursive <this repo> $DOTPATH && cd $DOTPATH && make
-  chsh -s zsh
   ```
+- Then, make zsh a default shell if permission is available.
+  ```
+  echo $HOME/.local/bin/zsh >> /etc/shells
+  chsh -s $HOME/.local/bin/zsh
+  ```
+  If not, zsh is executed automatically (See `.bash_profile`).
 
 ### with docker-compose
 - `sudo docker-compose up --build -d && sudo docker-compose exec centos8 bash`
