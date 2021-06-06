@@ -15,20 +15,30 @@ Defaults and recommendations:
 - `$PYTHON_DEFAULT_VENV=$HOME/venvs/default`
 
 ### Prefix
+
 ```
 $PREFIX/bin -- とりあえずPATHを通したいものやコンパイル済みバイナリはココへ入れる
 $PREFIX/src -- 自分でコンパイルするもの置き場
 $PREFIX/opt -- 自分でコンパイルしないもの置き場
 ```
 
+### git
+
+```
+~/.gitconfig_local  -- 手動で設定する（git管理対象外）
+~/.gitconfig  ==> $DOTPATH/.config/git/config
+$DOTPATH/.config/git/config  -- global config の本体
+$DOTPATH/.config/git/ignore  -- global ignore
+```
+
 ### Bash & Zsh
 ```
 ~/.bashrc             ==> $DOTPATH/sh/bashrc
-~/.bashrc_local        -- 手動で配置する。各環境用の設定を書く（あればbashrcの中で読まれる）
+~/.bashrc_local        -- 手動で配置する。各環境用の設定を書く（あればbashrcの中で読まれる, git管理対象外）
 ~/.bash_profile       ==> $DOTPATH/sh/bash_profile 
-~/.bash_profile_local  -- 手動で配置する。各環境用の設定を書く（あればbash_profileの中で読まれる）
+~/.bash_profile_local  -- 手動で配置する。各環境用の設定を書く（あればbash_profileの中で読まれる, git管理対象外）
 
-~/.sh_secure         -- 手動で書く。git管理したくないもの（あればbash_profileの中で読まれる）
+~/.sh_secure         -- 手動で書く。git管理したくないもの（あればbash_profileの中で読まれる, git管理対象外）
 ```
 
 ### Python

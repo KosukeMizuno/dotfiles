@@ -29,9 +29,10 @@ find "$HOME/.ssh" -type d -print0 | xargs -0 chmod 700
 find "$HOME/.ssh" -type f -print0 | xargs -0 chmod 600
 
 ## git
-# XDG_CONFIG_HOME/git/gitconfig より ~/.gitconfig が優先されるのでリンクしておく
+# XDG_CONFIG_HOME/git/config より ~/.gitconfig が優先されるのでリンクしておく
 deploy_ln "$DOTPATH/.config/git" "$XDG_CONFIG_HOME/git"
-deploy_ln "$XDG_CONFIG_HOME/git/gitconfig" "$HOME/.gitconfig"
+deploy_ln "$XDG_CONFIG_HOME/git/config" "$HOME/.gitconfig"
+[ ! -f "$HOME/.gitconfig_local" ] && cp "$DOTPATH/.config/git/config_local_template" "$HOME/.gitconfig_local"
 
 ## tmux
 deploy_ln "$DOTPATH/.config/tmux" "$XDG_CONFIG_HOME/tmux"

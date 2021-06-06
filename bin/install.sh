@@ -124,6 +124,7 @@ if [ -z "$(command -v fzf)" ]; then
     "$PREFIX/opt/fzf/install" --bin
     ln -s "$PREFIX/opt/fzf/bin/fzf" "$PREFIX/bin/fzf"
 fi
+
 # neofetch
 if [ -z "$(command -v neofetch)" ]; then
     git clone https://github.com/dylanaraps/neofetch "$PREFIX/opt/neofetch"
@@ -236,7 +237,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
     # python tools, jupyter
     # TODO: requirements.txtベースにしたい
     pip install --upgrade pip autopep8 isort
-    pip install jupyterlab
+    pip install jupyterlab nbdime
     pip install numpy scipy matplotlib cython tqdm better_exceptions numba
     pip install qutip
 fi

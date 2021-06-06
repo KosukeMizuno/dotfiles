@@ -14,17 +14,17 @@
 	ss  = status --short --branch --show-stash
 	co = !git branch -a --color=always | fzf --ansi --reverse --cycle --height 40% --prompt 'CHECKOUT BRANCH>' --preview 'echo {} | tr -d \"(*\" | sed \"s/^[ \\t]*//\" | cut -d \" \" -f 1 | xargs git log --first-parent --oneline --pretty=preview --date=short --color=always' | tr -d '(*' | awk '{print $1}' | xargs --no-run-if-empty git checkout
 	fs = !git lol --color=always | fzf --ansi --reverse --height 100% --preview 'echo {} | sed -r \"s/^.+\\s([a-f0-9]{7,})\\s.+$/\\1/\" | xargs git show --color=always' | sed -r 's/^.+\\s([a-f0-9]{7,})\\s.+$/\\1/' | xargs --no-run-if-empty git show
+
 [pretty]
 	lol = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
 	preview = format:%Cgreen%cd%Creset %C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset
 	medium-reverse = format:%C(red)%d %C(white reverse) %h% Creset %C(green reverse) %an %Creset %C(cyan)%ar%Creset%n%C(white bold)%w(80)%s%Creset%n%n%w(80,2,2)%b
-[user]
-	name = Kosuke Mizuno
-	email = dotmapu@gmail.com
+
 [core]
 	quotepath = false
 	symlinks = true
 	editor = 'nvim'
+
 [pull]
 	ff = only
 
@@ -32,4 +32,21 @@
 [remind]
 	paths = ~/dotfiles
 
+# nbdime
+[diff "jupyternotebook"]
+	command = git-nbdiffdriver diff
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+[difftool]
+	prompt = false
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false
 
+# local config
+[include]
+	path = ~/.gitconfig_local
