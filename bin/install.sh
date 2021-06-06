@@ -3,6 +3,12 @@
 #### install.sh ####
 # 必要なツールがなければ知らせる＆可能ならインストールする
 
+# 環境チェック
+if [ "$(uname)" != "Linux" ]; then
+    echo "This install script is written for Linux system." 1>&2
+    exit 1
+fi
+
 # check DOTPATH and PREFIX
 if [ -z "$DOTPATH" ]; then
     echo "Ensure \$DOTPATH is set." 1>&2

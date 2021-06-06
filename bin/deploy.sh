@@ -3,6 +3,12 @@
 #### deploy.sh ####
 # 設定ファイル群を展開する
 
+# 環境チェック
+if [ "$(uname)" != "Linux" ]; then
+    echo "This install script is written for Linux system." 1>&2
+    exit 1
+fi
+
 # check DOTPATH
 if [ -z "$DOTPATH" ]; then
     echo "Ensure $DOTPATH is set."
@@ -35,7 +41,8 @@ find "$HOME/.ssh" -type d -print0 | xargs -0 chmod 700
 find "$HOME/.ssh" -type f -print0 | xargs -0 chmod 600
 
 ## git
-# XDG_CONFIG_HOME/git/config より ~/.gitconfig が優先されるのでリンクしておく
+# XDG_CONFIG_HOME/git/config より ~/.gitconfig が優先される、
+# かついろんな機会に踏み荒らされがちなのでリンクしておく
 deploy_ln "$DOTPATH/.config/git" "$XDG_CONFIG_HOME/git"
 deploy_ln "$XDG_CONFIG_HOME/git/config" "$HOME/.gitconfig"
 [ ! -f "$HOME/.gitconfig_local" ] && cp "$DOTPATH/.config/git/config_local_template" "$HOME/.gitconfig_local"
@@ -49,7 +56,6 @@ deploy_ln "$DOTPATH/nvim" "$XDG_CONFIG_HOME/nvim"
 ## python
 deploy_ln "$DOTPATH/.config/pypoetry" "$XDG_CONFIG_HOME/pypoetry"
 deploy_ln "$DOTPATH/.config/pycodestyle" "$XDG_CONFIG_HOME/pycodestyle"
-mkdir -p "$HOME/.ipython/profile_default"
 deploy_ln "$DOTPATH/ipython_startup" "$HOME/.ipython/profile_default/starup"
 
 # jupyter

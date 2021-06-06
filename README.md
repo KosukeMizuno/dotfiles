@@ -5,8 +5,10 @@
 - `sudo docker-compose exec centos8 bash --login`
 
 ## How to install
-- `git clone --recursive <this repo> ~/dotfiles`
-- `cd ~/dotfiles && make`
+- ```sh
+  export DOTPATH=$HOME/dotfiles; 
+  git clone --recursive <this repo> $DOTPATH && cd $DOTPATH && make
+  ```
 
 ## Directory Structure
 
