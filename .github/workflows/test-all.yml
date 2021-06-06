@@ -14,4 +14,4 @@ jobs:
       - name: symlink
         run: ln -s $(pwd) $HOME/dotfiles
       - name: make
-        run: cd $HOME/dotfiles && make
+        run: cd $HOME/dotfiles && DOTPATH=$PWD make
