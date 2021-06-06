@@ -57,6 +57,8 @@ $DOTPATH/.config/git/ignore  -- global ignore
 設定フォルダは`$DOTPATH/nvim`においている。
 Note: `$DOTPATH/.config/nvim`ではないので注意。よくアクセスするので浅いところにした。
 
+git管理しない設定ファイルは`$DOTPATH/nvim/set_credential.vim`（あればinit.vimで読まれる）
+
 vim用のpython3(venv)は`$PREFIX/opt/python3_nvim`においた。
 python2って要る？
 

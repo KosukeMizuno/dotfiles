@@ -18,13 +18,7 @@ if has("win64")
 endif
 
 " アイコンを出すかどうか
-" TODO: deinのifオプションで読み込むかどうか指定すると常に読み込まれなくなってしまう
-" Note: nvim-qtから起動すると &term=nvimになる
-" Note: nvim(cli)であっても起動中は &term=nvimになるようだ...
-let g:rc_enable_icon = !empty($USE_ICON_IN_TERM) && $USE_ICON_IN_TERM
-
-" dotfiles
-set runtimepath+=$HOME/dotfiles/nvim
+let g:rc_enable_icon = !empty($USE_ICON_IN_TERM) && $USE_ICON_IN_TERM != "false"
 
 " python executable
 if has('win64')
@@ -60,15 +54,16 @@ let g:loaded_zipPlugin         = 1
 
 """" 分割したスクリプトをロード """"  {{{1
 " credintial file
-runtime! set_credential.vim
+" Note: runtimeコマンドはファイルが無くてもエラーにならない
+runtime! rc/set_credential.vim
 
 " プラグイン読み込み
-runtime! load_dein.vim
+runtime! rc/load_dein.vim
 " call dein#call_hook('source')
 " call dein#call_hook('post_source')
 
 " KEY MAPPING
-runtime! keymap.vim
+runtime! rc/keymap.vim
 
 """" Helper function """"  {{{1
 " インデントサイズをまとめて設定
@@ -81,11 +76,6 @@ command! -nargs=1 SetIndent call s:set_indent(<f-args>)
 
 """" 色関係 """"  {{{1
 try
-  " if empty($SSH_CLIENT)
-  "   colorscheme monokai_mod
-  " else
-  "   colorscheme material
-  " endif
   colorscheme monokai_mod
 catch /^Vim\%((\a\+)\)\=:E185/
   echo "colorscheme is not detected."
@@ -211,9 +201,12 @@ endif
 
 """" config helpers """" {{{1
 " Dein shortcuts
-command! DeinReCache   call dein#recache_runtimepath()
-command! DeinUpdate    call dein#update()
-command! DeinCheckLazy echo dein#check_lazy_plugins()
+command! DeinReCache call dein#recache_runtimepath()
+if exists('g:dein#install_github_api_token')
+  command! DeinUpdate call dein#check_update(v:true)
+else
+  command! DeinUpdate call dein#update()
+endif
 
 " profiling for log file by 'vim --startuptime'
 command! SortStartuplog %!sort -k2nr

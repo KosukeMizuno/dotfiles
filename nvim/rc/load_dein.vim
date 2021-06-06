@@ -1,6 +1,6 @@
 """" Load dein.vim """"
 let g:dein#auto_recache = v:true
-" let g:dein#lazy_rplugins = v:true
+" let g:dein#lazy_rplugins = v:true  " なんか動きを勘違いしてるっぽい。とりあえずdisableしとく
 
 " Add the dein installation directory into runtimepath
 let s:cache_dir = expand('~/.cache/dein')
@@ -13,7 +13,7 @@ if !dein#load_state(s:cache_dir)
 endif
 
 " rc files
-let s:toml_dir = expand('~/dotfiles/nvim')
+let s:toml_dir = expand('~/dotfiles/nvim/rc')
 let s:toml_plugins = s:toml_dir . '/plugins.toml'
 let s:toml_completion = s:toml_dir . '/plugins_compl.toml'
 let s:toml_textobj = s:toml_dir . '/plugins_textobj.toml'
