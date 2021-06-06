@@ -11,3 +11,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Centos action step
         uses: ./ # Uses an action in the root directory
+      - name: symlink
+        run: ln -s $(pwd) $HOME/dotfiles
+      - name: make
+        run: cd $HOME/dotfiles && make
