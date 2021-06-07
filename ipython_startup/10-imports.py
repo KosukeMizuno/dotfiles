@@ -36,7 +36,7 @@ except ImportError:
     pass
 
 try:
-    from tqdm import tqdm
+    from IPython import embed
 except ImportError:
     pass
 

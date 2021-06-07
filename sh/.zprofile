@@ -70,6 +70,9 @@ fi
 export DOTPATH="${DOTPATH:-$HOME/dotfiles}"
 source "$DOTPATH/sh/path.sh"
 
+# suppress stopping on ssh
+stty stop undef
+
 # enable direnv
 eval "$(direnv hook zsh)"
 

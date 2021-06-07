@@ -1,7 +1,12 @@
 #### GLOBAL IGNORE 
 
 # OS specific
+## Mac
 .DS_Store
+
+## Win
+bash.exe.stackdump
+*.lnk
 
 # direnv
 .envrc
@@ -19,3 +24,6 @@ tags
 ~$*.doc*
 ~$*.xls*
 ~$*.ppt*
+
+# python
+.ipynb_checkpoints
