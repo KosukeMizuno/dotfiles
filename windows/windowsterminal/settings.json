@@ -3,7 +3,7 @@
     // Add custom actions and keybindings to this array.
     // To unbind a key combination from your defaults.json, set the command to "unbound".
     // To learn more about actions and keybindings, visit https://aka.ms/terminal-keybindings
-    "actions": 
+    "actions":
     [
         {
             "command": "find",
@@ -18,7 +18,7 @@
             "keys": "alt+shift+h"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "down"
@@ -26,7 +26,7 @@
             "keys": "alt+shift+j"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "up"
@@ -34,7 +34,7 @@
             "keys": "alt+shift+k"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "down"
@@ -42,7 +42,7 @@
             "keys": "alt+down"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "left"
@@ -50,7 +50,7 @@
             "keys": "alt+left"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "right"
@@ -58,7 +58,7 @@
             "keys": "alt+right"
         },
         {
-            "command": 
+            "command":
             {
                 "action": "moveFocus",
                 "direction": "up"
@@ -74,14 +74,14 @@
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{cc5f7056-0543-5698-994c-d0f03bf12778}",
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "fontFace": "Cica",
             "fontSize": 14
         },
-        "list": 
+        "list":
         [
             {
                 "commandline": "powershell.exe",
@@ -115,7 +115,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#0C0C0C",
