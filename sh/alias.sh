@@ -103,7 +103,11 @@ alias grj="git remind status -n --all | fzf --ansi --cycle --preview=\"git -C {}
 alias grs='git remind status --all'
 
 # ghq
-alias gj='cd $(ghq list | fzf --ansi --cycle --preview "bat --color=always --style=grid --line-range :80 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
+if [ -n "$(command -v bat)" ]; then
+    alias gj='cd $(ghq list | fzf --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
+else
+    alias gj='cd $(ghq list | fzf --ansi --cycle --preview "cat $(ghq root)/{}/README.* | head -40" | xargs -t -I{} echo $(ghq root)/{})'
+fi
 if [ "$TERM_PROGRAM" = "mintty" ]; then
     alias gj="echo 'fzf is not available in mintty.'"
 fi
