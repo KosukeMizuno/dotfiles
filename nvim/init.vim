@@ -76,6 +76,11 @@ command! -nargs=1 SetIndent call s:set_indent(<f-args>)
 
 """" 色関係 """"  {{{1
 try
+  " if empty($SSH_CLIENT)
+  "   colorscheme monokai_mod
+  " else
+  "   colorscheme material
+  " endif
   colorscheme monokai_mod
 catch /^Vim\%((\a\+)\)\=:E185/
   echo "colorscheme is not detected."
