@@ -50,33 +50,38 @@ if ${DOTINSTALL_ZSH:-true}; then
 fi
 
 ## tmux
-if ${DOTINSTALL_TMUX:-true} && [ -z "$(command -v tmux)" ]; then
-    _pwd=$PWD
+if ${DOTINSTALL_TMUX:-true}; then
 
     # libevent
-    if ! ldconfig -p | grep -q "libevent_core-2.1.so.7"; then
-        [ -d "$PREFIX/src/libevent-2.1.12-stable" ] && rm -rf "$PREFIX/src/libevent-2.1.12-stable"
-        url="https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz"
-        wget $url -P /tmp
-        tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
-        cd "$PREFIX/src/libevent-2.1.12-stable"
-        ./configure --prefix=$PREFIX
-        make
-        make install
+    # TODO: ここの条件式大丈夫？
+    if (! ldconfig -p | grep -q "libevent_core-2.1.so.7") &&
+        (! find "$PREFIX/lib/" -name "libevent_core-2.1.so.7" -type f -or -type l | grep -q libevent-2.1.so.7); then
+        if [ ! -d "$PREFIX/src/libevent-2.1.12-stable" ]; then
+            url="https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz"
+            wget $url -P /tmp
+            tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
+        fi
+        (cd "$PREFIX/src/libevent-2.1.12-stable" && {
+            ./configure --prefix="$PREFIX"
+            make
+            make install
+        })
     fi
 
     # tmux-3.2
-    if [ ! -d "$PREFIX/src/tmux" ]; then
-        url="https://github.com/tmux/tmux/releases/download/3.2/tmux-3.2.tar.gz"
-        wget $url -P /tmp
-        tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
+    if [ -z "$(command -v tmux)" ]; then
+        if [ ! -d "$PREFIX/src/tmux-3.2" ]; then
+            url="https://github.com/tmux/tmux/releases/download/3.2/tmux-3.2.tar.gz"
+            wget $url -P /tmp
+            tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
+        fi
+        (cd "$PREFIX/src/tmux-3.2" && {
+            ./configure --prefix="$PREFIX"
+            make
+            make install
+        })
     fi
-    cd "$PREFIX/src/tmux-3.2"
-    ./configure --prefix="$PREFIX"
-    make
-    make install
 
-    cd $_pwd
 fi
 
 ## terminal
