@@ -90,30 +90,30 @@ fi
 
 # font
 if ${DOTINSTALL_FONTS:-true}; then
-    if [ $(fc-list | grep Cica | wc -l) -eq 0 ]; then
+    if [[ $(fc-list | grep -c Cica) -eq 0 ]]; then
         echo "Installing Cica font..."
         url=https://github.com/miiton/Cica/releases/download/v5.0.2/Cica_v5.0.2_with_emoji.zip
-        dname=$(mktemp -d --suffix=$(basename $url .zip))
+        dname=$(mktemp -d --suffix="$(basename "$url" .zip)")
         wget $url -P /tmp
-        unzip /tmp/$(basename $url) -d $dname
-        cp $dname/*.ttf $PREFIX/share/fonts/
+        unzip "/tmp/$(basename $url)" -d "$dname"
+        cp "$dname"/*.ttf "$PREFIX/share/fonts/"
         fc-cache -fv
     fi
-    if [ $(fc-list | grep HackGen | wc -l) -eq 0 ]; then
+    if [[ $(fc-list | grep -c HackGen) -eq 0 ]]; then
         echo "Installing HackGen font..."
         url=https://github.com/yuru7/HackGen/releases/download/v2.3.2/HackGenNerd_v2.3.2.zip
-        dname=$(mktemp -d --suffix=$(basename $url .zip))
+        dname=$(mktemp -d --suffix="$(basename "$url" .zip)")
         wget $url -P /tmp
-        unzip /tmp/$(basename $url) -d $dname
-        cp $dname/HackGenNerd_v2.3.2/*.ttf $PREFIX/share/fonts/
+        unzip "/tmp/$(basename $url)" -d "$dname"
+        cp "$dname/HackGenNerd_v2.3.2"/*.ttf "$PREFIX/share/fonts/"
         fc-cache -fv
     fi
-    if [ $(fc-list | grep "MesloLGS NF" | wc -l) -eq 0 ]; then
+    if [[ $(fc-list | grep -c "MesloLGS NF") -eq 0 ]]; then
         echo "Installing Meslo font..."
-        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P $PREFIX/share/fonts
-        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P $PREFIX/share/fonts
-        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P $PREFIX/share/fonts
-        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P $PREFIX/share/fonts
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf -P "$PREFIX/share/fonts"
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf -P "$PREFIX/share/fonts"
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf -P "$PREFIX/share/fonts"
+        wget https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf -P "$PREFIX/share/fonts"
         fc-cache -fv
     fi
 fi
