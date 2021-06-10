@@ -28,17 +28,18 @@ mkdir -p "$PREFIX/share/fonts"
 
 ## zsh
 if ${DOTINSTALL_ZSH:-true}; then
-    _pwd=$PWD
 
     if [ -z "$(command -v zsh)" ]; then
-        [ -d "$PREFIX/src/zsh-5.8" ] && rm -rf "$PREFIX/src/zsh-5.8"
-        url="https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download"
-        wget $url -P /tmp
-        tar xvf "/tmp/$(basename $url)" -C "$PREFIX/src"
-        cd "$PREFIX/src/zsh-5.8"
-        ./configure --prefix="$PREFIX"
-        make
-        make install
+        if [ ! -d "$PREFIX/src/zsh-5.8" ]; then
+            url="https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download"
+            wget $url -P /tmp
+            tar xvf "/tmp/$(basename $url)" -C "$PREFIX/src"
+        fi
+        (cd "$PREFIX/src/zsh-5.8" && {
+            ./configure --prefix="$PREFIX"
+            make
+            make install
+        })
     fi
 
     # zprezto
@@ -46,17 +47,6 @@ if ${DOTINSTALL_ZSH:-true}; then
         git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"
     fi
 
-    # 他のツールはinstallとdeployを分離しているが、
-    # zshは起動後に$HOME/.z**が無いと色々生成されるのでここでdeployしてしまう
-    deploy_ln "$DOTPATH/sh/.zlogin"    "$HOME/.zlogin"
-    deploy_ln "$DOTPATH/sh/.zlogout"   "$HOME/.zlogout"
-    deploy_ln "$DOTPATH/sh/.zpreztorc" "$HOME/.zpreztorc"
-    deploy_ln "$DOTPATH/sh/.zprofile"  "$HOME/.zprofile"
-    deploy_ln "$DOTPATH/sh/.zshenv"    "$HOME/.zshenv"
-    deploy_ln "$DOTPATH/sh/.zshrc"     "$HOME/.zshrc"
-    [ ! -f "$HOME/.p10k.zsh" ] && cp "$DOTPATH/sh/.p10k.zsh_template" "$HOME/.p10k.zsh"
-
-    cd _pwd
 fi
 
 ## tmux
