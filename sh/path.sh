@@ -2,6 +2,9 @@
 #### rc.env.sh ####
 # setup enviromnental variables related with PATH
 
+# asdf
+[[ -e "$HOME/.asdf/asdf.sh" ]] && source "$HOME/.asdf/asdf.sh"
+
 # user built things
 export PREFIX="${PREFIX:-$HOME/.local}"
 export PATH="$PREFIX/bin:$PATH"
@@ -14,9 +17,6 @@ export LD_LIBLARY_PATH LD_RUN_PATH PKG_CONFIG_PATH
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-
-# asdf
-[[ -e "$HOME/.asdf/asdf.sh" ]] && source "$HOME/.asdf/asdf.sh"
 
 # PYTHON
 export PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"

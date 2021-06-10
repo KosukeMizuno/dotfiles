@@ -296,7 +296,6 @@ if ${DOTINSTALL_LATEX:-true}; then
 fi
 
 ## nvim
-# TODO: shellcheckのエラーを直す
 if ${DOTINSTALL_NVIM:-true}; then
     if [[ -z $(command -v ghq) ]]; then
         echo "ghq was not found." 1>&2
@@ -314,40 +313,46 @@ if ${DOTINSTALL_NVIM:-true}; then
         NVIM_TARGET_BRANCH="nightly"
         echo "neovim HEAD: $(git rev-parse HEAD)"
         echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
-        if [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]] || [[ ! -x "$PREFIX/bin/nvim" ]]; then
+        if [[ ! -x "$PREFIX/bin/nvim" ]] || [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]]; then
             echo "Building nvim-nightly..."
             git checkout $NVIM_TARGET_BRANCH
             make CMAKE_INSTALL_PREFIX="$PREFIX" CMAKE_BUILD_TYPE=Release
             make install
         fi
-    })
+    }) || (
+        # ビルドに失敗したらadsfで入れとく（sh/pash.sh を読めば ~/.local/binのほうが先にくるので、ビルドに成功すればそちらが使用される）
+        install_asdf nvim neovim nightly
+    )
+    
+    if [[ -n $(command -v nvim) ]]; then
 
-    # python
-    if [[ -n $(command -v python3) ]]; then
-        VENV_FOR_NEOVIM="$PREFIX/opt/python3_nvim"
-        if [[ ! -d "$VENV_FOR_NEOVIM" ]]; then
-            python3 -m venv "$VENV_FOR_NEOVIM"
+        # python
+        if [[ -n $(command -v python3) ]]; then
+            VENV_FOR_NEOVIM="$PREFIX/opt/python3_nvim"
+            if [[ ! -d "$VENV_FOR_NEOVIM" ]]; then
+                python3 -m venv "$VENV_FOR_NEOVIM"
+            fi
+            "$VENV_FOR_NEOVIM/bin/pip" install --upgrade pip neovim pynvim
+        else
+            echo "python3 was not found. Creating venv for nvim failed." 1>&2
         fi
-        "$VENV_FOR_NEOVIM/bin/pip" install --upgrade pip neovim pynvim
-    else
-        echo "python3 was not found. Creating venv for nvim failed." 1>&2
+
+        # dein.vim
+        if ! ghq list | grep -q "Shougo/dein.vim"; then
+            ghq get Shougo/dein.vim
+        else
+            DEIN_DIR=$(ghq list -p | grep "Shougo/dein.vim")
+            git -C "$DEIN_DIR" pull
+        fi
+
+        mkdir -p "$HOME/.local/share/nvim/undo"
+        mkdir -p "$HOME/.local/share/nvim/backup"
+        mkdir -p "$HOME/.local/share/nvim/swap"
+
+        # nvimの初回ダウンロード等が必要なものを実行
+        nvim +q
+        nvim "+call dein#check_update()" +q
+        nvim "+UpdateRemotePlugins" "+TSInstall all" +q
+
     fi
-
-    # dein.vim
-    if ! ghq list | grep -q "Shougo/dein.vim"; then
-        ghq get Shougo/dein.vim
-    else
-        DEIN_DIR=$(ghq list -p | grep "Shougo/dein.vim")
-        git -C "$DEIN_DIR" pull
-    fi
-
-    mkdir -p "$HOME/.local/share/nvim/undo"
-    mkdir -p "$HOME/.local/share/nvim/backup"
-    mkdir -p "$HOME/.local/share/nvim/swap"
-
-    # nvimの初回ダウンロード等が必要なものを実行
-    nvim +q
-    nvim "+call dein#check_update()" +q
-    nvim "+UpdateRemotePlugins" "+TSInstall all" +q
-
 fi

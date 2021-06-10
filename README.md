@@ -9,17 +9,19 @@ Multi-platform dotfiles with automatic instalation and deploying scripts.
 ## How to install
 - ```sh
   export DOTPATH=$HOME/dotfiles
-  git clone --recursive <this repo> $DOTPATH && cd $DOTPATH && make
+  git clone --recursive <this repo> $DOTPATH
+  cd $DOTPATH
+  make
   ```
 - Then, make zsh a default shell if permission is available.
-  ```
+  ```sh
   echo $HOME/.local/bin/zsh >> /etc/shells
   chsh -s $HOME/.local/bin/zsh
   ```
   If not, zsh is executed automatically (See `.bash_profile`).
 
 ### with docker-compose
-- `sudo docker-compose up --build -d && sudo docker-compose exec centos8 bash --login`
+- `sudo docker-compose up --force-recreate -d`
 - `sudo docker-compose exec centos8 bash --login`
 
 ## Directory Structure
