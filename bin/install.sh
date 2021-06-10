@@ -179,7 +179,7 @@ install_asdf() {
     # $1 - command
     # $2 - plugin name, default: $1
     # $3 - version, default: latest
-    if [[ -z $(command -v "$1") ]]; then
+    if ! asdf plugin list "${2:-$1}" | grep -q "${2:-$1}"; then
         echo "command $1 was not found. Installing..."
         asdf plugin add "${2:-$1}"
         asdf install "${2:-$1}" "${3:-latest}"
@@ -196,7 +196,7 @@ if ${DOTINSTALL_GOLANG:-true}; then
     install_goget() {
         # $1 - command
         # $2 - url
-        [ -z "$(command -v $1)" ] && go get -u "$2"
+        [[ -z $(command -v "$1") ]] && go get -u "$2"
     }
     install_goget ghq github.com/x-motemen/ghq
     install_goget hub github.com/github/hub
@@ -238,7 +238,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
     # python
     #   Note: Following modules built successfully but were removed because they could not be imported: _ctypes
     #           と表示されるが、import ctypesとかできる。謎。
-    if [[ -z $(command -v python3.8) ]]; then
+    if [[ ! -x $PREFIX/bin/python3.8 ]]; then
         echo "python3.8 was not found. Installing..."
         if [[ ! -d "$PREFIX/src/cpython-3.8.10" ]]; then
             url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
@@ -262,7 +262,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
     fi
     if [[ ! -d "$PYTHON_DEFAULT_VENV" ]]; then
         mkdir -p "$PYTHON_VENV_DIR"
-        python3 -m venv "$PYTHON_DEFAULT_VENV"
+        "$PREFIX/bin/python3.8" -m venv "$PYTHON_DEFAULT_VENV"
     fi
 
     # poetry
@@ -327,10 +327,10 @@ if ${DOTINSTALL_NVIM:-true}; then
     if [[ -n $(command -v nvim) ]]; then
 
         # python
-        if [[ -n $(command -v python3) ]]; then
+        if [[ -x "$PREFIX/bin/python3.8" ]]; then
             VENV_FOR_NEOVIM="$PREFIX/opt/python3_nvim"
             if [[ ! -d "$VENV_FOR_NEOVIM" ]]; then
-                python3 -m venv "$VENV_FOR_NEOVIM"
+                "$PREFIX/bin/python3.8" -m venv "$VENV_FOR_NEOVIM"
             fi
             "$VENV_FOR_NEOVIM/bin/pip" install --upgrade pip neovim pynvim
         else
