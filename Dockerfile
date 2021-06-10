@@ -31,13 +31,4 @@ WORKDIR /home/${USERNAME}/
 #### install tools ####
 ENV DOTPATH /home/${USERNAME}/dotfiles
 
-ENV PREFIX /home/${USERNAME}/.local
-ENV PATH $PREFIX/bin:$PATH
-ENV LD_RUN_PATH $PREFIX/lib64:$PREFIX/lib:/usr/lib64:/usr/lib:/lib64:/lib
-ENV LD_LIBRARY_PATH $PREFIX/lib64:$PREFIX/lib:/usr/lib64:/usr/lib:/lib64:/lib
-ENV PKG_CONFIG_PATH $PREFIX/lib64/pkgconfig:$PREFIX/lib/pkgconfig
-
-RUN mkdir -p $PREFIX/src
-WORKDIR $PREFIX/src
-
 WORKDIR /home/${USERNAME}/dotfiles

@@ -9,9 +9,9 @@ if [[ $(uname) != "Linux" ]]; then
     exit 1
 fi
 
-# check DOTPATH
+# check DOTPATH and PREFIX
 if [[ -z $DOTPATH ]]; then
-    echo "Ensure $DOTPATH is set."
+    echo "Ensure \$DOTPATH is set." 1>&2
     exit 1
 fi
 source "$DOTPATH/sh/path.sh"
