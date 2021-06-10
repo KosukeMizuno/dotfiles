@@ -12,7 +12,7 @@ elif [[ -n $ZSH_NAME ]]; then
 fi
 
 # PATHを一覧で出す
-function echo_path(){
+echo_path() {
     echo "$PATH" | tr ':' '\n'
 }
 
@@ -28,8 +28,7 @@ if [[ $TERM_PROGRAM = "mintty" ]]; then
 fi
 
 # encoding conversion for win
-function wincmd()
-{
+wincmd() {
     CMD=$1
     shift
     $CMD "$@" 2>&1 | iconv -f CP932 -t UTF-8
@@ -54,13 +53,13 @@ else
 fi
 
 # explorer
-function open_filer(){
-    if [[ $# -eq 0 ]] ; then
+open_filer() {
+    if [[ $# -eq 0 ]]; then
         TARGET=$PWD
     else
         TARGET=$1
     fi
-    
+
     if [[ -n "$(command -v cygpath)" ]]; then
         TARGET=$(cygpath -w "$TARGET")
         explorer.exe "$TARGET"
@@ -121,13 +120,14 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
 export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
 
 # kill with fzf
-fkill() {
+__fzf_kill() {
     target=$(ps -ef | sed 1d | fzf)
     if [[ -n $target ]]; then
         echo "target --> $target"
         echo "$target" | awk '{print $2}' | xargs kill -"${1:-9}"
     fi
 }
+alias fkill=__fzf_kill
 
 # cd with fzf
 __fzf_cd() {
@@ -153,7 +153,7 @@ else
     alias activate_default="source $PYTHON_DEFAULT_VENV/bin/activate"
 fi
 __fzf_activate_python_venv() {
-    target=$(\ls "$PYTHON_VENV_DIR" | fzf)
+    target=$(\ls "$PYTHON_VENV_DIR" | fzf --select-1)
     if [[ -d "$PYTHON_VENV_DIR/$target" ]]; then
         if [[ -n $(command -v cygpath) ]]; then
             source "$PYTHON_VENV_DIR/$target/Scripts/activate"

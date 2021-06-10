@@ -19,7 +19,7 @@ Multi-platform dotfiles with automatic instalation and deploying scripts.
   If not, zsh is executed automatically (See `.bash_profile`).
 
 ### with docker-compose
-- `sudo docker-compose up --build -d && sudo docker-compose exec centos8 bash`
+- `sudo docker-compose up --build -d && sudo docker-compose exec centos8 bash --login`
 - `sudo docker-compose exec centos8 bash --login`
 
 ## Directory Structure
@@ -34,7 +34,7 @@ Defaults and recommendations:
 ```
 $PREFIX/bin -- とりあえずPATHを通したいものやコンパイル済みバイナリはココへ入れる
 $PREFIX/src -- 自分でコンパイルするもの置き場
-$PREFIX/opt -- 自分でコンパイルしないもの置き場
+$PREFIX/opt -- 自分でコンパイルしないもの, vim用python_venvなど
 ```
 
 ### git
@@ -64,7 +64,7 @@ $DOTPATH/.config/git/ignore  -- global ignore
 ~/.sh_secure         -- 手動で書く。git管理したくないもの（あればbash_profileの中で読まれる, git管理対象外）
 ```
 
-`$ZSH_DO_PROFILING`に何か設定された状態でzshを起動すると、`.zshenv`の中で`zsh/zprof`が有効化されてプロファイリングが走る
+`ZSH_DO_PROFILING=true`など設定された状態でzshを起動すると、`.zshenv`の中で`zsh/zprof`が有効化されてプロファイリングが走る
 
 ### Python
 
@@ -85,7 +85,8 @@ vim用のpython3(venv)は`$PREFIX/opt/python3_nvim`においた。
 python2って要る？
 
 
-## Acknowledgement
+## Acknowledgements
 
 - `./bin/lazyenv.bash` was copied from <https://github.com/takezoh/lazyenv>
+- `./bin/check_nerdfont.sh` was copied from <https://takuzoo3868.hatenablog.com/entry/2018/12/28/032148>
 - zsh-related rc scripts `./sh/.z*` was initially copied from [sorin-ionescu/prezto](https://github.com/sorin-ionescu/prezto) and then customized.

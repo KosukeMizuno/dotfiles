@@ -24,8 +24,6 @@ mkdir -p "$PREFIX/src"
 mkdir -p "$PREFIX/opt"
 mkdir -p "$PREFIX/share/fonts"
 
-#### 順番はあとで適当に変えたい
-
 ## zsh
 if ${DOTINSTALL_ZSH:-true}; then
 
@@ -217,7 +215,7 @@ if ${DOTINSTALL_RUST:-true}; then
         # $2 - crate name, default: $1
         [[ -z $(command -v "$1") ]] && cargo install "${2:-$1}"
     }
-    install_cargo exa
+    install_cargo exa  # TODO: exaがwindowsで使えないので共通化できるものを探したい
     install_cargo rg ripgrep
     install_cargo bat
 fi
@@ -234,6 +232,7 @@ if ${DOTINSTALL_NODEJS:-true}; then
 fi
 
 ## Python
+# TODO: shellcheckのエラーを直す
 if ${DOTINSTALL_PYTHON:-true}; then
     _pwd=$PWD
 
@@ -292,6 +291,7 @@ if ${DOTINSTALL_LATEX:-true}; then
 fi
 
 ## nvim
+# TODO: shellcheckのエラーを直す
 if ${DOTINSTALL_NVIM:-true}; then
     _pwd=$(pwd)
 
