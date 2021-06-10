@@ -14,6 +14,8 @@ if [[ -z $DOTPATH ]]; then
     echo "Ensure \$DOTPATH is set." 1>&2
     exit 1
 fi
+
+unalias -a
 source "$DOTPATH/sh/path.sh"
 PATH="$DOTPATH/bin:$PATH"
 
@@ -206,7 +208,7 @@ fi
 ## Rust
 # Note: rust & rust-based tools are installed without asdf.
 if ${DOTINSTALL_RUST:-true}; then
-    if [[ ! -f "$HOME/.cargo/env" ]]; then
+    if [[ ! -e "$HOME/.cargo/env" ]]; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     fi
     source "$HOME/.cargo/env"
@@ -215,7 +217,7 @@ if ${DOTINSTALL_RUST:-true}; then
         # $2 - crate name, default: $1
         [[ -z $(command -v "$1") ]] && cargo install "${2:-$1}"
     }
-    install_cargo exa  # TODO: exaがwindowsで使えないので共通化できるものを探したい
+    install_cargo exa # TODO: exaがwindowsで使えないので共通化できるものを探したい
     install_cargo rg ripgrep
     install_cargo bat
 fi
@@ -232,16 +234,13 @@ if ${DOTINSTALL_NODEJS:-true}; then
 fi
 
 ## Python
-# TODO: shellcheckのエラーを直す
 if ${DOTINSTALL_PYTHON:-true}; then
-    _pwd=$PWD
-
     # python
     #   Note: Following modules built successfully but were removed because they could not be imported: _ctypes
     #           と表示されるが、import ctypesとかできる。謎。
     if [[ -z $(command -v python3.8) ]]; then
+        echo "python3.8 was not found. Installing..."
         if [[ ! -d "$PREFIX/src/cpython-3.8.10" ]]; then
-            echo "python3.8 was not found. Installing..."
             url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
             wget $url -P /tmp
             dname=$(mktemp -d)
@@ -250,21 +249,24 @@ if ${DOTINSTALL_PYTHON:-true}; then
             mkdir -p "$PREFIX/src/$progname"
             cp -lR "$dname/$progname" "$PREFIX/src"
         fi
-        cd "$PREFIX/src/$progname"
-        ./configure --prefix="$PREFIX" --enable-shared --enable-optimizations --with-lto
-        make -j8
-        make install # Note: $PREFIXへの(初)インストールなのでaltinstallではなくinstall
-        cd $_pwd
+        (cd "$PREFIX/src/$progname" && {
+            ./configure --prefix="$PREFIX" --enable-shared --enable-optimizations --with-lto
+            make -j8
+
+            if [[ -n $(find "$PREFIX/bin" -name python3) ]]; then
+                make altinstall
+            else
+                make install
+            fi
+        })
     fi
-    PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
-    PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
     if [[ ! -d "$PYTHON_DEFAULT_VENV" ]]; then
+        mkdir -p "$PYTHON_VENV_DIR"
         python3 -m venv "$PYTHON_DEFAULT_VENV"
     fi
-    source "$PYTHON_DEFAULT_VENV/bin/activate"
 
     # poetry
-    [[ -f "$HOME/.poetry/env" ]] && source "$HOME/.poetry/env"
+    [[ -e "$HOME/.poetry/env" ]] && source "$HOME/.poetry/env"
     if [[ -z $(command -v poetry) ]]; then
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
         source "$HOME/.poetry/env"
@@ -272,10 +274,13 @@ if ${DOTINSTALL_PYTHON:-true}; then
 
     # python tools, jupyter
     # TODO: requirements.txtベースにしたい
-    pip install --upgrade pip autopep8 isort
-    pip install jupyterlab nbdime
-    pip install numpy scipy matplotlib cython tqdm better_exceptions numba
-    pip install qutip
+    default_pip=$PYTHON_DEFAULT_VENV/bin/pip
+    if [[ -x $default_pip ]]; then
+        $default_pip install --upgrade pip autopep8 isort
+        $default_pip install jupyterlab nbdime
+        $default_pip install numpy scipy matplotlib cython tqdm better_exceptions numba
+        $default_pip install qutip
+    fi
 fi
 
 ## Perl
@@ -293,33 +298,29 @@ fi
 ## nvim
 # TODO: shellcheckのエラーを直す
 if ${DOTINSTALL_NVIM:-true}; then
-    _pwd=$(pwd)
-
-    # cd neovim source
     if [[ -z $(command -v ghq) ]]; then
         echo "ghq was not found." 1>&2
         exit 1
     fi
-    if ghq list | grep -q "neovim/neovim"; then
-        cd "$(ghq list -p | grep neovim/neovim)"
-        echo "fetching neovim/neovim  ..."
-        git fetch
-    else
+    if ! ghq list | grep -q "neovim/neovim"; then
         echo "cloning neovim/neovim  ..."
-        ghq get -l neovim/neovim
+        ghq get neovim/neovim
     fi
 
-    # check update & build
-    NVIM_TARGET_BRANCH="nightly"
-    echo "neovim HEAD: $(git rev-parse HEAD)"
-    echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
-    if [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]] || [[ -x "$PREFIX/bin/nvim" ]]; then
-        echo "Building nvim-nightly..."
-        git checkout $NVIM_TARGET_BRANCH
-        make distclean
-        make CMAKE_INSTALL_PREFIX="$PREFIX" CMAKE_BUILD_TYPE=Release
-        make install
-    fi
+    (cd "$(ghq list -p | grep neovim/neovim)" && {
+        git fetch
+
+        # check update & build
+        NVIM_TARGET_BRANCH="nightly"
+        echo "neovim HEAD: $(git rev-parse HEAD)"
+        echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
+        if [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]] || [[ ! -x "$PREFIX/bin/nvim" ]]; then
+            echo "Building nvim-nightly..."
+            git checkout $NVIM_TARGET_BRANCH
+            make CMAKE_INSTALL_PREFIX="$PREFIX" CMAKE_BUILD_TYPE=Release
+            make install
+        fi
+    })
 
     # python
     if [[ -n $(command -v python3) ]]; then
@@ -333,7 +334,7 @@ if ${DOTINSTALL_NVIM:-true}; then
     fi
 
     # dein.vim
-    if ! (ghq list | grep -q "Shougo/dein.vim"); then
+    if ! ghq list | grep -q "Shougo/dein.vim"; then
         ghq get Shougo/dein.vim
     else
         DEIN_DIR=$(ghq list -p | grep "Shougo/dein.vim")
@@ -345,11 +346,8 @@ if ${DOTINSTALL_NVIM:-true}; then
     mkdir -p "$HOME/.local/share/nvim/swap"
 
     # nvimの初回ダウンロード等が必要なものを実行
-    # nvimに対するエイリアスがあるので絶対パスで呼ぶ
-    "$PREFIX/bin/nvim" +q
-    "$PREFIX/bin/nvim" "+call dein#check_update()" +q
-    "$PREFIX/bin/nvim" "+UpdateRemotePlugins" "+TSInstall all" +q
+    nvim +q
+    nvim "+call dein#check_update()" +q
+    nvim "+UpdateRemotePlugins" "+TSInstall all" +q
 
-    cd "$_pwd"
 fi
-exit 0

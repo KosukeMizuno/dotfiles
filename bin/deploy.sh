@@ -14,6 +14,8 @@ if [[ -z $DOTPATH ]]; then
     echo "Ensure \$DOTPATH is set." 1>&2
     exit 1
 fi
+
+unalias -a
 source "$DOTPATH/sh/path.sh"
 PATH="$DOTPATH/bin:$PATH"
 
