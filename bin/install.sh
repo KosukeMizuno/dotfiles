@@ -313,7 +313,7 @@ if ${DOTINSTALL_NVIM:-true}; then
     NVIM_TARGET_BRANCH="nightly"
     echo "neovim HEAD: $(git rev-parse HEAD)"
     echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
-    if [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]] || [[ -z $(command -v nvim) ]]; then
+    if [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]] || [[ -x "$PREFIX/bin/nvim" ]]; then
         echo "Building nvim-nightly..."
         make distclean
         git checkout $NVIM_TARGET_BRANCH
@@ -344,10 +344,12 @@ if ${DOTINSTALL_NVIM:-true}; then
     mkdir -p "$HOME/.local/share/nvim/backup"
     mkdir -p "$HOME/.local/share/nvim/swap"
 
-    # nvimの初回ダウンロード等が必要なもの
-    nvim +q
-    nvim "+call dein#check_update()" +q
-    nvim "+UpdateRemotePlugins" "+TSInstall all" +q
+    # nvimの初回ダウンロード等が必要なものを実行
+    # nvimに対するエイリアスがあるので絶対パスで呼ぶ
+    "$PREFIX/bin/nvim" +q
+    "$PREFIX/bin/nvim" "+call dein#check_update()" +q
+    "$PREFIX/bin/nvim" "+UpdateRemotePlugins" "+TSInstall all" +q
 
     cd "$_pwd"
 fi
+exit 0
