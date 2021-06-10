@@ -35,18 +35,18 @@ src=$1
 dst=$2
 
 # check dst exists or not.
-if [ ! -f "$dst" ] && [ ! -d "$dst" ] && [ ! -L "$dst" ]; then  
+if [[ ! -e $dst ]]; then  
     echo "  dst doesn't exists ==> Make symbolic link."
-    if [ ! $dry ]; then
+    if [[ ! $dry ]]; then
         dirdst=$(dirname "$dst")
-        [ ! -d "$dirdst" ] && mkdir -p "$dirdst"
+        [[ ! -d $dirdst ]] && mkdir -p "$dirdst"
         echo "ln -s $src $dst"
         ln -s "$src" "$dst"
     fi
     exit
 fi
 
-if [ $mode == "skip" ]; then
+if [[ $mode == "skip" ]]; then
     echo "  dst already exists. Skip mode ==> Do nothing."
     exit 0
 fi
@@ -54,28 +54,28 @@ fi
 # check dst and src are identical or not.
 _src=$(readlink -f "$src")  # Note: readlink はPOSIX準拠じゃない
 _dst=$(readlink -f "$dst")
-if [ "$_src" == "$_dst" ]; then  
+if [[ "$_src" == "$_dst" ]]; then  
     echo "  dst and src are already identical."
     exit 0
 fi
 
 # make link
-if [ $mode == "force" ]; then
+if [[ $mode == "force" ]]; then
     echo "  dst already exists. Force mode ==> remove dst and make link."
-    if [ ! $dry ]; then
-        if [ -L "$dst" ]; then
+    if [[ ! $dry ]]; then
+        if [[ -L $dst ]]; then
             unlink "$dst"
-        elif [ -f "$dst" ]; then
+        elif [[ -f $dst ]]; then
             rm "$dst"
-        elif [ -d "$dst" ]; then
+        elif [[ -d $dst ]]; then
             rm -rf "$dst"
         fi
         ln -s "$src" "$dst"
     fi
 
-elif [ $mode == "backup" ]; then
+elif [[ $mode == "backup" ]]; then
     echo "  dst already exists. Backup mode ==> rename dst and make link."
-    if [ ! $dry ]; then
+    if [[ ! $dry ]]; then
         mv_targ="$dst.orig"
         mv "$dst" "$mv_targ"
         ln -s "$src" "$dst"

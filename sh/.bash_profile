@@ -14,17 +14,17 @@ stty stop undef
 eval "$(direnv hook bash)"
 
 # load local bash_profile if exists
-if [ -f "$HOME/.bash_profile_local" ]; then
+if [[ -e "$HOME/.bash_profile_local" ]]; then
     source "$HOME/.sh_profile_local"
 fi
 
 # load secure things if exists
-if [ -f "$HOME/.sh_secure" ]; then
+if [[ -e "$HOME/.sh_secure" ]]; then
     source "$HOME/.sh_secure"
 fi
 
 # load bashrc
-if [ -f "$HOME/.bashrc" ]; then
+if [[ -e "$HOME/.bashrc" ]]; then
     source "$HOME/.bashrc"
 fi
 

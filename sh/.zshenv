@@ -6,7 +6,7 @@ export ZDOTDIR="${ZDOTDIR:-$HOME}"
 #       git-submoduleで入れると面倒なのでHOME下にいれることにした
 
 # export ZSH_DO_PROFILING=""
-if [ -n "${ZSH_DO_PROFILING:-}" ]; then
+if [[ -n ${ZSH_DO_PROFILING:-} ]]; then
     zmodload zsh/zprof && zprof
 fi
 

@@ -33,7 +33,7 @@ function __source_rc() {
     zle kill-whole-line
     BUFFER=rc
     zle .accept-line
-    if [ ! ${#BUF} -eq 0 ];then
+    if [[ ! ${#BUF} -eq 0 ]];then
         zle -U ${BUF}
     fi
 }
@@ -101,7 +101,7 @@ alias nvim=editor_or_fg
 
 #### PROFILING ####
 # zshenv の最初にあるzprofも併せて有効化する必要がある
-if [ -n "${ZSH_DO_PROFILING:-}" ]; then
+if [[ -n ${ZSH_DO_PROFILING:-} ]]; then
     if (which zprof > /dev/null 2>&1) ; then
         zprof
     fi

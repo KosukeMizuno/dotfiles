@@ -315,8 +315,8 @@ if ${DOTINSTALL_NVIM:-true}; then
     echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
     if [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]] || [[ -x "$PREFIX/bin/nvim" ]]; then
         echo "Building nvim-nightly..."
-        make distclean
         git checkout $NVIM_TARGET_BRANCH
+        make distclean
         make CMAKE_INSTALL_PREFIX="$PREFIX" CMAKE_BUILD_TYPE=Release
         make install
     fi

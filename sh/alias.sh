@@ -3,10 +3,10 @@
 
 #### COMMAND LINE HELPER
 # reload rc
-if [ -n "$BASH" ]; then
+if [[ -n $BASH ]]; then
     alias rc='echo "sourcing ~/.bashrc ..."; source $HOME/.bashrc'
     alias rc_profile='echo "sourcing ~/.bash_profile ..."; source $HOME/.bash_profile'
-elif [ -n "$ZSH_NAME" ]; then
+elif [[ -n $ZSH_NAME ]]; then
     alias rc='echo "sourcing ~/.zshrc ..."; source $HOME/.zshrc'
     alias rc_profile='echo "sourcing ~/.zprofile ..."; source $HOME/.zprofile'
 fi
@@ -17,7 +17,7 @@ function echo_path(){
 }
 
 # alias for mintty (winpty, encoding)
-if [ "$TERM_PROGRAM" = "mintty" ]; then
+if [[ $TERM_PROGRAM = "mintty" ]]; then
     for name in node ipython python jupyter nvim; do
         alias $name="winpty $name"
     done
@@ -36,8 +36,8 @@ function wincmd()
 }
 
 #### FILER ####
-if [ -n "$(command -v exa)" ]; then
-    if [ -n "$USE_ICON_IN_TERM" ] && $USE_ICON_IN_TERM; then
+if [[ -n $(command -v exa) ]]; then
+    if [[ -n $USE_ICON_IN_TERM ]] && $USE_ICON_IN_TERM; then
         ICON_FLG=" --icons"
     else
         ICON_FLG=""
@@ -55,13 +55,13 @@ fi
 
 # explorer
 function open_filer(){
-    if [ $# -eq 0 ] ; then
+    if [[ $# -eq 0 ]] ; then
         TARGET=$PWD
     else
         TARGET=$1
     fi
     
-    if [ -n "$(command -v cygpath)" ]; then
+    if [[ -n "$(command -v cygpath)" ]]; then
         TARGET=$(cygpath -w "$TARGET")
         explorer.exe "$TARGET"
     else
@@ -76,12 +76,13 @@ alias tl="tmux ls"
 
 # tmux-resurrectの再起動時にもたもたしていると新しいセッションができてしまうことがあるので、
 # 最新を破棄＆古いセッションファイルを最新にして読み込めるようにする
+# TODO: 書き直し
 tmux-select-resurrect-session() {
     TMUXRESURRECTDIR="$HOME/.tmux/resurrect"
     unlink "$TMUXRESURRECTDIR/last"
     PREVCMD="cat $TMUXRESURRECTDIR/{}"
-    SESSIONFILE=$(\ls $TMUXRESURRECTDIR | fzf --preview=$PREVCMD --tac)
-    echo $SESSIONFILE
+    SESSIONFILE=$(\ls $TMUXRESURRECTDIR | fzf --preview="$PREVCMD" --tac)
+    echo "$SESSIONFILE"
     ln -s "$TMUXRESURRECTDIR/$SESSIONFILE" "$TMUXRESURRECTDIR/last"
 }
 
@@ -103,12 +104,12 @@ alias grj="git remind status -n --all | fzf --ansi --cycle --preview=\"git -C {}
 alias grs='git remind status --all'
 
 # ghq
-if [ -n "$(command -v bat)" ]; then
+if [[ -n $(command -v bat) ]]; then
     alias gj='cd $(ghq list | fzf --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
 else
     alias gj='cd $(ghq list | fzf --ansi --cycle --preview "cat $(ghq root)/{}/README.* | head -40" | xargs -t -I{} echo $(ghq root)/{})'
 fi
-if [ "$TERM_PROGRAM" = "mintty" ]; then
+if [[ $TERM_PROGRAM = "mintty" ]]; then
     alias gj="echo 'fzf is not available in mintty.'"
 fi
 
@@ -122,15 +123,15 @@ export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
 # kill with fzf
 fkill() {
     target=$(ps -ef | sed 1d | fzf)
-    if [[ -n "$target" ]]; then
+    if [[ -n $target ]]; then
         echo "target --> $target"
-        echo "$target" | awk '{print $2}' | xargs kill -${1:-9}
+        echo "$target" | awk '{print $2}' | xargs kill -"${1:-9}"
     fi
 }
 
 # cd with fzf
 __fzf_cd() {
-    if [ -n "$(command -v exa)" ]; then
+    if [[ -n $(command -v exa) ]]; then
         target=$(exa -a --only-dirs | fzf --ansi --cycle --height 50% --preview='exa --color=always {}')
     else
         target=$(ls -d */ .*/ | fzf --ansi --cycle --height 50% --preview='ls --color=always {}')
@@ -146,15 +147,15 @@ alias i=ipython
 # TODO: 対処療法的なのでちゃんとmsysとlinuxを判別したい
 PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
 PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
-if [ -n "$(command -v cygpath)" ]; then
+if [[ -n $(command -v cygpath) ]]; then
     alias activate_default="source $PYTHON_DEFAULT_VENV/Scripts/activate"
 else
     alias activate_default="source $PYTHON_DEFAULT_VENV/bin/activate"
 fi
 __fzf_activate_python_venv() {
     target=$(\ls "$PYTHON_VENV_DIR" | fzf)
-    if [ -d "$PYTHON_VENV_DIR/$target" ]; then
-        if [ -n "$(command -v cygpath)" ]; then
+    if [[ -d "$PYTHON_VENV_DIR/$target" ]]; then
+        if [[ -n $(command -v cygpath) ]]; then
             source "$PYTHON_VENV_DIR/$target/Scripts/activate"
         else
             source "$PYTHON_VENV_DIR/$target/bin/activate"
