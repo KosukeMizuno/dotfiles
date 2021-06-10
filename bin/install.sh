@@ -4,13 +4,13 @@
 # 必要なツールがなければ知らせる＆可能ならインストールする
 
 # 環境チェック
-if [ "$(uname)" != "Linux" ]; then
+if [[ $(uname) != "Linux" ]]; then
     echo "This install script is written for Linux system." 1>&2
     exit 1
 fi
 
 # check DOTPATH and PREFIX
-if [ -z "$DOTPATH" ]; then
+if [[ -z $DOTPATH ]]; then
     echo "Ensure \$DOTPATH is set." 1>&2
     exit 1
 fi
@@ -29,8 +29,8 @@ mkdir -p "$PREFIX/share/fonts"
 ## zsh
 if ${DOTINSTALL_ZSH:-true}; then
 
-    if [ -z "$(command -v zsh)" ]; then
-        if [ ! -d "$PREFIX/src/zsh-5.8" ]; then
+    if [[ -z $(command -v zsh) ]]; then
+        if [[ ! -d "$PREFIX/src/zsh-5.8" ]]; then
             url="https://sourceforge.net/projects/zsh/files/zsh/5.8/zsh-5.8.tar.xz/download"
             wget $url -P /tmp
             tar xvf "/tmp/$(basename $url)" -C "$PREFIX/src"
@@ -43,7 +43,7 @@ if ${DOTINSTALL_ZSH:-true}; then
     fi
 
     # zprezto
-    if [ ! -d "$HOME/.zprezto" ]; then
+    if [[ ! -d "$HOME/.zprezto" ]]; then
         git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"
     fi
 
@@ -55,8 +55,8 @@ if ${DOTINSTALL_TMUX:-true}; then
     # libevent
     # TODO: ここの条件式大丈夫？
     if (! ldconfig -p | grep -q "libevent_core-2.1.so.7") &&
-        (! find "$PREFIX/lib/" -name "libevent_core-2.1.so.7" -type f -or -type l | grep -q libevent-2.1.so.7); then
-        if [ ! -d "$PREFIX/src/libevent-2.1.12-stable" ]; then
+        (! find "$PREFIX/lib/" -name "libevent_core-2.1.so.7" -type f -or -type l | grep -q "libevent-2.1.so.7"); then
+        if [[ ! -d "$PREFIX/src/libevent-2.1.12-stable" ]]; then
             url="https://github.com/libevent/libevent/releases/download/release-2.1.12-stable/libevent-2.1.12-stable.tar.gz"
             wget $url -P /tmp
             tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
@@ -69,8 +69,8 @@ if ${DOTINSTALL_TMUX:-true}; then
     fi
 
     # tmux-3.2
-    if [ -z "$(command -v tmux)" ]; then
-        if [ ! -d "$PREFIX/src/tmux-3.2" ]; then
+    if [[ -z $(command -v tmux) ]]; then
+        if [[ ! -d "$PREFIX/src/tmux-3.2" ]]; then
             url="https://github.com/tmux/tmux/releases/download/3.2/tmux-3.2.tar.gz"
             wget $url -P /tmp
             tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
@@ -93,7 +93,7 @@ if ${DOTINSTALL_FONTS:-true}; then
     if [[ $(fc-list | grep -c Cica) -eq 0 ]]; then
         echo "Installing Cica font..."
         url=https://github.com/miiton/Cica/releases/download/v5.0.2/Cica_v5.0.2_with_emoji.zip
-        dname=$(mktemp -d --suffix="$(basename "$url" .zip)")
+        dname=$(mktemp -d --suffix="$(basename $url .zip)")
         wget $url -P /tmp
         unzip "/tmp/$(basename $url)" -d "$dname"
         cp "$dname"/*.ttf "$PREFIX/share/fonts/"
@@ -102,7 +102,7 @@ if ${DOTINSTALL_FONTS:-true}; then
     if [[ $(fc-list | grep -c HackGen) -eq 0 ]]; then
         echo "Installing HackGen font..."
         url=https://github.com/yuru7/HackGen/releases/download/v2.3.2/HackGenNerd_v2.3.2.zip
-        dname=$(mktemp -d --suffix="$(basename "$url" .zip)")
+        dname=$(mktemp -d --suffix="$(basename $url .zip)")
         wget $url -P /tmp
         unzip "/tmp/$(basename $url)" -d "$dname"
         cp "$dname/HackGenNerd_v2.3.2"/*.ttf "$PREFIX/share/fonts/"
@@ -119,18 +119,18 @@ if ${DOTINSTALL_FONTS:-true}; then
 fi
 
 ## ssh
-if [ -z "$(command -v ssh)" ]; then
+if [[ -z $(command -v ssh) ]]; then
     echo "command ssh was not found." 1>&2
 fi
-if [ -z "$(command -v wget)" ]; then
+if [[ -z $(command -v wget) ]]; then
     echo "command wget was not found." 1>&2
 fi
-if [ -z "$(command -v curl)" ]; then
+if [[ -z $(command -v curl) ]]; then
     echo "command curl was not found." 1>&2
 fi
 
 ## git
-if [ -z "$(command -v git)" ]; then
+if [[ -z $(command -v git) ]]; then
     echo "command git was not found." 1>&2
     exit 1
     # gitなかったら後段無理なので終了
@@ -138,7 +138,7 @@ fi
 
 ## other things
 # git-remind
-if [ -z "$(command -v git-remind)" ]; then
+if [[ -z $(command -v git-remind) ]]; then
     url="https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz"
     wget $url -P /tmp
     dname="$PREFIX/opt/$(basename $url .tar.gz)"
@@ -148,25 +148,28 @@ if [ -z "$(command -v git-remind)" ]; then
 fi
 
 # fzf
-if [ -z "$(command -v fzf)" ]; then
+if [[ -z $(command -v fzf) ]]; then
     git clone --depth 1 https://github.com/junegunn/fzf.git "$PREFIX/opt/fzf"
     "$PREFIX/opt/fzf/install" --bin
-    ln -s "$PREFIX/opt/fzf/bin/fzf" "$PREFIX/bin/fzf"
+    for name in "$PREFIX/opt/fzf/bin"/*; do
+        ln -s "$name" "$PREFIX/bin/$(basename "$name")"
+    done
 fi
 
 # neofetch
-if [ -z "$(command -v neofetch)" ]; then
+if [[ -z $(command -v neofetch) ]]; then
     git clone https://github.com/dylanaraps/neofetch "$PREFIX/opt/neofetch"
-    cd "$PREFIX/opt/neofetch"
-    make PREFIX="$PREFIX" install
-    cd -
+    (
+        cd "$PREFIX/opt/neofetch" &&
+            make PREFIX="$PREFIX" install
+    )
 fi
 
 ## asdf
-if [ -f "$HOME/.asdf/asdf.sh" ]; then
+if [[ -e "$HOME/.asdf/asdf.sh" ]]; then
     source "$HOME/.asdf/asdf.sh"
 fi
-if [ -z "$(command -v asdf)" ]; then
+if [[ -z $(command -v asdf) ]]; then
     echo "command asdf was not found. Installing..."
     git clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
     git -C "$HOME/.asdf" checkout "$(git describe --abbrev=0 --tags)"
@@ -176,7 +179,7 @@ install_asdf() {
     # $1 - command
     # $2 - plugin name, default: $1
     # $3 - version, default: latest
-    if [ -z "$(command -v $1)" ]; then
+    if [[ -z $(command -v "$1") ]]; then
         echo "command $1 was not found. Installing..."
         asdf plugin add "${2:-$1}"
         asdf install "${2:-$1}" "${3:-latest}"
@@ -185,6 +188,8 @@ install_asdf() {
 }
 
 ## go & go-tools
+# TODO: なんかgolangのバージョン管理しなくていいんじゃね的な記事を読んだ
+#       asdfに依存する必要ないんじゃない？
 if ${DOTINSTALL_GOLANG:-true}; then
     install_asdf go golang
     install_asdf direnv
@@ -203,14 +208,14 @@ fi
 ## Rust
 # Note: rust & rust-based tools are installed without asdf.
 if ${DOTINSTALL_RUST:-true}; then
-    if [ ! -f "$HOME/.cargo/env" ]; then
+    if [[ ! -f "$HOME/.cargo/env" ]]; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
     fi
     source "$HOME/.cargo/env"
     install_cargo() {
         # $1 - command
         # $2 - crate name, default: $1
-        [ -z "$(command -v $1)" ] && cargo install "${2:-$1}"
+        [[ -z $(command -v "$1") ]] && cargo install "${2:-$1}"
     }
     install_cargo exa
     install_cargo rg ripgrep
@@ -221,7 +226,7 @@ fi
 if ${DOTINSTALL_NODEJS:-true}; then
     install_asdf node nodejs lts
     install_npm() {
-        [ -z "$(command -v $1)" ] && npm install -g "$1"
+        [[ -z $(command -v "$1") ]] && npm install -g "$1"
     }
     install_npm tldr
     npm install -g neovim
@@ -235,8 +240,8 @@ if ${DOTINSTALL_PYTHON:-true}; then
     # python
     #   Note: Following modules built successfully but were removed because they could not be imported: _ctypes
     #           と表示されるが、import ctypesとかできる。謎。
-    if [ -z "$(command -v python3.8)" ]; then
-        if [ ! -d "$PREFIX/src/cpython-3.8.10" ]; then
+    if [[ -z $(command -v python3.8) ]]; then
+        if [[ ! -d "$PREFIX/src/cpython-3.8.10" ]]; then
             echo "python3.8 was not found. Installing..."
             url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
             wget $url -P /tmp
@@ -254,14 +259,14 @@ if ${DOTINSTALL_PYTHON:-true}; then
     fi
     PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
     PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
-    if [ ! -d "$PYTHON_DEFAULT_VENV" ]; then
+    if [[ ! -d "$PYTHON_DEFAULT_VENV" ]]; then
         python3 -m venv "$PYTHON_DEFAULT_VENV"
     fi
     source "$PYTHON_DEFAULT_VENV/bin/activate"
 
     # poetry
-    [ -f "$HOME/.poetry/env" ] && source "$HOME/.poetry/env"
-    if [ -z "$(command -v poetry)" ]; then
+    [[ -f "$HOME/.poetry/env" ]] && source "$HOME/.poetry/env"
+    if [[ -z $(command -v poetry) ]]; then
         curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
         source "$HOME/.poetry/env"
     fi
@@ -277,13 +282,13 @@ fi
 ## Perl
 if ${DOTINSTALL_PERL:-true}; then
     # TODO
-    echo ""
+    :
 fi
 
 ## LaTeX
 if ${DOTINSTALL_LATEX:-true}; then
     # TODO
-    echo ""
+    :
 fi
 
 ## nvim
@@ -291,7 +296,7 @@ if ${DOTINSTALL_NVIM:-true}; then
     _pwd=$(pwd)
 
     # cd neovim source
-    if [ -z "$(command -v python3)" ]; then
+    if [[ -z $(command -v ghq) ]]; then
         echo "ghq was not found." 1>&2
         exit 1
     fi
@@ -308,7 +313,7 @@ if ${DOTINSTALL_NVIM:-true}; then
     NVIM_TARGET_BRANCH="nightly"
     echo "neovim HEAD: $(git rev-parse HEAD)"
     echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
-    if [ "$(git rev-parse HEAD)" != "$(git rev-parse $NVIM_TARGET_BRANCH)" ] || [ -z "$(command -v nvim)" ]; then
+    if [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]] || [[ -z $(command -v nvim) ]]; then
         echo "Building nvim-nightly..."
         make distclean
         git checkout $NVIM_TARGET_BRANCH
@@ -317,9 +322,9 @@ if ${DOTINSTALL_NVIM:-true}; then
     fi
 
     # python
-    if [ -n "$(command -v python3)" ]; then
+    if [[ -n $(command -v python3) ]]; then
         VENV_FOR_NEOVIM="$PREFIX/opt/python3_nvim"
-        if [ ! -d "$VENV_FOR_NEOVIM" ]; then
+        if [[ ! -d "$VENV_FOR_NEOVIM" ]]; then
             python3 -m venv "$VENV_FOR_NEOVIM"
         fi
         "$VENV_FOR_NEOVIM/bin/pip" install --upgrade pip neovim pynvim
