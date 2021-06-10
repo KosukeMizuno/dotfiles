@@ -69,7 +69,7 @@ if ${DOTINSTALL_TMUX:-true}; then
     fi
 
     # tmux-3.2
-    if [[ -z $(command -v tmux) ]]; then
+    if [[ ! -x "$PREFIX/bin/tmux" ]]; then
         if [[ ! -d "$PREFIX/src/tmux-3.2" ]]; then
             url="https://github.com/tmux/tmux/releases/download/3.2/tmux-3.2.tar.gz"
             wget $url -P /tmp
