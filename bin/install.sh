@@ -136,34 +136,6 @@ if [[ -z $(command -v git) ]]; then
     # gitなかったら後段無理なので終了
 fi
 
-## other things
-# git-remind
-if [[ -z $(command -v git-remind) ]]; then
-    url="https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz"
-    wget $url -P /tmp
-    dname="$PREFIX/opt/$(basename $url .tar.gz)"
-    mkdir -p "$dname"
-    tar zxvf "/tmp/$(basename $url)" -C "$dname"
-    ln -s "$dname/git-remind" "$PREFIX/bin/git-remind"
-fi
-
-# fzf
-if [[ -z $(command -v fzf) ]]; then
-    git clone --depth 1 https://github.com/junegunn/fzf.git "$PREFIX/opt/fzf"
-    "$PREFIX/opt/fzf/install" --bin
-    for name in "$PREFIX/opt/fzf/bin"/*; do
-        ln -s "$name" "$PREFIX/bin/$(basename "$name")"
-    done
-fi
-
-# neofetch
-if [[ -z $(command -v neofetch) ]]; then
-    url="https://github.com/dylanaraps/neofetch"
-    git clone $url "$PREFIX/opt/neofetch" &&
-      cd "$PREFIX/opt/neofetch" &&
-      make PREFIX="$PREFIX" install
-fi
-
 ## asdf
 if [[ -e "$HOME/.asdf/asdf.sh" ]]; then
     source "$HOME/.asdf/asdf.sh"
@@ -354,4 +326,37 @@ if ${DOTINSTALL_NVIM:-true}; then
         nvim "+UpdateRemotePlugins" "+TSInstall all" +q
 
     fi
+fi
+
+## other things
+# git-remind
+if [[ -z $(command -v git-remind) ]]; then
+    url="https://github.com/suin/git-remind/releases/download/v1.1.1/git-remind_1.1.1_Linux_x86_64.tar.gz"
+    wget $url -P /tmp
+    dname="$PREFIX/opt/$(basename $url .tar.gz)"
+    mkdir -p "$dname"
+    tar zxvf "/tmp/$(basename $url)" -C "$dname"
+    ln -s "$dname/git-remind" "$PREFIX/bin/git-remind"
+fi
+
+# fzf
+if [[ ! -x "$PREFIX/bin/fzf" ]]; then
+    if ! ghq list | grep -q "junegunn/fzf"; then
+        ghq get "junegunn/fzf"
+    fi
+    FZF_DIR=$(ghq list -p | grep "junegunn/fzf")
+    git -C "$FZF_DIR" pull
+
+    "$FZF_DIR/install" --bin
+    for name in "$FZF_DIR/bin"/*; do
+        ln -s "$name" "$PREFIX/bin/$(basename "$name")"
+    done
+fi
+
+# neofetch
+if [[ -z $(command -v neofetch) ]]; then
+    url="https://github.com/dylanaraps/neofetch"
+    git clone $url "$PREFIX/opt/neofetch" &&
+        cd "$PREFIX/opt/neofetch" &&
+        make PREFIX="$PREFIX" install
 fi

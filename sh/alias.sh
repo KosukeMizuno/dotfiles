@@ -100,14 +100,14 @@ alias gd="git diff"
 alias gp="git push"
 
 # git-remind
-alias grj="git remind status -n --all | fzf --ansi --cycle --preview=\"git -C {} -c color.status=always status -vv --branch --show-stash\" | cd"
+alias grj="git remind status -n --all | fzf --inline-info --height 40% --ansi --cycle --preview=\"git -C {} -c color.status=always status -vv --branch --show-stash\" | cd"
 alias grs='git remind status --all'
 
 # ghq
 if [[ -n $(command -v bat) ]]; then
-    alias gj='cd $(ghq list | fzf --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
+    alias gj='cd $(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
 else
-    alias gj='cd $(ghq list | fzf --ansi --cycle --preview "cat $(ghq root)/{}/README.* | head -40" | xargs -t -I{} echo $(ghq root)/{})'
+    alias gj='cd $(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "cat $(ghq root)/{}/README.* | head -40" | xargs -t -I{} echo $(ghq root)/{})'
 fi
 if [[ $TERM_PROGRAM = "mintty" ]]; then
     alias gj="echo 'fzf is not available in mintty.'"
@@ -118,7 +118,7 @@ alias gx="hub browse"
 
 #### FZF ####
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git/*"'
-export FZF_DEFAULT_OPTS='--height 40% --border --inline-info'
+export FZF_DEFAULT_OPTS=""
 
 # kill with fzf
 __fzf_kill() {
@@ -133,9 +133,9 @@ alias fkill=__fzf_kill
 # cd with fzf
 __fzf_cd() {
     if [[ -n $(command -v exa) ]]; then
-        target=$(exa -a --only-dirs | fzf --ansi --cycle --height 50% --preview='exa --color=always {}')
+        target=$(exa -a --only-dirs | fzf --inline-info --ansi --cycle --height 50% --preview='exa --color=always {}')
     else
-        target=$(ls -d */ .*/ | fzf --ansi --cycle --height 50% --preview='ls --color=always {}')
+        target=$(ls -d */ .*/ | fzf --inline-info --ansi --cycle --height 50% --preview='ls --color=always {}')
     fi
     cd "$target" || exit 1
 }
@@ -149,9 +149,9 @@ alias i=ipython
 PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
 PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
 if [[ -n $(command -v cygpath) ]]; then
-    alias activate_default="source $PYTHON_DEFAULT_VENV/Scripts/activate"
+    alias activate_default='source $PYTHON_DEFAULT_VENV/Scripts/activate'
 else
-    alias activate_default="source $PYTHON_DEFAULT_VENV/bin/activate"
+    alias activate_default='source $PYTHON_DEFAULT_VENV/bin/activate'
 fi
 __fzf_activate_python_venv() {
     target=$(\ls "$PYTHON_VENV_DIR" | fzf --select-1)
