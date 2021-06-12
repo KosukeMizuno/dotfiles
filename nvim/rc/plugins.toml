@@ -594,10 +594,10 @@ hook_add = '''
   let g:fastfold_fold_movement_commands = []
 '''
 
-# [[plugins]]
+[[plugins]]
 # 絵が乱れがちなのでしばらく切ってみる
-# repo = 'Xuyuanp/scrollbar.nvim'
-# if = 'has("nvim-0.5")'
+repo = 'Xuyuanp/scrollbar.nvim'
+if = 'has("nvim-0.5")'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'

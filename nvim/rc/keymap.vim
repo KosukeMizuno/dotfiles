@@ -94,8 +94,7 @@ function! s:toggle_scrollbar() abort
     echo l:msg
   endif
 endfunction
-"" default enable
-let g:scrollbar_enabled = v:false
+let g:scrollbar_enabled = v:true
 call s:toggle_scrollbar()
 "" }}}
 
@@ -311,6 +310,10 @@ else
   nnoremap <Leader>[b <Nop>
   nnoremap sb <Nop>
 endif
+
+" tab
+nnoremap ]t <cmd>tabn<CR>
+nnoremap [t <cmd>tabp<CR>
 
 " ZQ(終了)は潰す
 nnoremap ZQ <Nop>

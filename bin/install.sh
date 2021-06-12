@@ -158,11 +158,10 @@ fi
 
 # neofetch
 if [[ -z $(command -v neofetch) ]]; then
-    git clone https://github.com/dylanaraps/neofetch "$PREFIX/opt/neofetch"
-    (
-        cd "$PREFIX/opt/neofetch" &&
-            make PREFIX="$PREFIX" install
-    )
+    url="https://github.com/dylanaraps/neofetch"
+    git clone $url "$PREFIX/opt/neofetch" &&
+      cd "$PREFIX/opt/neofetch" &&
+      make PREFIX="$PREFIX" install
 fi
 
 ## asdf
@@ -323,7 +322,7 @@ if ${DOTINSTALL_NVIM:-true}; then
         # ビルドに失敗したらadsfで入れとく（sh/pash.sh を読めば ~/.local/binのほうが先にくるので、ビルドに成功すればそちらが使用される）
         install_asdf nvim neovim nightly
     )
-    
+
     if [[ -n $(command -v nvim) ]]; then
 
         # python
@@ -351,7 +350,7 @@ if ${DOTINSTALL_NVIM:-true}; then
 
         # nvimの初回ダウンロード等が必要なものを実行
         nvim +q
-        nvim "+call dein#check_update()" +q
+        nvim "+call dein#check_update(v:true)" +q
         nvim "+UpdateRemotePlugins" "+TSInstall all" +q
 
     fi
