@@ -5,6 +5,9 @@ export ZDOTDIR="${ZDOTDIR:-$HOME}"
 # Note: preztoのインストールフォルダが`ZDOTDIR/.zprezto`を仮定していて、
 #       git-submoduleで入れると面倒なのでHOME下にいれることにした
 
+# unique PATH
+typeset -U path PATH
+
 # export ZSH_DO_PROFILING=""
 if [[ -n ${ZSH_DO_PROFILING:-} ]]; then
     zmodload zsh/zprof && zprof

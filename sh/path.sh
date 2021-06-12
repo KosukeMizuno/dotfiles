@@ -25,3 +25,8 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 # RUST
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# GOLANG
+export GOPATH="$PREFIX/opt/go"
+export GOBIN="$GOPATH/bin"
+export PATH="$GOBIN:$PATH"

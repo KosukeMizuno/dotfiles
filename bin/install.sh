@@ -159,35 +159,40 @@ install_asdf() {
 }
 
 ## go & go-tools
-# TODO: なんかgolangのバージョン管理しなくていいんじゃね的な記事を読んだ
-#       asdfに依存する必要ないんじゃない？
 if ${DOTINSTALL_GOLANG:-true}; then
-    install_asdf go golang
     install_asdf direnv
+
     install_goget() {
         # $1 - command
         # $2 - url
         [[ -z $(command -v "$1") ]] && go get -u "$2"
     }
+
+    if [[ ! -d $PREFIX/opt/go ]]; then
+        echo "golang was not found. Downloading..."
+        url="https://golang.org/dl/go1.16.5.linux-amd64.tar.gz"
+        wget $url -P /tmp
+        tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/opt"
+    fi
     install_goget ghq github.com/x-motemen/ghq
     install_goget hub github.com/github/hub
     install_goget gomi github.com/b4b4r07/gomi
     install_goget shfmt mvdan.cc/sh/v3/cmd/shfmt
-    asdf reshim golang
 fi
 
 ## Rust
 # Note: rust & rust-based tools are installed without asdf.
 if ${DOTINSTALL_RUST:-true}; then
-    if [[ ! -e "$HOME/.cargo/env" ]]; then
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-    fi
-    source "$HOME/.cargo/env"
     install_cargo() {
         # $1 - command
         # $2 - crate name, default: $1
         [[ -z $(command -v "$1") ]] && cargo install "${2:-$1}"
     }
+
+    if [[ ! -e "$HOME/.cargo/env" ]]; then
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+    fi
+    source "$HOME/.cargo/env"
     install_cargo exa # TODO: exaがwindowsで使えないので共通化できるものを探したい
     install_cargo rg ripgrep
     install_cargo bat
@@ -322,7 +327,7 @@ if ${DOTINSTALL_NVIM:-true}; then
 
         # nvimの初回ダウンロード等が必要なものを実行
         nvim +q
-        nvim "+call dein#check_update(v:true)" +q
+        nvim "+call dein#check_update(v:true)" "+call dein#recache_runtimepath()" +q
         nvim "+UpdateRemotePlugins" "+TSInstall all" +q
 
     fi
