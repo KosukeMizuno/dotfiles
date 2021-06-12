@@ -1,7 +1,9 @@
 #### BASH_PROFILE ####
 
-ZSHEXE="$PREFIX/bin/zsh"
-[ -x "$ZSHEXE" ] && exec $ZSHEXE
+if [ -z "${BASH_EXECUTION_STRING}" ]; then
+    ZSHEXE="$PREFIX/bin/zsh"
+    [[ -x "$ZSHEXE" ]] && SHELL="$ZSHEXE" exec "$ZSHEXE" -l
+fi
 
 # dotfiles
 export DOTPATH="${DOTPATH:-$HOME/dotfiles}"
