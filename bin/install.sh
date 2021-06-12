@@ -233,6 +233,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
                 make altinstall
             else
                 make install
+                make altinstall
             fi
         })
     fi
