@@ -28,8 +28,9 @@ on_map = {x=['al', 'il'], o=['al', 'il']}
 # ai, ii, aI, iI
 repo = 'kana/vim-textobj-indent'
 lazy = 1
-on_map = {x=['ai', 'ii', 'aI', 'iI'],
-          o=['ai', 'ii', 'aI', 'iI']}
+[plugins.on_map]
+x=['ai', 'ii', 'aI', 'iI']
+o=['ai', 'ii', 'aI', 'iI']
 
 [[plugins]]
 ## 折りたたみ
@@ -44,8 +45,9 @@ on_map = {x=['az', 'iz'], o=['az', 'iz']}
 # Iw IW Is Ip Ib IB It I< I> I[ I] I( I) I{ I} I" I' I`
 repo = 'osyo-manga/vim-textobj-blockwise'
 lazy = 1
-on_map = {x=['Aw', 'AW', 'As', 'Ap', 'Ab', 'AB', 'At', 'A<', 'A>', 'A[', 'A]', 'A(', 'A)', 'A{', 'A}', 'A"', "A'", 'A`'],
-          o=['Aw', 'AW', 'As', 'Ap', 'Ab', 'AB', 'At', 'A<', 'A>', 'A[', 'A]', 'A(', 'A)', 'A{', 'A}', 'A"', "A'", 'A`']}
+[plugins.on_map]
+x=['Aw', 'AW', 'As', 'Ap', 'Ab', 'AB', 'At', 'A<', 'A>', 'A[', 'A]', 'A(', 'A)', 'A{', 'A}', 'A"', "A'", 'A`']
+o=['Aw', 'AW', 'As', 'Ap', 'Ab', 'AB', 'At', 'A<', 'A>', 'A[', 'A]', 'A(', 'A)', 'A{', 'A}', 'A"', "A'", 'A`']
 
 [[plugins]]
 ## 連続したスペース
@@ -73,16 +75,18 @@ on_map = {x=['a,', 'i,'], o=['a,', 'i,']}
 # ad, id
 repo = 'machakann/vim-textobj-delimited'
 lazy = 1
-on_map = {x=['ad', 'id', 'aD', 'iD'],
-          o=['ad', 'id', 'aD', 'iD']}
+[plugins.on_map]
+x=['ad', 'id', 'aD', 'iD']
+o=['ad', 'id', 'aD', 'iD']
 
 [[plugins]]
 ## コメント
 # ac, ic, aC, iC
 repo = 'glts/vim-textobj-comment'
 lazy = 1
-on_map = {x=['ac', 'ic', 'aC', 'iC'],
-          o=['ac', 'ic', 'aC', 'iC']}
+[plugins.on_map]
+x=['ac', 'ic', 'aC', 'iC']
+o=['ac', 'ic', 'aC', 'iC']
 
 [[plugins]]
 ## word in word: snake_case, camelCase, PascalCase, kebab-case
@@ -127,14 +131,16 @@ on_map = {x=['au', 'iu'], o=['au', 'iu']}
 [[plugins]]
 repo = 'glts/vim-textobj-indblock'
 lazy = 1
-on_map = {x=['ao', 'io', 'aO', 'iO'],
-          o=['ao', 'io', 'aO', 'iO']}
+[plugins.on_map]
+x=['ao', 'io', 'aO', 'iO']
+o=['ao', 'io', 'aO', 'iO']
 
 [[plugins]]
 repo = 'anyakichi/vim-textobj-xbrackets'
 lazy = 1
-on_map = {x=['iv', 'iysb', 'iys(', 'ixsB', 'ixs{', 'iys){', 'ixB', 'ix{', 'iy[', 'ixs){', 'ix<', 'iys[', 'i0', 'i9', 'ixb', 'ix)', 'ix(', 'iyB', 'iy{', 'iVb', 'iV)', 'iV(', 'ixs[', 'ixs<', 'ix[', 'iVB', 'iV}', 'iV{', 'ixsb', 'ixs(', 'iy<', 'iys<', 'iysB', 'iys{', 'iyb', 'iy('],
-          o=['iv', 'iysb', 'iys(', 'ixsB', 'ixs{', 'iys){', 'ixB', 'ix{', 'iy[', 'ixs){', 'ix<', 'iys[', 'i0', 'i9', 'ixb', 'ix)', 'ix(', 'iyB', 'iy{', 'iVb', 'iV)', 'iV(', 'ixs[', 'ixs<', 'ix[', 'iVB', 'iV}', 'iV{', 'ixsb', 'ixs(', 'iy<', 'iys<', 'iysB', 'iys{', 'iyb', 'iy(']}
+[plugins.on_map]
+x=['iv', 'iysb', 'iys(', 'ixsB', 'ixs{', 'iys){', 'ixB', 'ix{', 'iy[', 'ixs){', 'ix<', 'iys[', 'i0', 'i9', 'ixb', 'ix)', 'ix(', 'iyB', 'iy{', 'iVb', 'iV)', 'iV(', 'ixs[', 'ixs<', 'ix[', 'iVB', 'iV}', 'iV{', 'ixsb', 'ixs(', 'iy<', 'iys<', 'iysB', 'iys{', 'iyb', 'iy(']
+o=['iv', 'iysb', 'iys(', 'ixsB', 'ixs{', 'iys){', 'ixB', 'ix{', 'iy[', 'ixs){', 'ix<', 'iys[', 'i0', 'i9', 'ixb', 'ix)', 'ix(', 'iyB', 'iy{', 'iVb', 'iV)', 'iV(', 'ixs[', 'ixs<', 'ix[', 'iVB', 'iV}', 'iV{', 'ixsb', 'ixs(', 'iy<', 'iys<', 'iysB', 'iys{', 'iyb', 'iy(']
 
 
 
@@ -159,7 +165,7 @@ on_map = {n='<Plug>', x='<Plug>'}
 [[plugins]]
 repo = 'machakann/vim-sandwich'
 lazy = 1
-on_map = {n=['sa', 'sd', 'sr', 'sdb', 'srb'],
-          x=['ib', 'ab', 'is', 'as'],
-          o=['ib', 'ab', 'is', 'as']}
-
+[plugins.on_map]
+n=['sa', 'sd', 'sr', 'sdb', 'srb']
+x=['ib', 'ab', 'is', 'as']
+o=['ib', 'ab', 'is', 'as']

@@ -325,11 +325,11 @@ let g:yankround_use_region_hl = 1  " highlight put text
 [[plugins]]
 repo = 'junegunn/vim-peekaboo'
 lazy = 1
-on_map = {n=['"', '@', '<Plug>(peekaboo)'],
-          x=['"', '<Plug>(peekaboo)'],
-          i=['<C-r>', '<Plug>(peekaboo)']}
 augroup = 'peekaboo_init'
-
+[plugins.on_map]
+n = ['"', '@', '<Plug>(peekaboo)']
+x = ['"', '<Plug>(peekaboo)']
+i = ['<C-r>', '<Plug>(peekaboo)']
 
 #### 編集補助 ####  {{{1
 
@@ -498,9 +498,10 @@ on_cmd = 'Qfreplace'
 [[plugins]]
 repo = 'wellle/visual-split.vim'  # {{{
 lazy = 1
-on_map = {n=['<C-w>gr', '<C-w>gss', '<C-w>gsa', '<C-w>gsb'],
-          x=['<C-w>gr', '<C-w>gss', '<C-w>gsa', '<C-w>gsb']}
 on_cmd = ['VSResize', 'VSSplit', 'VSSplitAbove', 'VSSplitBelow']
+[plugins.on_map]
+n=['<C-w>gr', '<C-w>gss', '<C-w>gsa', '<C-w>gsb']
+x=['<C-w>gr', '<C-w>gss', '<C-w>gsa', '<C-w>gsb']
 # }}}
 
 [[plugins]]
