@@ -1,6 +1,6 @@
-#!/bin/bash
 #### rc.env.sh ####
 # setup enviromnental variables related with PATH
+# shellcheck disable=SC2148,SC1091
 
 # asdf
 [[ -e "$HOME/.asdf/asdf.sh" ]] && source "$HOME/.asdf/asdf.sh"

@@ -1,5 +1,6 @@
 #### rc.alias.sh ####
 # define aliases
+# shellcheck disable=SC2139,SC2148,SC1090
 
 #### COMMAND LINE HELPER
 # reload rc
@@ -22,7 +23,7 @@ if [[ $TERM_PROGRAM = "mintty" ]]; then
         alias $name="winpty $name"
     done
 
-    for name in ipconfig; do
+    for name in ipconfig ping netstat netsh; do
         alias $name="wincmd $name"
     done
 fi
@@ -81,7 +82,7 @@ tmux-select-resurrect-session() {
     TMUXRESURRECTDIR="$HOME/.tmux/resurrect"
     unlink "$TMUXRESURRECTDIR/last"
     PREVCMD="cat $TMUXRESURRECTDIR/{}"
-    SESSIONFILE=$(\ls $TMUXRESURRECTDIR | fzf --preview="$PREVCMD" --tac)
+    SESSIONFILE=$(\ls "$TMUXRESURRECTDIR" | fzf --preview="$PREVCMD" --tac)
     echo "$SESSIONFILE"
     ln -s "$TMUXRESURRECTDIR/$SESSIONFILE" "$TMUXRESURRECTDIR/last"
 }

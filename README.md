@@ -50,8 +50,10 @@ $DOTPATH/.config/git/ignore  -- global ignore
 
 ### Bash & Zsh
 ```
-~/.bashrc             ==> $DOTPATH/sh/bashrc
-~/.bash_profile       ==> $DOTPATH/sh/bash_profile 
+~/.profile       ==> $DOTPATH/sh/profile
+
+~/.bashrc        ==> $DOTPATH/sh/bashrc
+~/.bash_profile  ==> $DOTPATH/sh/bash_profile 
 
 ~/.p10k.zsh   -- 手動管理。なければ初めにコピーされるが、それぞれの環境で`p10k configure`する。
 ~/.zlogin     ==> リンク
@@ -78,7 +80,7 @@ $DOTPATH/.config/git/ignore  -- global ignore
 
 ### Neovim
 
-設定フォルダは`$DOTPATH/nvim`においている。
+設定フォルダは`$DOTPATH/nvim`においている。  
 Note: `$DOTPATH/.config/nvim`ではないので注意。よくアクセスするので浅いところにした。
 
 git管理しない設定ファイルは`$DOTPATH/nvim/set_credential.vim`（あればinit.vimで読まれる）

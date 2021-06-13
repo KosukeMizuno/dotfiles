@@ -1,5 +1,5 @@
-#
 # Sets Prezto options.
+# shellcheck disable=SC2148
 #
 # Authors:
 #   Sorin Ionescu <sorin.ionescu@gmail.com>

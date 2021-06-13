@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1091
 
 #### deploy.sh ####
 # 設定ファイル群を展開する

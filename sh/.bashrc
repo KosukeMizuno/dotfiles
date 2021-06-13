@@ -1,5 +1,5 @@
-#!/bin/bash
 #### BASHRC ####
+# shellcheck disable=SC1091,SC2148
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
