@@ -22,6 +22,9 @@ PATH="$DOTPATH/bin:$PATH"
 # ensure local path
 mkdir -p "$XDG_CONFIG_HOME"
 
+# 
+deploy_ln "$DOTPATH/sh/.profile" "$HOME/.profile"
+
 ## bash
 deploy_ln "$DOTPATH/sh/.bashrc" "$HOME/.bashrc"
 deploy_ln "$DOTPATH/sh/.bash_profile" "$HOME/.bash_profile"

@@ -240,6 +240,9 @@ repo = 'lambdalisue/fern.vim'
 #call dein#source('fern-mapping-git.vim')
 #call dein#source('fern-mapping-project-top.vim')
 #'''
+hook_add = '''
+let g:fern#default_hidden = 1
+'''
 
 [[plugins]]
 repo = 'lambdalisue/nerdfont.vim'
