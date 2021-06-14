@@ -16,8 +16,8 @@ if [[ -z $DOTPATH ]]; then
     exit 1
 fi
 
+source "$HOME/.bash_profile.sh"
 unalias -a
-source "$DOTPATH/sh/path.sh"
 PATH="$DOTPATH/bin:$PATH"
 
 # ensure local path

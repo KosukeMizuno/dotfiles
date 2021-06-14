@@ -1,4 +1,5 @@
 #!/bin/bash
+# shellcheck disable=SC1091
 
 #### install.sh ####
 # 必要なツールがなければ知らせる＆可能ならインストールする
@@ -15,8 +16,8 @@ if [[ -z $DOTPATH ]]; then
     exit 1
 fi
 
+source "$HOME/.bash_profile.sh"  # bashrc_localなどにプロキシ設定が書かれるのですべて読み込ませておく
 unalias -a
-source "$DOTPATH/sh/path.sh"
 PATH="$DOTPATH/bin:$PATH"
 
 # ensure local path
@@ -225,7 +226,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
             mkdir -p "$PREFIX/src/$progname"
             cp -lR "$dname/$progname" "$PREFIX/src"
         fi
-        (cd "$PREFIX/src/$progname" && {
+        (cd "$PREFIX/src/cpython-3.8.10" && {
             ./configure --prefix="$PREFIX" --enable-shared --enable-optimizations --with-lto
             make -j8
 
