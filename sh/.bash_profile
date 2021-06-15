@@ -14,7 +14,7 @@ source "$DOTPATH/sh/path.sh"
 stty stop undef
 
 # enable direnv
-eval "$(direnv hook bash)"
+[[ -n $(command -v direnv) ]] && eval "$(direnv hook bash)"
 
 # load local bash_profile if exists
 if [[ -e "$HOME/.bash_profile_local" ]]; then
