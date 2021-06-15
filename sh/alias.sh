@@ -42,9 +42,9 @@ if [[ -n $(command -v exa) ]]; then
     else
         ICON_FLG=""
     fi
-    alias ls="exa -lhb --git${ICON_FLG}"
-    alias ll="exa -hb --git${ICON_FLG}"
-    alias la="exa -alhbHSg --git${ICON_FLG}"
+    alias ls="exa -hb --git${ICON_FLG}"
+    alias ll="exa -lhb --git${ICON_FLG}"
+    alias la="exa -ahbHSg --git${ICON_FLG}"
     alias lla="exa -alhbHSg --git${ICON_FLG}"
 else
     alias ls='ls'

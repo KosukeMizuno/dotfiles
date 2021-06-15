@@ -42,7 +42,6 @@ bindkey "^x^r" __source_rc
 
 # Ctrl+Z で最後のジョブを復帰させる
 ## https://qiita.com/uasi/items/93846fb0a671c0f1cc05
-# TODO: windowsで無効化する
 function __run_fglast {
     zle push-input
     BUFFER="fg %"
@@ -74,7 +73,6 @@ bindkey '^r' select-history
 
 # テキストエディタを Ctrl+x Ctrl+j で呼び出す
 # suspended job に居たら新しく立ち上げずそちらを起動
-# TODO: windowsでの動作確認or無効化
 editor_or_fg (){
     EDITOR_PROG=${EDITOR:-nvim}
     if [[ $# -gt 0 ]]; then
@@ -100,7 +98,6 @@ alias nvim=editor_or_fg
 
 
 #### PROFILING ####
-# zshenv の最初にあるzprofも併せて有効化する必要がある
 if [[ -n ${ZSH_DO_PROFILING:-} ]]; then
     if (which zprof > /dev/null 2>&1) ; then
         zprof
