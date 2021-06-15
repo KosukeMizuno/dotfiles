@@ -221,10 +221,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
             url=https://github.com/python/cpython/archive/refs/tags/v3.8.10.tar.gz
             wget $url -P /tmp
             dname=$(mktemp -d)
-            tar zxvf "/tmp/$(basename $url)" -C "$dname"
-            progname=$(ls "$dname")
-            mkdir -p "$PREFIX/src/$progname"
-            cp -lR "$dname/$progname" "$PREFIX/src"
+            tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
         fi
         (cd "$PREFIX/src/cpython-3.8.10" && {
             ./configure --prefix="$PREFIX" --enable-shared --enable-optimizations --with-lto
@@ -366,4 +363,15 @@ if [[ -z $(command -v neofetch) ]]; then
     git clone $url "$PREFIX/opt/neofetch" &&
         cd "$PREFIX/opt/neofetch" &&
         make PREFIX="$PREFIX" install
+fi
+
+# htop
+if [[ -z $(command -v htop) ]]; then
+    url="https://github.com/htop-dev/htop/archive/refs/tags/3.0.5.tar.gz"
+    wget $url -P /tmp
+    tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
+    cd "$PREFIX/src/htop-3.0.5" && 
+        ./autogen.sh &&
+        ./configure --prefix=$PREFIX &&
+        make && make install
 fi

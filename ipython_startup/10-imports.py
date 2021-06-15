@@ -25,7 +25,7 @@ try:
     from scipy.constants import physical_constants
 
     from scipy.optimize import curve_fit
-    from scipy.fftpack import fft, fftfreq, fftshift
+    from scipy.fft import fft, fftfreq, fftshift
 except ImportError:
     pass
 
