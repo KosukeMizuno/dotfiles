@@ -192,6 +192,8 @@ if ${DOTINSTALL_RUST:-true}; then
 
     if [[ ! -e "$HOME/.cargo/env" ]]; then
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        rustup install stable
+        rustup default stable
     fi
     source "$HOME/.cargo/env"
     install_cargo exa # TODO: exaがwindowsで使えないので共通化できるものを探したい
@@ -207,6 +209,7 @@ if ${DOTINSTALL_NODEJS:-true}; then
     }
     install_npm tldr
     npm install -g neovim
+    npm install -g tree-sitter-cli
     asdf reshim nodejs
 fi
 
