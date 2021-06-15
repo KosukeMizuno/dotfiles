@@ -35,7 +35,7 @@ src=$1
 dst=$2
 
 # check dst exists or not.
-if [[ ! -e $dst ]]; then  
+if [[ ! -e $dst ]] && [[ ! -L $dst ]]; then  
     echo "  dst doesn't exists ==> Make symbolic link."
     if [[ ! $dry ]]; then
         dirdst=$(dirname "$dst")

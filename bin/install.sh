@@ -16,7 +16,7 @@ if [[ -z $DOTPATH ]]; then
     exit 1
 fi
 
-source "$HOME/.bash_profile.sh"  # bashrc_localなどにプロキシ設定が書かれるのですべて読み込ませておく
+source "$DOTPATH/sh/path.sh"
 unalias -a
 PATH="$DOTPATH/bin:$PATH"
 
@@ -375,6 +375,6 @@ if [[ -z $(command -v htop) ]]; then
     tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
     cd "$PREFIX/src/htop-3.0.5" && 
         ./autogen.sh &&
-        ./configure --prefix=$PREFIX &&
+        ./configure --prefix="$PREFIX" &&
         make && make install
 fi

@@ -9,5 +9,5 @@ if [ -e "$DOTPATH/sh/path.sh" ]; then
 fi
 
 if [ -e "$DOTPATH/sh/common.sh" ]; then
-    source "$DOTPATH/sh/pcommonath.sh"
+    source "$DOTPATH/sh/common.sh"
 fi
