@@ -68,5 +68,3 @@ def unit_conv_photon(la):
     print('Frequency : {:.4e} [Hz]'.format(c0 / _la))
     print('Energy    : {:.4f} [eV] = {:.4e} [J]'.format(h_planck * c0 / _la / q0, h_planck * c0 / _la))
     print('Momentum  : {:.4e} [N s]'.format(h_planck / _la))
-
-
