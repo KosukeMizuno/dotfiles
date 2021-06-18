@@ -1,0 +1,11 @@
+# startup script
+# loading what is related to ipython.
+
+%load_ext autoreload
+
+try:
+    from IPython import embed
+except ImportError:
+    pass
+
+# vim: set ft=python:

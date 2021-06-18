@@ -36,11 +36,6 @@ except ImportError:
     pass
 
 try:
-    from IPython import embed
-except ImportError:
-    pass
-
-try:
     import esapy
     from esapy import esapy_fold
 except ImportError:

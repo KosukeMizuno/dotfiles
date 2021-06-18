@@ -23,7 +23,7 @@ PATH="$DOTPATH/bin:$PATH"
 # ensure local path
 mkdir -p "$XDG_CONFIG_HOME"
 
-# 
+#
 deploy_ln "$DOTPATH/sh/.profile" "$HOME/.profile"
 
 ## bash
@@ -62,7 +62,7 @@ deploy_ln "$DOTPATH/nvim" "$XDG_CONFIG_HOME/nvim"
 ## python
 deploy_ln "$DOTPATH/.config/pypoetry" "$XDG_CONFIG_HOME/pypoetry"
 deploy_ln "$DOTPATH/.config/pycodestyle" "$XDG_CONFIG_HOME/pycodestyle"
-deploy_ln "$DOTPATH/ipython_startup" "$HOME/.ipython/profile_default/startup"
+deploy_ln "$DOTPATH/python/ipython_startup" "$HOME/.ipython/profile_default/startup"
 
 # jupyter
 
