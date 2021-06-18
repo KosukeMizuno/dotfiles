@@ -285,6 +285,16 @@ pytest = '''  " {{{2
 '''
 
 # shell script  # {{{1
+[[plugins]]
+repo = 'z0mbix/vim-shfmt'
+lazy = 1
+on_ft = 'sh'
+on_command = ['Shfmt']
+hook_source = '''
+let g:shfmt_extra_args = '-i 4'
+'''
+
+[plugins.ftplugin]
 sh = '''
   SetIndent 4
 

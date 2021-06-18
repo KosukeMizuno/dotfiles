@@ -201,7 +201,7 @@ if ${DOTINSTALL_RUST:-true}; then
     install_cargo bat
     install_cargo evcxr evcxr_repl
 
-    if [[ -z $(comand -v rust-analyzer)]]; then
+    if [[ -z $(command -v rust-analyzer) ]]; then
         if [[ ! -d "$PREFIX/src/rust-analyzer" ]]; then
             git clone https://github.com/rust-analyzer/rust-analyzer.git "$PREFIX/src/rust-analyzer"
         fi
