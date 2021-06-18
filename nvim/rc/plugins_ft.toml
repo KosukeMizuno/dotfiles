@@ -259,7 +259,9 @@ python = '''  " {{{2
     \   'pydocstyle': {'enabled': v:true},
     \   'pylint': {'enabled': v:false},
     \   'flake8': {'enabled': v:false},
-    \   'mypy': {'enabled': v:false},
+    \   'mypy': {'enabled': v:true},
+    \   'yapf': {'enabled': v:false},
+    \   'autopep8': {'enabled': v:true},
     \   'jedi_definition': {
     \     'follow_imports': v:true,
     \     'follow_builtin_imports': v:true,
