@@ -331,7 +331,7 @@ if ${DOTINSTALL_NVIM:-true}; then
         nvim +q
         nvim "+call dein#check_update(v:true)" "+call dein#recache_runtimepath()" +q
         nvim "+UpdateRemotePlugins" "+TSInstall all" +q
-
+        nvim "+LspInstallServer pyls-all" "+LspInstallServer bash-language-server" +q
     fi
 fi
 
