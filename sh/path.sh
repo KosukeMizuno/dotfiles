@@ -18,11 +18,6 @@ export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
-# PYTHON
-export PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
-export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
-export PATH="$HOME/.poetry/bin:$PATH"
-
 # RUST
 export PATH="$HOME/.cargo/bin:$PATH"
 
@@ -30,3 +25,13 @@ export PATH="$HOME/.cargo/bin:$PATH"
 export GOPATH="$PREFIX/opt/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$GOBIN:$PATH"
+
+# PYTHON
+export PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
+export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
+export PATH="$HOME/.poetry/bin:$PATH"
+if [[ -e "$PYTHON_DEFAULT_VENV/bin/activate" ]]; then
+    source "$PYTHON_DEFAULT_VENV/bin/activate"
+elif [[ -e "$PYTHON_DEFAULT_VENV/Script/activate" ]]; then
+    source "$PYTHON_DEFAULT_VENV/Script/activate"
+fi

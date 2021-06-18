@@ -157,6 +157,8 @@ fi
 __fzf_activate_python_venv() {
     target=$(\ls "$PYTHON_VENV_DIR" | fzf --select-1)
     if [[ -d "$PYTHON_VENV_DIR/$target" ]]; then
+        [[ -n $(command -v deactivate) ]] && deactivate
+
         if [[ -n $(command -v cygpath) ]]; then
             source "$PYTHON_VENV_DIR/$target/Scripts/activate"
         else
@@ -169,4 +171,3 @@ alias activate=__fzf_activate_python_venv
 # esapy
 alias esafu='esa up --no-browser "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'
 alias esafr='esa reset "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'
-

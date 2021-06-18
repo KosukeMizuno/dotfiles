@@ -15,6 +15,8 @@ fi
 
 #### ZSHRC ####
 
+# echo "Sourcing zshrc"
+
 # common
 source "$DOTPATH/sh/common.sh"
 

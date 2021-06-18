@@ -1,6 +1,8 @@
 #### .ZPROFILE ####
 # Executes commands at login pre-zshrc.
 
+# echo "Sourcing zprofile"
+
 if [[ "$OSTYPE" == darwin* ]]; then
   export BROWSER='open'
 fi
