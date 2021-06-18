@@ -77,7 +77,7 @@ let g:markdown_mapping_switch_status = '<Plug>(markdown-switch-status)'
 let g:markdown_enable_spell_checking = 0
 let g:markdown_enable_input_abbreviations = 0
 '''
-# }}}2
+# }}}
 [plugins.ftplugin]
 markdown = '''  " {{{2
   setlocal wrap
@@ -292,3 +292,15 @@ sh = '''
   setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
 '''  # }}}
 
+# Rust  # {{{1
+[[plugins]]
+repo = 'rust-lang/rust.vim'
+lazy = 1
+on_ft = 'rust'
+hook_source = '''
+let g:rustfmt_autosave = 1
+'''
+
+[plugins.ftplugin]
+rust = '''
+'''

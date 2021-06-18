@@ -199,6 +199,18 @@ if ${DOTINSTALL_RUST:-true}; then
     install_cargo exa # TODO: exaがwindowsで使えないので共通化できるものを探したい
     install_cargo rg ripgrep
     install_cargo bat
+    install_cargo evcxr evcxr_repl
+
+    if [[ -z $(comand -v rust-analyzer)]]; then
+        if [[ ! -d "$PREFIX/src/rust-analyzer" ]]; then
+            git clone https://github.com/rust-analyzer/rust-analyzer.git "$PREFIX/src/rust-analyzer"
+        fi
+        # TODO: とりあえず今日の最新にしておいたけど動的に最新を取りたい
+        ( cd "$PREFIX/src/rust-analyzer" && {
+            git checkout 2021-06-14
+            cargo xtask install --server
+        })
+    fi
 fi
 
 ## Node.js
