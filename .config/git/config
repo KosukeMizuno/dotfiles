@@ -28,9 +28,29 @@
 [pull]
 	ff = only
 
+
+# git-delta
+# Note: windowsはlessの最新版が要るって書いてあったけど入れなくて動いた＆入れたらおかしくなった
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    features = line-numbers decorations
+    whitespace-error-style = 22 reverse
+[delta "decorations"]
+    commit-decoration-style = bold yellow box ul
+    file-style = bold yellow ul
+    file-decoration-style = none
+
+
 # [Gitでcommitやpushを忘れることありませんか？git-remindはそういう｢忘れ｣を防ぐためのツールです - Qiita](https://qiita.com/suin/items/4932dd3f822ea8da8a01)
 [remind]
 	paths = ~/dotfiles
+
 
 # nbdime
 [diff "jupyternotebook"]
@@ -46,6 +66,7 @@
 	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
 	prompt = false
+
 
 # local config
 [include]

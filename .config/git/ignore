@@ -27,3 +27,4 @@ tags
 
 # python
 .ipynb_checkpoints
+.venv/*
