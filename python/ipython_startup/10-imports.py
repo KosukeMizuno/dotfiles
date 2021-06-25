@@ -23,8 +23,7 @@ except ImportError:
 try:
     from scipy import constants
     from scipy.constants import physical_constants
-
-    from scipy.optimize import curve_fit
+    from scipy.optimize import curve_fit, minimize
     from scipy.fft import fft, fftfreq, fftshift
 except ImportError:
     pass
@@ -32,6 +31,9 @@ except ImportError:
 try:
     import matplotlib as mpl
     import matplotlib.pyplot as plt
+
+    mpl.rcParams['figure.facecolor'] = 'w'
+    mpl.rcParams['figure.dpi'] = 200
 except ImportError:
     pass
 
@@ -46,3 +48,4 @@ try:
     better_exceptions.MAX_LENGTH = None
 except ImportError:
     pass
+

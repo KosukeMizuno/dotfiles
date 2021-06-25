@@ -29,7 +29,6 @@ export PATH="$GOBIN:$PATH"
 # PYTHON
 export PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
 export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
-export MATPLOTLIBRC="$XDG_CONFIG_HOME/matplotlib/matplotlibrc"
 export PATH="$HOME/.poetry/bin:$PATH"
 if [[ -e "$PYTHON_DEFAULT_VENV/bin/activate" ]]; then
     source "$PYTHON_DEFAULT_VENV/bin/activate"
