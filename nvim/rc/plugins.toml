@@ -718,7 +718,7 @@ if = 'has("nvim-0.5")'
 hook_add = '''
 let bufferline = get(g:, 'bufferline', {})
 if g:rc_enable_icon
-  let bufferline.icons = g:rc_enable_icon
+  let bufferline.icons = v:true
 endif
 '''
 
