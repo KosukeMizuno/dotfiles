@@ -3,16 +3,19 @@
 
 # Source global definitions
 if [ -f /etc/bashrc ]; then
-	source "/etc/bashrc"
+    source "/etc/bashrc"
 fi
 
 # common
 source "$DOTPATH/sh/common.sh"
+
+# prompt
+[[ -n $(command -v starship) ]] && eval "$(starship init bash)"
 
 # alias
 source "$DOTPATH/sh/alias.sh"
 
 # load local bashrc
 if [[ -e "$HOME/.shrc_local" ]]; then
-	source "$HOME/.shrc_local"
+    source "$HOME/.shrc_local"
 fi

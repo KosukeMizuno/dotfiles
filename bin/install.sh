@@ -212,6 +212,9 @@ if ${DOTINSTALL_RUST:-true}; then
             cargo xtask install --server
         })
     fi
+
+    # starship
+    sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --bin-dir="$PREFIX/bin" --yes
 fi
 
 ## Node.js

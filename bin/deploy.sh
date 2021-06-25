@@ -39,6 +39,9 @@ deploy_ln "$DOTPATH/sh/.zshenv"    "$HOME/.zshenv"
 deploy_ln "$DOTPATH/sh/.zshrc"     "$HOME/.zshrc"
 [[ ! -e "$HOME/.p10k.zsh" ]] && cp "$DOTPATH/sh/.p10k.zsh_template" "$HOME/.p10k.zsh"
 
+## starship
+deploy_ln "$DOTPATH/.config/starship.toml" "$XDG_CONFIG_HOME/starship.toml"
+
 ## ssh (copy)
 [[ ! -d "$HOME/.ssh" ]] && mkdir "$HOME/.ssh"
 [[ ! -e "$HOME/.ssh/config" ]] && cp "$DOTPATH/.ssh/config_template" "$HOME/.ssh/config"
@@ -65,10 +68,11 @@ deploy_ln "$DOTPATH/.config/pycodestyle" "$XDG_CONFIG_HOME/pycodestyle"
 deploy_ln "$DOTPATH/python/ipython_startup" "$HOME/.ipython/profile_default/startup"
 
 # jupyter
-
+:
 
 ## latex
-
+:
 
 ## terminal: alacritty windows-terminal
 deploy_ln "$DOTPATH/.config/alacritty" "$XDG_CONFIG_HOME/alacritty"
+
