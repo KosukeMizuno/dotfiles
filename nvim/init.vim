@@ -33,6 +33,12 @@ let g:maplocalleader = "\\"
 nnoremap <Leader> <Nop>
 nnoremap <LocalLeader> <Nop>
 
+" disable providers  {{{4
+let g:loaded_python_provider = 0  " python2
+let g:loaded_ruby_provider = 0
+let g:loaded_perl_provider = 0
+" }}}
+
 " disable default plugins  {{{4
 let g:loaded_2html_plugin      = 1
 let g:loaded_logiPat           = 1
@@ -212,6 +218,7 @@ if exists('g:dein#install_github_api_token')
 else
   command! DeinUpdate call dein#update()
 endif
+command! CheckHealth call dein#source() | checkhealth
 
 " profiling for log file by 'vim --startuptime'
 command! SortStartuplog %!sort -k2nr

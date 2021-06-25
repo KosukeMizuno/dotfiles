@@ -717,7 +717,9 @@ repo = 'romgrk/barbar.nvim'
 if = 'has("nvim-0.5")'
 hook_add = '''
 let bufferline = get(g:, 'bufferline', {})
-let bufferline.icons = g:rc_enable_icon
+if g:rc_enable_icon
+  let bufferline.icons = g:rc_enable_icon
+endif
 '''
 
 [[plugins]]
