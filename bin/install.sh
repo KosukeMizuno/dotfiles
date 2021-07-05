@@ -225,7 +225,6 @@ if ${DOTINSTALL_NODEJS:-true}; then
     }
     install_npm tldr
     npm install -g neovim
-    npm install -g tree-sitter-cli
     asdf reshim nodejs
 fi
 
@@ -304,7 +303,7 @@ if ${DOTINSTALL_NVIM:-true}; then
         git fetch
 
         # check update & build
-        NVIM_TARGET_BRANCH="nightly"
+        NVIM_TARGET_BRANCH="v0.5.0"
         echo "neovim HEAD: $(git rev-parse HEAD)"
         echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
         if [[ ! -x "$PREFIX/bin/nvim" ]] || [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]]; then
@@ -346,8 +345,8 @@ if ${DOTINSTALL_NVIM:-true}; then
         # nvimの初回ダウンロード等が必要なものを実行
         nvim +q
         nvim "+call dein#check_update(v:true)" "+call dein#recache_runtimepath()" +q
-        nvim "+UpdateRemotePlugins" "+TSInstall all" +q
-        nvim "+LspInstallServer pyls-all" "+LspInstallServer bash-language-server" "+LspInstallServer vim-language-server" +q
+        nvim "+call dein#source()" "+UpdateRemotePlugins" "+TSInstall all" +q
+        nvim "+call dein#source()" "+LspInstallServer pyls-all" "+LspInstallServer bash-language-server" "+LspInstallServer vim-language-server" +q
     fi
 fi
 
@@ -389,7 +388,7 @@ if [[ -z $(command -v htop) ]]; then
     url="https://github.com/htop-dev/htop/archive/refs/tags/3.0.5.tar.gz"
     wget $url -P /tmp
     tar zxvf "/tmp/$(basename $url)" -C "$PREFIX/src"
-    cd "$PREFIX/src/htop-3.0.5" && 
+    cd "$PREFIX/src/htop-3.0.5" &&
         ./autogen.sh &&
         ./configure --prefix="$PREFIX" &&
         make && make install

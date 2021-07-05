@@ -33,7 +33,6 @@ try:
     import matplotlib.pyplot as plt
 
     mpl.rcParams['figure.facecolor'] = 'w'
-    mpl.rcParams['figure.dpi'] = 200
 except ImportError:
     pass
 
