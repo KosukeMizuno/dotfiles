@@ -8,10 +8,10 @@
 # user built things
 export PREFIX="${PREFIX:-$HOME/.local}"
 export PATH="$PREFIX/bin:$PATH"
-LD_LIBLARY_PATH=$(echo "$PREFIX/lib64:$PREFIX/lib:$LD_LIBLARY_PATH" | sed 's/:$//')
+LD_LIBRARY_PATH=$(echo "$PREFIX/lib64:$PREFIX/lib:$LD_LIBRARY_PATH" | sed 's/:$//')
 LD_RUN_PATH=$(echo "$PREFIX/lib64:$PREFIX/lib:$LD_RUN_PATH" | sed 's/:$//')
 PKG_CONFIG_PATH=$(echo "$PREFIX/lib64/pkgconfig:$PREFIX/lib/pkgconfig:$PKG_CONFIG_PATH" | sed 's/:$//')
-export LD_LIBLARY_PATH LD_RUN_PATH PKG_CONFIG_PATH
+export LD_LIBRARY_PATH LD_RUN_PATH PKG_CONFIG_PATH
 
 # XDG
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
