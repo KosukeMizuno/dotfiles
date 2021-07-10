@@ -167,5 +167,5 @@ repo = 'machakann/vim-sandwich'
 lazy = 1
 [plugins.on_map]
 n=['sa', 'sd', 'sr', 'sdb', 'srb']
-x=['ib', 'ab', 'is', 'as']
-o=['ib', 'ab', 'is', 'as']
+x=['sa', 'sd', 'sr', 'ib', 'ab', 'is', 'as']
+o=['sa', 'ib', 'ab', 'is', 'as']
