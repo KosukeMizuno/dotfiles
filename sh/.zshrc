@@ -24,8 +24,8 @@ source "$DOTPATH/sh/common.sh"
 source "$DOTPATH/sh/alias.sh"
 
 # load local bashrc
-if [ -f "$HOME/.shrc_local" ]; then
-	source "$HOME/.shrc_local"
+if [ -e "$HOME/.shrc_local" ]; then
+    source "$HOME/.shrc_local"
 fi
 
 #### custom keybindings
