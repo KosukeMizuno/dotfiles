@@ -243,6 +243,24 @@ repo = 'lambdalisue/fern.vim'
 hook_add = '''
 let g:fern#default_hidden = 1
 '''
+[plugins.ftplugin]
+fern = '''
+  nnoremap <buffer> qw <cmd>bd<CR>
+  nnoremap <buffer> <C-e> <cmd>bd<CR>
+  nnoremap <buffer> <C-h> <C-w>h
+  nnoremap <buffer> <C-j> <C-w>j
+  nnoremap <buffer> <C-k> <C-w>k
+  nnoremap <buffer> <C-l> <C-w>l
+  nmap <buffer> <Leader>H <Plug>(fern-action-project-top:reveal)
+  nmap <buffer> o <Plug>(fern-action-open:edit)
+
+  setlocal nonumber norelativenumber
+  setlocal foldcolumn=0
+
+  if g:rc_enable_icon
+    call glyph_palette#apply()
+  endif
+'''
 
 [[plugins]]
 repo = 'lambdalisue/nerdfont.vim'
@@ -271,20 +289,6 @@ repo = 'lambdalisue/fern-mapping-git.vim'
 [[plugins]]
 repo = 'lambdalisue/fern-mapping-project-top.vim'
 #lazy = 1
-
-[plugins.ftplugin]
-fern = '''
-setlocal nonumber norelativenumber
-setlocal foldcolumn=0
-
-if g:rc_enable_icon
-  call glyph_palette#apply()
-endif
-
-nmap <buffer> <Leader>H <Plug>(fern-action-project-top:reveal)
-nmap <buffer> o <Plug>(fern-action-open:edit)
-nmap <buffer> qw <cmd>quit<CR>
-'''
 
 # }}}
 
