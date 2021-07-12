@@ -779,7 +779,7 @@ nnoremap [WEB]/dj :<C-u>Capture !trans --no-ansi -d {ja=en}<Space>
 " }}}
 
 " Fern
-nnoremap <C-e> <cmd>Fern . -drawer -toggle -reveal=%<CR>
+nnoremap <C-e> <cmd>Fern . -drawer -reveal=%<CR>
 
 " vista.vim
 "" vimtexのToCなどファイルタイプごとの目次機能がある場合はC-bをそっちに割り当てる
