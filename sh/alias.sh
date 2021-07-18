@@ -12,6 +12,12 @@ elif [[ -n $ZSH_NAME ]]; then
     alias rc_profile='echo "sourcing ~/.zprofile ..."; source $HOME/.zprofile'
 fi
 
+# ランダム文字列を生成する
+gen_ranodm_word() {
+    randomword=$(dd if=/dev/random | tr -dc 0-9a-zA-Z | head "-c${1:-16}")
+    echo "$randomword"
+}
+
 # PATHを一覧で出す
 echo_path() {
     echo "$PATH" | tr ':' '\n'
