@@ -99,6 +99,7 @@ alias ga="git add ."
 alias gl="git log --graph --all --branches --tags --remotes --abbrev-commit --oneline"
 alias gd="git diff"
 alias gp="git push"
+alias gpl="git pull"
 
 # git-remind
 alias grj="git remind status -n --all | fzf --inline-info --height 40% --ansi --cycle --preview=\"git -C {} -c color.status=always status -vv --branch --show-stash\" | cd"
