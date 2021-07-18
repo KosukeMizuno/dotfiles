@@ -886,12 +886,12 @@ augroup END
 """" QuickRun """"  {{{1
 " rr でファイルを実行
 " r+textobj で範囲実行
-nmap <Leader>r <Plug>(quickrun-op)
-nmap <Leader>rr <Plug>(quickrun)
-xmap <Leader>r <Plug>(quickrun)
+nmap <Leader>r  <cmd>w<CR><Plug>(quickrun-op)
+nmap <Leader>rr <cmd>w<CR><Plug>(quickrun)
+xmap <Leader>r  <cmd>w<CR>gv<Plug>(quickrun)
 " rt で context_filetype によるブロックを実行
 "" run-block ということでrbにしてもよかったが打ちにくいのでrtにした
-nmap <Leader>rt <Plug>(precious-quickrun-op)<Plug>(textobj-precious-i)
+nmap <Leader>rt <cmd>w<CR><Plug>(precious-quickrun-op)<Plug>(textobj-precious-i)
 
 
 """" コピーペースト関係 """"  {{{1
