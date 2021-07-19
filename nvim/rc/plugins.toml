@@ -524,9 +524,9 @@ hook_post_source = '''
 function! s:joined_x(reverse)
   undojoin
   if a:reverse
-    normal! "zX
+    normal! "_X
   else
-    normal! "zx
+    normal! "_x
   end
 endfunction
 function! s:joined_p()
