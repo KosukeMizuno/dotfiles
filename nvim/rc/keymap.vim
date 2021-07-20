@@ -158,9 +158,6 @@ set mouse=a
 " インサートモードではクリック無効化
 inoremap <LeftMouse> <Nop>
 
-" インサートモードでは右クリックコンテキストメニュー表示
-inoremap <silent><RightMouse> <cmd>call GuiShowContextMenu()<CR>
-
 """" 移動系 """"  {{{1
 " 通常のバッファ内でしばらく何もしなかったら lマークを付ける
 "" カーソル移動の高速化をリセット & コマンドラインになんか出てたら消す
@@ -407,13 +404,15 @@ inoremap <silent> じｊ <C-g>U<Right>
 inoremap <expr> <SID>(insert_autoindent) len(getline('.')) ? '' : '<ESC>"_cc'
 imap jl <cmd>normal! gk<CR><SID>(insert_autoindent)
 
-" Alt+yuio (hjklの一段上) でカーソル移動（試験的）
-"" いままでaltはtmuxに割り当てていたが、
-"" とりあえずyuioは使ってないので割り当ててみる
-noremap <silent> <A-y> <cmd>normal!  h<CR>
-noremap <silent> <A-u> <cmd>normal! gj<CR>
-noremap <silent> <A-i> <cmd>normal! gk<CR>
-noremap <silent> <A-o> <cmd>normal!  l<CR>
+" ;の次にスペース以外を打つことはほとんどないのでマップ起点にする
+inoremap <silent> ;; ;
+inoremap <silent> ;h <C-g>U<Left>
+inoremap <silent> ;j <C-g>U<Down>
+inoremap <silent> ;k <C-g>U<Up>
+inoremap <silent> ;l <C-g>U<Right>
+
+" quickrun起点
+imap <silent> ;r <ESC><Leader>r
 
 "" インサートモードを抜けた時に IME off する
 "" マルチバイト文字検索した後にも抜けれるようにする
@@ -633,9 +632,10 @@ inoremap <F3> <ESC>:<C-u>ToggleCompletion<CR>a
 
 "" Neosnippet/Deoplete  {{{2
 
-"" C-kでスニペット展開orジャンプ or 補完確定 or 補完候補がなければ補完を開く
+"" C-kでスニペット展開orジャンプ or ダイグラフ開始 or 補完候補がなければ補完を開く
+inoremap <SID>(digraph) <C-k>
 imap <expr> <C-k> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" :
-  \                                      pumvisible() ? "\<C-y>" : deoplete#manual_complete()
+  \                                      pumvisible() ? "\<SID>(digraph)" : deoplete#manual_complete()
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 
