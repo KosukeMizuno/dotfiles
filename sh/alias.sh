@@ -18,6 +18,11 @@ gen_ranodm_word() {
     echo "$randomword"
 }
 
+# URLエンコード
+urlencode() {
+  echo "$1" | nkf -WwMQ | tr = %
+}
+
 # PATHを一覧で出す
 echo_path() {
     echo "$PATH" | tr ':' '\n'
