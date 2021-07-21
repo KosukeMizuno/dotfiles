@@ -35,7 +35,7 @@ source "$DOTPATH/sh/path.sh"
 stty stop undef
 
 # enable direnv
-[[ -n $(command -v direnv) ]] && eval "$(direnv hook bash)"
+[[ -n $(command -v direnv) ]] && eval "$(direnv hook zsh)"
 
 # load local bash_profile if exists
 if [ -f "$HOME/.sh_profile_local" ]; then
