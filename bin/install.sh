@@ -224,6 +224,7 @@ if ${DOTINSTALL_NODEJS:-true}; then
         [[ -z $(command -v "$1") ]] && npm install -g "$1"
     }
     install_npm tldr
+    install_npm yarn
     npm install -g neovim
     asdf reshim nodejs
 fi
