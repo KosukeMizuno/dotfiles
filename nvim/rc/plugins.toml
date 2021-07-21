@@ -576,21 +576,6 @@ hook_post_update = '''
 # rtp内に移植して改造
 repo = 'phanviet/vim-monokai-pro'
 
-# [[plugins]]
-# repo = 'flazz/vim-colorschemes'
-
-[[plugins]]
-repo = 'marko-cerovac/material.nvim'
-if = 'has("nvim-0.5")'
-hook_add = '''
-let g:material_style = 'deep ocean'
-let g:material_italic_comments = 0
-let g:material_italic_keywords = 0
-let g:material_italic_functions = 0
-let g:material_contrast = 1
-let g:material_borders = 1
-'''
-
 [[plugins]]
 repo = 'ryanoasis/vim-devicons'
 if = 'g:rc_enable_icon'
