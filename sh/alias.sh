@@ -65,6 +65,7 @@ else
 fi
 
 # explorer
+## TODO: こいつは実行可能ファイルに切り出したほうが便利
 open_filer() {
     if [[ $# -eq 0 ]]; then
         TARGET=$PWD
@@ -80,6 +81,9 @@ open_filer() {
     fi
 }
 alias x=open_filer
+
+# ripgrep: 隠しファイルは検索対象にする、ただしgitignoreは遵守
+alias rg="rg --hidden --glob \!.git "
 
 #### TMUX ####
 alias t="tmux"

@@ -214,6 +214,9 @@ on_source = 'denite.nvim'
 repo = 'jremmen/vim-ripgrep'
 lazy = 1
 on_cmd = ['Rg', 'RgRoot']
+hook_source = '''
+let g:rg_command = 'rg --hidden --glob \!.git --vimgrep'
+'''
 
 [[plugins]]
 repo = 'liuchengxu/vista.vim'  # {{{
