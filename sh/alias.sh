@@ -113,6 +113,7 @@ alias gs="git status --short --branch --show-stash"
 alias ga="git add ."
 alias gl="git log --graph --all --branches --tags --remotes --abbrev-commit --oneline"
 alias gd="git diff"
+alias gdc="git diff --cached"
 alias gp="git push"
 alias gpl="git pull"
 
