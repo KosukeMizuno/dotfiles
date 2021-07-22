@@ -8,6 +8,8 @@ Multi-platform dotfiles with automatic instalation and deploying scripts.
 
 ## How to install
 
+### Building CLI environment
+
 If you are in proxy environment, set `HTTP_PROXY` before `make`.
 
 - ```sh
@@ -23,7 +25,19 @@ If you are in proxy environment, set `HTTP_PROXY` before `make`.
   ```
   If not, zsh is executed automatically (See `.bash_profile`).
 
-### with docker-compose
+### IME
+
+Editing japanese language with vim, 
+
+- Windows:
+  - `imeoff.exe` (by AutoHotKey) should be executable.
+- Ubuntu:
+  - `xvkbd` should be installed
+  - `Muhenkan` key should make IME off whenever it is sent (this key will be sent at InsertLeave event).
+
+
+### CI with docker-compose
+
 - `sudo docker-compose up --force-recreate -d`
 - `sudo docker-compose exec centos8 bash --login`
 
@@ -97,3 +111,4 @@ python2って要る？
 - `./bin/lazyenv.bash` was copied from <https://github.com/takezoh/lazyenv>
 - `./bin/check_nerdfont.sh` was copied from <https://takuzoo3868.hatenablog.com/entry/2018/12/28/032148>
 - zsh-related rc scripts `./sh/.z*` was initially copied from [sorin-ionescu/prezto](https://github.com/sorin-ionescu/prezto) and then customized.
+

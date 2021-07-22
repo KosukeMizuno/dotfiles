@@ -9,11 +9,11 @@
 """" ヘルパー関数 """"  {{{1
 
 " IME off
-if has('win64')
+if executable('imeoff.exe')
   command! ImeOff call system('imeoff.exe')
+elseif executable('xvkbd')
+  command! ImeOff call system('xvkbd -text "\[Muhenkan]"')
 else
-  " TODO: ImeOff is not yet implemented.
-  " t_** の設定でできるらしい？よくわからんけど入れたい
   command! ImeOff normal! \<Nop>
 endif
 
