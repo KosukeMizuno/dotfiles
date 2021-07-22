@@ -179,6 +179,8 @@ if ${DOTINSTALL_GOLANG:-true}; then
     install_goget hub github.com/github/hub
     install_goget gomi github.com/b4b4r07/gomi
     install_goget shfmt mvdan.cc/sh/v3/cmd/shfmt
+    install_goget gocopy github.com/atotto/clipboard/cmd/gocopy
+    install_goget gopaste github.com/atotto/clipboard/cmd/gopaste
 fi
 
 ## Rust

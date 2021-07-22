@@ -919,7 +919,7 @@ xnoremap X "_X
 
 " Clipboard連携
 vnoremap <C-c> mk"+y
-inoremap <S-Insert> <C-r>*
+inoremap <S-Insert> <C-r>+
 
 " ペーストモードをF2でトグル
 set pastetoggle=<F2>
