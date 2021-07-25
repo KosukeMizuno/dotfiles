@@ -120,11 +120,14 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
     \ 'cmdline', 'menu', 'help']
 
 " matcher
-" let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+" let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 '''
 
-[[plugins]]
-repo = 'FelikZ/ctrlp-py-matcher'
+# [[plugins]]
+# repo = 'nixprime/cpsm'
+# hook_post_update = '''
+# system('PY3=ON ./install.sh')
+# '''
 
 [[plugins]]
 repo = 'sgur/ctrlp-extensions.vim'
@@ -292,8 +295,6 @@ repo = 'lambdalisue/fern-mapping-git.vim'
 [[plugins]]
 repo = 'lambdalisue/fern-mapping-project-top.vim'
 #lazy = 1
-
-# }}}
 
 # }}}
 

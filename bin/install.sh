@@ -396,3 +396,16 @@ if [[ -z $(command -v htop) ]]; then
         ./configure --prefix="$PREFIX" &&
         make && make install
 fi
+
+# ctags
+if [[ -z $(command -v ctags) ]]; then
+    url=https://github.com/universal-ctags/ctags.git
+    dest="$PREFIX/src/universal-ctags"
+    git clone $url "$dest" && (
+        cd "$dest" &&
+            ./autogen.sh &&
+            ./configure --prefix="$PREFIX" &&
+            make &&
+            make install
+    )
+fi
