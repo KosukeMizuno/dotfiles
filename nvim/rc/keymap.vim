@@ -698,7 +698,7 @@ function! s:on_lsp_buffer_enabled() abort  " {{{
   endif
   nnoremap <buffer> <Plug>(toggle_vista) <cmd>Vista vim_lsp<CR>
 
-  echo "LSP enabled"
+  echom "LSP enabled: ft=".. &ft .. ", " .. expand("%")
 endfunction  " }}}
 
 " }}}

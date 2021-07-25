@@ -247,12 +247,12 @@ neosnippet = '''  " {{{2
 python = '''  " {{{2
   setlocal nowrap
 
-  setlocal foldmethod=expr
   if has('nvim-0.5')
     setlocal foldexpr=nvim_treesitter#foldexpr()
   else
     setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
   endif
+  setlocal foldmethod=expr
 
   let s:pyls_config = {'pyls': {'plugins': {
     \   'pycodestyle': {'enabled': v:true},
@@ -298,8 +298,8 @@ let g:shfmt_extra_args = '-i 4'
 sh = '''
   SetIndent 4
 
-  setlocal foldmethod=expr
   setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
+  setlocal foldmethod=expr
 '''  # }}}
 
 # Rust  # {{{1
