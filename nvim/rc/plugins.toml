@@ -646,6 +646,14 @@ let g:extra_whitespace_ignored_filetypes = ['markdown', 'startify', 'tex', 'Mund
 '''
 
 [[plugins]]
+repo = 'drzel/vim-scrolloff-fraction'
+hook_add = '''
+let g:scrolloff_fraction = 0.1
+let g:scrolloff_absolute_filetypes = ['qf']
+let g:scrolloff_absolute_value = 0
+'''
+
+[[plugins]]
 repo = 'junegunn/goyo.vim'  # {{{
 lazy = 1
 on_cmd = ['Goyo', 'Goyo!']
@@ -660,7 +668,10 @@ function! s:goyo_enter()
   set noshowmode
   set noshowcmd
   set cmdheight=1
-  set scrolloff=999
+
+  " set scrolloff=999
+  let g:_scrolloff_fraction = g:scrolloff_fraction
+  let g:scrolloff_fraction = 1
 endfunction
 
 function! s:goyo_leave()
@@ -670,7 +681,9 @@ function! s:goyo_leave()
   set showmode
   set showcmd
   set cmdheight=2
-  set scrolloff=5
+
+  " set scrolloff=5
+  let g:scrolloff_fraction = g:_scrolloff_fraction
 endfunction
 
 augroup MyGoyoEvents

@@ -93,7 +93,6 @@ markdown = '''  " {{{2
 
 todo = '''  " {{{2
   setlocal cmdheight=1
-  setlocal scrolloff=1
 
   " 常に保存し続ける
   augroup myrc_todo
@@ -227,7 +226,6 @@ help = '''  " {{{2
 qf = '''  " {{{2
   "" quickfix/location どちらも filetype=qf になる
   setlocal norelativenumber
-  setlocal scrolloff=0
 
   " qw でリストが残っていても閉じれるようにする
   nnoremap <buffer> qw :<C-u>bd<CR>
