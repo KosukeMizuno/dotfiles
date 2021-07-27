@@ -597,8 +597,7 @@ repo = 'Xuyuanp/scrollbar.nvim'
 if = 'has("nvim-0.5")'
 
 [[plugins]]
-# repo = 'Shougo/context_filetype.vim'
-repo = '~/ghq/github.com/KosukeMizuno/context_filetype.vim'
+repo = 'Shougo/context_filetype.vim'
 lazy = 1
 
 [[plugins]]

@@ -5,6 +5,8 @@ from functools import partial
 import gc
 import importlib
 import itertools
+from itertools import product
+import math
 import os
 from pathlib import Path
 import pickle
@@ -17,6 +19,8 @@ import time
 # import third-party libraries
 try:
     import numpy as np
+    from numpy import pi, sqrt
+    np.set_printoptions(linewidth=175)
 except ImportError:
     pass
 
@@ -37,6 +41,11 @@ except ImportError:
     pass
 
 try:
+    import cloudpickle
+except ImportError:
+    pass
+
+try:
     import esapy
     from esapy import esapy_fold
 except ImportError:
@@ -47,4 +56,3 @@ try:
     better_exceptions.MAX_LENGTH = None
 except ImportError:
     pass
-
