@@ -401,7 +401,8 @@ fi
 if [[ -z $(command -v ctags) ]]; then
     url=https://github.com/universal-ctags/ctags.git
     dest="$PREFIX/src/universal-ctags"
-    git clone $url "$dest" && (
+    [[ ! -d "$dest" ]] && git clone $url "$dest"
+    (
         cd "$dest" &&
             ./autogen.sh &&
             ./configure --prefix="$PREFIX" &&
