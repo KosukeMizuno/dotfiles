@@ -121,6 +121,7 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
 
 " matcher
 " let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 '''
 
 # [[plugins]]
@@ -128,6 +129,9 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
 # hook_post_update = '''
 # system('PY3=ON ./install.sh')
 # '''
+
+[[plugins]]
+repo = 'FelikZ/ctrlp-py-matcher'
 
 [[plugins]]
 repo = 'sgur/ctrlp-extensions.vim'
