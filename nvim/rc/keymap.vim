@@ -195,8 +195,8 @@ nmap <silent> <Space><Up>   <SID>(toggle_movement)
 " 上下移動（行単位＆スクロール）  " {{{
 " 表示行単位で上下移動する
 "" 数字指定の場合は論理行単位で移動する（相対行表示通りに移動）
-nnoremap <expr> j v:count ? 'j' : g:movement_jk..'gj'
-nnoremap <expr> k v:count ? 'k' : g:movement_jk..'gk'
+nnoremap <silent> <expr> j v:count ? 'j' : g:movement_jk..'gj'
+nnoremap <silent> <expr> k v:count ? 'k' : g:movement_jk..'gk'
 "" ビジュアルモード・オペレータ待機モードは一行ずつにしておく
 xnoremap <expr> j v:count ? 'j' : 'gj'
 onoremap <expr> j v:count ? 'j' : 'gj'
