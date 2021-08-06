@@ -1037,3 +1037,6 @@ xnoremap <silent> <Leader> :<C-u>WhichKeyVisual '<Space>'<CR>
 nnoremap <silent> [? :<C-u>WhichKey '['<CR>
 nnoremap <silent> ]? :<C-u>WhichKey ']'<CR>
 
+" check syntax and highlight
+nnoremap <Leader>v <cmd>VimShowHlGroup<CR>
+

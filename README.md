@@ -12,7 +12,8 @@ Multi-platform dotfiles with automatic instalation and deploying scripts.
 
 If you are in proxy environment, set `HTTP_PROXY` before `make`.
 
-- ```sh
+- Clone & install
+  ```sh
   export DOTPATH=$HOME/dotfiles
   git clone --recursive <this repo> $DOTPATH
   cd $DOTPATH

@@ -206,6 +206,10 @@ endif
 
 
 """" config helpers """" {{{1
+command! VimShowHlLinkGroup echo synIDattr(synIDtrans(synID(line('.'), col('.'), 1)), 'name')
+command! VimShowHlGroup echo synIDattr(synID(line('.'), col('.'), 1), 'name')
+command! CheckHealth call dein#source() | checkhealth
+
 " Dein shortcuts
 command! DeinReCache call dein#recache_runtimepath()
 if exists('g:dein#install_github_api_token')
@@ -213,7 +217,6 @@ if exists('g:dein#install_github_api_token')
 else
   command! DeinUpdate call dein#update()
 endif
-command! CheckHealth call dein#source() | checkhealth
 
 " profiling for log file by 'vim --startuptime'
 command! SortStartuplog %!sort -k2nr

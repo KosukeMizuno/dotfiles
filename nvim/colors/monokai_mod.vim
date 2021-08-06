@@ -237,3 +237,6 @@ hi link TSTag          Label
 hi link TSTagDelimiter Delimiter
 hi clear TSError
 hi clear TSVariable
+
+" markdown
+hi link markdownHeadingDelimiter Special
