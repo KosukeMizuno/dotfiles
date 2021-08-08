@@ -124,12 +124,6 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 '''
 
-# [[plugins]]
-# repo = 'nixprime/cpsm'
-# hook_post_update = '''
-# system('PY3=ON ./install.sh')
-# '''
-
 [[plugins]]
 repo = 'FelikZ/ctrlp-py-matcher'
 

@@ -23,6 +23,9 @@ urlencode() {
   echo "$1" | nkf -WwMQ | tr = %
 }
 
+# 一時作業フォルダを作成して移動
+alias cdtemp='cd "$(mktemp -d)"'
+
 # PATHを一覧で出す
 echo_path() {
     echo "$PATH" | tr ':' '\n'
