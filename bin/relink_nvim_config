@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# args: $1 が test だったらテスト用設定ファイルにリンクを貼る
+#       それ以外の場合は普段遣い用の設定にする
+
+if [[ ! -L "$XDG_CONFIG_HOME/nvim" ]]; then
+    exit 1
+fi
+
+unlink "$XDG_CONFIG_HOME/nvim"
+if [[ "$1" == "test" ]]; then
+    ln -s "$DOTPATH/nvim_test" "$XDG_CONFIG_HOME/nvim"
+else
+    ln -s "$DOTPATH/nvim" "$XDG_CONFIG_HOME/nvim"
+fi
+nvim +q
+nvim "+call dein#recache_runtimepath()" +q
+
+# vim: set ft=sh:

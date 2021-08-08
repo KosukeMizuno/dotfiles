@@ -106,6 +106,9 @@ git管理しない設定ファイルは`$DOTPATH/nvim/set_credential.vim`（あ�
 vim用のpython3(venv)は`$PREFIX/opt/python3_nvim`においた。
 python2って要る？
 
+`init.vim`の検証用に設定フォルダの切り替えスクリプトを用意した: `./bin/relink_nvim_config`
+`$XDG_CONFIG_HOME/nvim`に`$DOTPATH/nvim` or `$DOTPATH/nvim_test`へのリンクがはられる。
+
 
 ## Acknowledgements
 
