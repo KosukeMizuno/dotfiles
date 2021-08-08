@@ -257,6 +257,7 @@ fern = '''
   nnoremap <buffer> <C-l> <C-w>l
   nmap <buffer> <Leader>H <Plug>(fern-action-project-top:reveal)
   nmap <buffer> o <Plug>(fern-action-open:edit)
+  nmap <buffer> ; <Plug>(fern-action-choice)
 
   setlocal nonumber norelativenumber
   setlocal foldcolumn=0
