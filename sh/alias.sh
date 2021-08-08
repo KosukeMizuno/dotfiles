@@ -25,6 +25,8 @@ urlencode() {
 
 # 一時作業フォルダを作成して移動
 alias cdtemp='cd "$(mktemp -d)"'
+# dotfilesに移動
+alias cdot="cd ${DOTPATH:-$HOME/dotfiles}"
 
 # PATHを一覧で出す
 echo_path() {
