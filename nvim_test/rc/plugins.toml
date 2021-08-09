@@ -1,9 +1,124 @@
-[[plugins]]
+[[plugins]]  # ctrlp  {{{2
 repo = 'ctrlpvim/ctrlp.vim'
+depends = 'ctrlp-py-matcher'
+lazy = 1
+on_cmd = ['CtrlP', 'CtrlPBuffer', 'CtrlPLine',
+          'CtrlPMRUFiles', 'CtrlPQuickfix',
+          'CtrlPMenu', 'CtrlPCmdline', 'CtrlPCmdPalette']
 hook_source = '''
+" yankroundと共存させるために、後でkeymap.vim内で手動マップを行う
+" 読み込み時にはマップしないよう設定する
+let g:ctrlp_map = ''
 let g:ctrlp_working_path_mode = 'ra'
 
 " gitignoreを遵守
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+" 行き来できるモード
+let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
+    \ 'undo', 'line', 'changes', 'mixed', 'bookmarkdir',
+    \ 'cmdline', 'menu', 'help']
+
+" matcher
+" let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+'''
+
+[[plugins]]
+repo = 'FelikZ/ctrlp-py-matcher'
+
+[[plugins]]
+repo = 'sgur/ctrlp-extensions.vim'
+lazy = 1
+# ctrlp-extensions.vim は after/plugin/ctrlp.vim で定義されるので、ctrlp本体より先にスクリプトを配置させる
+on_source = ['ctrlp.vim']
+hook_source = '''
+let g:ctrlp_yankring_disable = 1
+'''
+
+[[plugins]]
+repo = 'fisadev/vim-ctrlp-cmdpalette'
+lazy = 1
+on_source = 'ctrlp.vim'
+
+[[plugins]]
+repo = 'zeero/vim-ctrlp-help'
+depends = ['ctrlp.vim', 'vimdoc-ja']
+lazy = 1
+on_cmd = 'CtrlPHelp'
+
+[[plugins]]
+repo = 'mattn/ctrlp-lsp'
+depends = 'ctrlp.vim'
+on_source = 'vim-lsp'
+lazy = 1
+on_cmd = ['CtrlPLspDocumentSymbol', 'CtrlPLspWorkspaceSymbol']
+
+[[plugins]]
+repo = 'mattn/ctrlp-ghq'
+lazy = 1
+on_source = ['ctrlp.vim']
+hook_source = '''
+let g:ctrlp_ghq_cache_enabled = 0
+'''
+
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+hook_add = '''
+if empty($SSH_CLIENT)
+  let g:airline_theme = 'molokai'
+else
+  let g:airline_theme = 'base16'
+endif
+let g:airline_powerline_fonts = g:rc_enable_icon
+let g:airline#extensions#whitespace#mixed_indent_algo = 1
+
+" nviim>0.5ならbarbar.nvimが担当する
+let g:airline#extensions#tabline#enabled = !has('nvim-0.5')
+let g:airline#extensions#tabline#buffer_idx_mode = 0
+let g:airline#extensions#tabline#buffer_nr_show = 0
+'''
+
+[[plugins]]
+repo = 'romgrk/barbar.nvim'
+if = 'has("nvim-0.5")'
+hook_add = '''
+let bufferline = get(g:, 'bufferline', {})
+if g:rc_enable_icon
+  let bufferline.icons = v:true
+endif
+'''
+
+[[plugins]]
+repo = 'kyazdani42/nvim-web-devicons'
+if = 'g:rc_enable_icon'
+
+[[plugins]]
+repo = 'prabirshrestha/vim-lsp'
+hook_add = '''
+let g:lsp_auto_enable = 1
+let g:lsp_signature_help_enabled = 0
+let g:lsp_diagnostics_virtual_text_enabled = 0
+let g:lsp_diagnostics_highlights_enabled = 0
+let g:lsp_diagnostics_echo_cursor = 1
+let g:lsp_diagnostics_echo_delay = 0
+let g:lsp_document_code_actions_signs_enabled = 1
+let g:lsp_document_code_actions_signs_delay = 0
+'''
+
+[[plugins]]
+repo = 'mattn/vim-lsp-settings'
+
+[[plugins]]
+repo = 'lighttiger2505/deoplete-vim-lsp'
+depends = ['deoplete.nvim', 'vim-lsp']
+lazy = 1
+on_event = 'InsertEnter'
+hook_source = '''
+call deoplete#custom#source('lsp', 'rank', 9000)
 '''
 
