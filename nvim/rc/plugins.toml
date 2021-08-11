@@ -142,6 +142,14 @@ lazy = 1
 on_source = 'ctrlp.vim'
 
 [[plugins]]
+repo = 'KosukeMizuno/ctrlp-fern-action.vim'
+# repo = '~/ghq/github.com/KosukeMizuno/ctrlp-fern-action.vim'
+depends = ['ctrlp.vim']
+lazy = 1
+on_source = ['fern.vim']
+on_cmd = 'CtrlPFernAction'
+
+[[plugins]]
 repo = 'zeero/vim-ctrlp-help'
 depends = ['ctrlp.vim', 'vimdoc-ja']
 lazy = 1
@@ -250,6 +258,7 @@ let g:fern#default_hidden = 1
 [plugins.ftplugin]
 fern = '''
   nnoremap <buffer> qw <cmd>bd<CR>
+  nnoremap <buffer> ZZ <cmd>xa<CR>
   nnoremap <buffer> <C-e> <cmd>bd<CR>
   nnoremap <buffer> <C-h> <C-w>h
   nnoremap <buffer> <C-j> <C-w>j
@@ -257,7 +266,8 @@ fern = '''
   nnoremap <buffer> <C-l> <C-w>l
   nmap <buffer> <Leader>H <Plug>(fern-action-project-top:reveal)
   nmap <buffer> o <Plug>(fern-action-open:edit)
-  nmap <buffer> ; <Plug>(fern-action-choice)
+  nmap <buffer> g; <Plug>(fern-action-choice)
+  nnoremap <buffer> ; <cmd>CtrlPFernAction<CR>
 
   setlocal nonumber norelativenumber
   setlocal foldcolumn=0
