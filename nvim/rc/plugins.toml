@@ -254,6 +254,7 @@ repo = 'lambdalisue/fern.vim'
 #'''
 hook_add = '''
 let g:fern#default_hidden = 1
+let g:fern#hide_cursor = 1
 '''
 [plugins.ftplugin]
 fern = '''
