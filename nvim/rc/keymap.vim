@@ -14,7 +14,7 @@ if executable('imeoff.exe')
 elseif executable('xvkbd')
   command! ImeOff call system('xvkbd -text "\[Muhenkan]"')
 else
-  command! ImeOff normal! \<Nop>
+  command! ImeOff :
 endif
 
 " mark-k

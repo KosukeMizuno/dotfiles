@@ -125,7 +125,8 @@ let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 '''
 [plugins.ftplugin]
 ctrlp = '''
-command! -buffer ImeOff normal! \<Nop>
+" ctrlpセレクタでは１入力ごとにInsertLeaveが発生して、ImeOffが呼ばれて遅くなるので書き換え
+command! -buffer ImeOff :
 '''
 
 [[plugins]]
