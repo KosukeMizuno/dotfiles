@@ -123,6 +123,10 @@ let g:ctrlp_extensions = ['tag', 'buffertag', 'quickfix', 'dir', 'rtscript',
 " let g:ctrlp_match_func = { 'match': 'cpsm#CtrlPMatch' }
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 '''
+[plugins.ftplugin]
+ctrlp = '''
+command! -buffer ImeOff normal! \<Nop>
+'''
 
 [[plugins]]
 repo = 'FelikZ/ctrlp-py-matcher'
