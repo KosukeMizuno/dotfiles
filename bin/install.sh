@@ -308,9 +308,9 @@ if ${DOTINSTALL_NVIM:-true}; then
         # check update & build
         NVIM_TARGET_BRANCH="v0.5.0"
         echo "neovim HEAD: $(git rev-parse HEAD)"
-        echo "neovim nightly: $(git rev-parse $NVIM_TARGET_BRANCH)"
+        echo "neovim $NVIM_TARGET_BRANCH: $(git rev-parse $NVIM_TARGET_BRANCH)"
         if [[ ! -x "$PREFIX/bin/nvim" ]] || [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]]; then
-            echo "Building nvim-nightly..."
+            echo "Building nvim-$NVIM_TARGET_BRANCH..."
             git checkout $NVIM_TARGET_BRANCH
             make CMAKE_INSTALL_PREFIX="$PREFIX" CMAKE_BUILD_TYPE=Release
             make install
