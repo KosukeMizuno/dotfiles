@@ -794,3 +794,11 @@ repo = 'mattn/webapi-vim'
 [[plugins]]
 repo = 'thinca/vim-ft-help_fold'
 
+[[plugins]]
+repo = 'rcarriga/nvim-notify'
+hook_add = '''
+lua << EOF
+vim.notify = require("notify")
+EOF
+'''
+
