@@ -533,6 +533,11 @@ lazy = 1
 on_cmd = 'WinResizerStartResize'
 
 [[plugins]]
+repo = 'mhinz/vim-sayonara'
+lazy = 1
+on_cmd = ['Sayonara', 'Sayonara!']
+
+[[plugins]]
 repo = 'kana/vim-submode'  # {{{
 lazy = 1
 on_map = {n='x'}

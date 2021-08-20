@@ -321,7 +321,7 @@ if has('win64') && has('nvim')
 endif
 
 " バッファ閉じる
-nnoremap <Leader>w :<C-u>bd<CR>
+nnoremap <Leader>w :<C-u>Sayonara!<CR>
 
 " Ctrl+hjkl でvimウィンドウ移動
 nnoremap <C-h> <C-w>h
