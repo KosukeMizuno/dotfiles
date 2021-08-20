@@ -309,6 +309,7 @@ if ${DOTINSTALL_NVIM:-true}; then
         NVIM_TARGET_BRANCH="v0.5.0"
         echo "neovim HEAD: $(git rev-parse HEAD)"
         echo "neovim $NVIM_TARGET_BRANCH: $(git rev-parse $NVIM_TARGET_BRANCH)"
+        # TODO: v0.5.0になってHEADより古いので、今の条件だと常にビルドが走ってしまう
         if [[ ! -x "$PREFIX/bin/nvim" ]] || [[ $(git rev-parse HEAD) != $(git rev-parse $NVIM_TARGET_BRANCH) ]]; then
             echo "Building nvim-$NVIM_TARGET_BRANCH..."
             git checkout $NVIM_TARGET_BRANCH
@@ -347,7 +348,7 @@ if ${DOTINSTALL_NVIM:-true}; then
 
         # nvimの初回ダウンロード等が必要なものを実行
         nvim +q
-        nvim "+call dein#check_update(v:true)" "+call dein#recache_runtimepath()" +q
+        nvim "+call dein#update()" "+call dein#recache_runtimepath()" +q
         nvim "+call dein#source()" "+UpdateRemotePlugins" "+TSInstall all" +q
         nvim "+call dein#source()" "+LspInstallServer pyls-all" "+LspInstallServer bash-language-server" "+LspInstallServer vim-language-server" +q
     fi
