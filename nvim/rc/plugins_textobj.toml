@@ -99,7 +99,6 @@ on_map = {x=['am', 'im'], o=['am', 'im']}
 ## toml file for dein.vim
 # iP, aP, ir, ah
 repo = 'KosukeMizuno/vim-textobj-dein'
-# repo = 'KosukeMizuno/vim-textobj-dein'
 lazy = 1
 on_ft = 'toml'
 
