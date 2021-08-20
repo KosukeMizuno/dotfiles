@@ -221,8 +221,8 @@ xnoremap gk k
 onoremap gk k
 
 " スムーズなスクロール
-nnoremap <silent> <C-d> mk:<C-u>call comfortable_motion#flick(100)<CR>
-nnoremap <silent> <C-u> mk:<C-u>call comfortable_motion#flick(-100)<CR>
+nmap <C-d> <Plug>(SmoothieDownwards)
+nmap <C-u> <Plug>(SmoothieUpwards)
 "" Space+<C-d/u> で戻る＋画面の真ん中にもってくる
 nnoremap <silent> <Leader><C-d> g`kzz
 nnoremap <silent> <Leader><C-u> g`kzz

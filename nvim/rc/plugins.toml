@@ -22,11 +22,11 @@ repo = 'zhimsel/vim-stay'
 #### 移動系 ####  {{{1
 
 [[plugins]]
-repo = 'yuttie/comfortable-motion.vim'
+repo = 'psliwka/vim-smoothie'
 lazy = 1
-on_func = 'comfortable_motion#flick'
+on_map = {n='<Plug>(Smoothie'}
 hook_source = '''
-let g:comfortable_motion_no_default_key_mappings = 1
+let g:smoothie_no_default_mappings = v:true
 '''
 
 [[plugins]]
