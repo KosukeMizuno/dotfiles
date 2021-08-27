@@ -31,7 +31,8 @@ If you are in proxy environment, set `HTTP_PROXY` before `make`.
 Editing japanese language with vim, 
 
 - Windows:
-  - `imeoff.exe` (by AutoHotKey) should be executable.
+  - ~~`imeoff.exe` (by AutoHotKey) should be executable.~~
+  - This program is no longer required.
 - Ubuntu:
   - `xvkbd` should be installed
   - `Muhenkan` key should make IME off whenever it is sent (this key will be sent at InsertLeave event).
