@@ -202,3 +202,4 @@ __run_ipynb() {
     jupyter nbconvert --debug --to notebook --execute "$target" --output "$newname"
 }
 alias nbx=__run_ipynb
+

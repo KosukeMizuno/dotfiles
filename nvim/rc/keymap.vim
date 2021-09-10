@@ -32,7 +32,7 @@ function! s:clear_things (clear_marker, clear_scrollbar)  " {{{
 
   " clear scrollbar
   "" context_filetype によるsyntax設定が壊されるので必要なときだけ呼ぶ
-  silent let l:sc = dein#check_install('scrollbar')
+  silent let l:sc = dein#check_install('scrollbar.nvim')
   if a:clear_scrollbar && l:sc == 0
     lua require('scrollbar').clear()
   endif
@@ -69,7 +69,7 @@ nnoremap <silent> <Leader><C-l> <cmd>nohl<CR><cmd>call <SID>clear_things(v:true,
 " Scrollbar設定  {{{
 nnoremap <Leader>s <cmd>call <SID>toggle_scrollbar()<CR>
 function! s:toggle_scrollbar() abort
-  silent let l:sc = dein#check_install('scrollbar')
+  silent let l:sc = dein#check_install('scrollbar.nvim')
   if l:sc != 0
     return
   endif
@@ -94,7 +94,7 @@ function! s:toggle_scrollbar() abort
     echo l:msg
   endif
 endfunction
-let g:scrollbar_enabled = v:true
+let g:scrollbar_enabled = v:false
 call s:toggle_scrollbar()
 "" }}}
 
@@ -221,8 +221,8 @@ xnoremap gk k
 onoremap gk k
 
 " スムーズなスクロール
-nnoremap <silent> <C-d> mk:<C-u>call comfortable_motion#flick(100)<CR>
-nnoremap <silent> <C-u> mk:<C-u>call comfortable_motion#flick(-100)<CR>
+nmap <C-d> <Plug>(SmoothieDownwards)
+nmap <C-u> <Plug>(SmoothieUpwards)
 "" Space+<C-d/u> で戻る＋画面の真ん中にもってくる
 nnoremap <silent> <Leader><C-d> g`kzz
 nnoremap <silent> <Leader><C-u> g`kzz
@@ -321,7 +321,7 @@ if has('win64') && has('nvim')
 endif
 
 " バッファ閉じる
-nnoremap <Leader>w :<C-u>bd<CR>
+nnoremap <Leader>w :<C-u>Sayonara!<CR>
 
 " Ctrl+hjkl でvimウィンドウ移動
 nnoremap <C-h> <C-w>h
@@ -480,14 +480,14 @@ xnoremap < <Nop>
 xnoremap >> >gv
 xnoremap << <gv
 
-" " dial.nvim
-" nmap <C-a> <Plug>(dial-increment)
-" nmap <C-x> <Plug>(dial-decrement)
-" "" ビジュアルモードでのインクリメント/デクリメントを連続入力可にする
-" vmap <C-a> <Plug>(dial-increment)gv
-" vmap <C-x> <Plug>(dial-decrement)gv
-" xmap g<C-a> <Plug>(dial-increment-additional)gv
-" xmap g<C-x> <Plug>(dial-decrement-additional)gv
+" dial.nvim
+nmap <C-a> <Plug>(dial-increment)
+nmap <C-x> <Plug>(dial-decrement)
+"" ビジュアルモードでのインクリメント/デクリメントを連続入力可にする
+vmap <C-a> <Plug>(dial-increment)gv
+vmap <C-x> <Plug>(dial-decrement)gv
+xmap g<C-a> <Plug>(dial-increment-additional)gv
+xmap g<C-x> <Plug>(dial-decrement-additional)gv
 
 " gmをマークにする（go mark *）
 "" memo: もとのgmは画面幅の真ん中にカーソルを持ってくる
@@ -765,6 +765,7 @@ xnoremap [WEB]a "zy:<C-u>OpenBrowserSearch -alc <C-r>z<CR>
 " }}}
 
 " translate a sentence under cursor  {{{
+" TODO: 今動いてないはず。。。wslからの移植時に動かなくなってるのでは
 "" transコマンドは`brew install translate-shell`で用意しておく
 command! TranslateShell execute '!cat "~/.vimbuffer" | trans {en=ja} --no-ansi'
 command! TranslateShellDict execute '!cat "~/.vimbuffer" | trans {en=ja} -d --no-ansi'

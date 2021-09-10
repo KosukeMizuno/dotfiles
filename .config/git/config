@@ -71,3 +71,4 @@
 # local config
 [include]
 	path = ~/.gitconfig_local
+
