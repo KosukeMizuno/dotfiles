@@ -194,3 +194,12 @@ alias activate=__fzf_activate_python_venv
 alias esafu='esa up --no-browser "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'
 alias esafr='esa reset "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'
 
+# run jupyter notebook as date-named file
+__run_ipynb() {
+    target="$1"
+    newnametmp="nbx_$(basename $target '.ipynb')-at$(date +%y%m%d%H%M)-XXXXXX.ipynb"
+    newname=$(mktemp -p $(dirname "$target") "$newnametmp")
+    jupyter nbconvert --debug --to notebook --execute "$target" --output "$newname"
+}
+alias nbx=__run_ipynb
+
