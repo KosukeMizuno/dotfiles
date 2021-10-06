@@ -199,7 +199,7 @@ __run_ipynb() {
     target="$1"
     newnametmp="nbx_$(basename $target '.ipynb')-at$(date +%y%m%d%H%M)-XXXXXX.ipynb"
     newname=$(mktemp -p $(dirname "$target") "$newnametmp")
-    cp "$target" "$newname"
+    /usr/bin/cp -f "$target" "$newname"
     jupyter nbconvert --debug --to notebook --execute "$target" --output "$newname"
 }
 alias nbx=__run_ipynb
