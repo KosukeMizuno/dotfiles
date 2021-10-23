@@ -32,6 +32,6 @@ export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
 export PATH="$HOME/.poetry/bin:$PATH"
 if [[ -e "$PYTHON_DEFAULT_VENV/bin/activate" ]]; then
     source "$PYTHON_DEFAULT_VENV/bin/activate"
-elif [[ -e "$PYTHON_DEFAULT_VENV/Script/activate" ]]; then
-    source "$PYTHON_DEFAULT_VENV/Script/activate"
+elif [[ -e "$PYTHON_DEFAULT_VENV/Scripts/activate" ]]; then
+    source "$PYTHON_DEFAULT_VENV/Scripts/activate"
 fi

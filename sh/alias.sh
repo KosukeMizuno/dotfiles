@@ -188,7 +188,7 @@ __fzf_activate_python_venv() {
         fi
     fi
 }
-alias activate=_fzf_activate_python_venv
+alias activate=__fzf_activate_python_venv
 
 # esapy
 alias esafu='esa up --no-browser "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'
