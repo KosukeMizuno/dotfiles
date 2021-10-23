@@ -5,11 +5,11 @@
 #### COMMAND LINE HELPER
 # reload rc
 if [[ -n $BASH ]]; then
-    alias rc='echo "sourcing ~/.bashrc ..."; source $HOME/.bashrc'
-    alias rc_profile='echo "sourcing ~/.bash_profile ..."; source $HOME/.bash_profile'
+    alias rc='echo "sourcing ~/.bashrc ..."; source "$HOME/.bashrc"'
+    alias rc_profile='echo "sourcing ~/.bash_profile ..."; source "$HOME/.bash_profile"'
 elif [[ -n $ZSH_NAME ]]; then
-    alias rc='echo "sourcing ~/.zshrc ..."; source $HOME/.zshrc'
-    alias rc_profile='echo "sourcing ~/.zprofile ..."; source $HOME/.zprofile'
+    alias rc='echo "sourcing ~/.zshrc ..."; source "$HOME/.zshrc"'
+    alias rc_profile='echo "sourcing ~/.zprofile ..."; source "$HOME/.zprofile"'
 fi
 
 # ランダム文字列を生成する
@@ -26,7 +26,7 @@ urlencode() {
 # 一時作業フォルダを作成して移動
 alias cdtemp='cd "$(mktemp -d)"'
 # dotfilesに移動
-alias cdot="cd ${DOTPATH:-$HOME/dotfiles}"
+alias cdot='cd "${DOTPATH:-$HOME/dotfiles}"'
 
 # PATHを一覧で出す
 echo_path() {
@@ -127,13 +127,27 @@ alias grj="git remind status -n --all | fzf --inline-info --height 40% --ansi --
 alias grs='git remind status --all'
 
 # ghq
-if [[ -n $(command -v bat) ]]; then
-    alias gj='cd $(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
-else
-    alias gj='cd $(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "cat $(ghq root)/{}/README.* | head -40" | xargs -t -I{} echo $(ghq root)/{})'
-fi
+## if [[ -n $(command -v bat) ]]; then
+##     alias gj='cd $(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
+## else
+##     alias gj='cd $(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "cat $(ghq root)/{}/README.* | head -40" | xargs -t -I{} echo $(ghq root)/{})'
+## fi
+__fzf_ghq_cd(){
+    if [[ -n $(command -v bat) ]]; then
+        target="$(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 "$(ghq root)"/{}/README.*")"
+    else
+        target="$(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "cat "$(ghq root)"/{}/README.* | head -40")"
+    fi
+    [[ -z $target ]] && exit 1
+    
+    cd_target="$(ghq root)/$target"
+    [[ ! -d "$cd_target" ]] && [[ ! -L "$cd_target" ]] && exit 1
+    cd "$cd_target"
+}
 if [[ $TERM_PROGRAM = "mintty" ]]; then
     alias gj="echo 'fzf is not available in mintty.'"
+else
+    alias gj=__fzf_ghq_cd
 fi
 
 # github cli
@@ -160,6 +174,7 @@ __fzf_cd() {
     else
         target=$(ls -d */ .*/ | fzf --inline-info --ansi --cycle --height 50% --preview='ls --color=always {}')
     fi
+    [[ ! -d "$cd_target" ]] && [[ ! -L "$cd_target" ]] && exit 1
     cd "$target" || exit 1
 }
 alias fcd=__fzf_cd
