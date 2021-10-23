@@ -127,21 +127,16 @@ alias grj="git remind status -n --all | fzf --inline-info --height 40% --ansi --
 alias grs='git remind status --all'
 
 # ghq
-## if [[ -n $(command -v bat) ]]; then
-##     alias gj='cd $(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 $(ghq root)/{}/README.*" | xargs -t -I{} echo $(ghq root)/{})'
-## else
-##     alias gj='cd $(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "cat $(ghq root)/{}/README.* | head -40" | xargs -t -I{} echo $(ghq root)/{})'
-## fi
 __fzf_ghq_cd(){
     if [[ -n $(command -v bat) ]]; then
         target="$(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 "$(ghq root)"/{}/README.*")"
     else
         target="$(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "cat "$(ghq root)"/{}/README.* | head -40")"
     fi
-    [[ -z $target ]] && exit 1
-    
+    [[ -z $target ]] && return
+
     cd_target="$(ghq root)/$target"
-    [[ ! -d "$cd_target" ]] && [[ ! -L "$cd_target" ]] && exit 1
+    [[ ! -d "$cd_target" ]] && [[ ! -L "$cd_target" ]] && return
     cd "$cd_target"
 }
 if [[ $TERM_PROGRAM = "mintty" ]]; then
@@ -174,8 +169,8 @@ __fzf_cd() {
     else
         target=$(ls -d */ .*/ | fzf --inline-info --ansi --cycle --height 50% --preview='ls --color=always {}')
     fi
-    [[ ! -d "$cd_target" ]] && [[ ! -L "$cd_target" ]] && exit 1
-    cd "$target" || exit 1
+    [[ ! -d "$cd_target" ]] && [[ ! -L "$cd_target" ]] && return
+    cd "$target"
 }
 alias fcd=__fzf_cd
 alias cdf=__fzf_cd
