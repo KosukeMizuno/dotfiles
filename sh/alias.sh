@@ -169,7 +169,7 @@ __fzf_cd() {
     else
         target=$(ls -d */ .*/ | fzf --inline-info --ansi --cycle --height 50% --preview='ls --color=always {}')
     fi
-    [[ ! -d "$cd_target" ]] && [[ ! -L "$cd_target" ]] && return
+    [[ ! -d "$target" ]] && [[ ! -L "$target" ]] && return
     cd "$target"
 }
 alias fcd=__fzf_cd
