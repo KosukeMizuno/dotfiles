@@ -129,9 +129,9 @@ alias grs='git remind status --all'
 # ghq
 __fzf_ghq_cd(){
     if [[ -n $(command -v bat) ]]; then
-        target="$(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 "$(ghq root)"/{}/README.*")"
+        target="$(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "bat --color=always --style=grid --line-range :40 '$(ghq root)'/{}/README.*")"
     else
-        target="$(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "cat "$(ghq root)"/{}/README.* | head -40")"
+        target="$(ghq list | fzf --inline-info --height 40% --ansi --cycle --preview "cat '$(ghq root)'/{}/README.* | head -40")"
     fi
     [[ -z $target ]] && return
 
@@ -182,9 +182,9 @@ alias i=ipython
 PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
 PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
 if [[ -n $(command -v cygpath) ]]; then
-    alias activate_default='source $PYTHON_DEFAULT_VENV/Scripts/activate'
+    alias activate_default='source "$PYTHON_DEFAULT_VENV/Scripts/activate"'
 else
-    alias activate_default='source $PYTHON_DEFAULT_VENV/bin/activate'
+    alias activate_default='source "$PYTHON_DEFAULT_VENV/bin/activate"'
 fi
 __fzf_activate_python_venv() {
     target=$(\ls "$PYTHON_VENV_DIR" | fzf --select-1)
