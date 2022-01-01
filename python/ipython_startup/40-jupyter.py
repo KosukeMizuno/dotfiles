@@ -12,12 +12,11 @@ def _get_runtime_env():
 
     return 'jupyter'
 
-
 def is_ipython():
-    return _get_runtime_env == 'ipython'
+    return _get_runtime_env() == 'ipython'
 
 def is_jupyter():
-    return _get_runtime_env == 'jupyter'
+    return _get_runtime_env() == 'jupyter'
 
 
 #### load tqdm
@@ -36,5 +35,47 @@ else:
         pass
 
 #### load widgets
-from ipywidgets import clear_output, display
+try:
+    from ipywidgets import clear_output, display
+except ImportError:
+    pass
+
+#### open/save dialog
+import tkinter as tk
+import tkinter.filedialog
+from pathlib import Path
+
+def open_dialog(**opt):
+    """examples of option:
+    - filetypes=[(label, ext), ...]
+        - label: str
+        - ext: str, semicolon separated extentions
+    - initialdir: str, default Path.cwd()
+    - multiple: bool, default False
+    """
+    root = tk.Tk('sss', 'bbb')
+    root.withdraw()
+    root.wm_attributes("-topmost", True)
+
+    opt_default = dict(initialdir=Path.cwd())
+    _opt = dict(opt_default, **opt)
+
+    return tk.filedialog.askopenfilename(**_opt)
+
+def saveas_dialog(**opt):
+    """examples of option:
+    - filetypes=[(label, ext), ...]
+        - label: str
+        - ext: str, semicolon separated extentions
+    - initialdir: str, default Path.cwd()
+    - initialfile: str, default isn't set
+    """
+    root = tk.Tk('sss', 'bbb')
+    root.withdraw()
+    root.wm_attributes("-topmost", True)
+
+    opt_default = dict(initialdir=Path.cwd())
+    _opt = dict(opt_default, **opt)
+
+    return tk.filedialog.asksaveasfilename(**_opt)
 
