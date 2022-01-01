@@ -1,7 +1,8 @@
-# helpers for jupyter, ipython
-
-# https://blog.amedama.jp/entry/detect-jupyter-env
-def get_runtime_env():
+#### helpers for jupyter, ipython
+def _get_runtime_env():
+    """今の環境を文字列で取得する
+    https://blog.amedama.jp/entry/detect-jupyter-env
+    """
     if 'get_ipython' not in globals():
         return 'python'
 
@@ -12,15 +13,14 @@ def get_runtime_env():
     return 'jupyter'
 
 
-def is_interactive_env():
-    return get_runtime_env in ['ipython', 'jupyter']
-
+def is_ipython():
+    return _get_runtime_env == 'ipython'
 
 def is_jupyter():
-    return get_runtime_env == 'jupyter'
+    return _get_runtime_env == 'jupyter'
 
 
-# load tqdm
+#### load tqdm
 if is_jupyter():
     try:
         from tqdm import tqdm_notebook as tqdm
@@ -34,3 +34,7 @@ else:
         from tqdm import tqdm
     except ImportError:
         pass
+
+#### load widgets
+from ipywidgets import clear_output, display
+
