@@ -88,7 +88,7 @@ def saveas_dialog(**opt):
 def load_pickle_with_dialog(mode='rb', **opt):
     opt_default = dict(filetypes=[('pickled data', '*.pkl'), ('all', '*')])
     _opt = dict(opt_default, **opt)
-    fn = saveas_dialog(**_opt)
+    fn = open_dialog(**_opt)
     if fn == '':  # canceled
         return None
 
