@@ -330,6 +330,7 @@ if ${DOTINSTALL_NVIM:-true}; then
                 "$PREFIX/bin/python3.8" -m venv "$VENV_FOR_NEOVIM"
             fi
             "$VENV_FOR_NEOVIM/bin/pip" install --upgrade pip neovim pynvim
+            "$VENV_FOR_NEOVIM/bin/pip" install --upgrade "python-language-server[all]"
         else
             echo "python3 was not found. Creating venv for nvim failed." 1>&2
         fi
