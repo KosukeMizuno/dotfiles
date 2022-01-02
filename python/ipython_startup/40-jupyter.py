@@ -57,7 +57,7 @@ def open_dialog(**opt):
     - initialdir: str, default Path.cwd()
     - multiple: bool, default False
     """
-    root = tk.Tk('sss', 'bbb')
+    root = tk.Tk()
     root.withdraw()
     root.wm_attributes("-topmost", True)
 
@@ -75,7 +75,7 @@ def saveas_dialog(**opt):
     - initialdir: str, default Path.cwd()
     - initialfile: str, default isn't set
     """
-    root = tk.Tk('sss', 'bbb')
+    root = tk.Tk()
     root.withdraw()
     root.wm_attributes("-topmost", True)
 
@@ -85,20 +85,25 @@ def saveas_dialog(**opt):
     return tk.filedialog.asksaveasfilename(**_opt)
 
 
-def load_with_dialog(mode='rb', **opt):
-    p = Path(open_dialog(**opt))
-
-    if not p.exists():
+def load_pickle_with_dialog(mode='rb', **opt):
+    opt_default = dict(filetypes=[('pickled data', '*.pkl'), ('all', '*')])
+    _opt = dict(opt_default, **opt)
+    fn = saveas_dialog(**_opt)
+    if fn == '':  # canceled
         return None
 
-    with p.open(mode) as f:
+    with Path(fn).open(mode) as f:
         data = pickle.load(f)
     return data
 
 
-def dump_with_dialog(obj, mode='wb', **opt):
-    p = Path(saveas_dialog(**opt))
+def dump_pickle_with_dialog(obj, mode='wb', **opt):
+    opt_default = dict(filetypes=[('pickled data', '*.pkl'), ('all', '*')])
+    _opt = dict(opt_default, **opt)
+    fn = saveas_dialog(**_opt)
+    if fn == '':  # canceled
+        return
     # note: 上書き確認はtkinterがやってくれるのでここではチェックしない
 
-    with p.open(mode) as f:
+    with Path(fn).open(mode) as f:
         pickle.dump(obj, f)
