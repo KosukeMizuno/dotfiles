@@ -97,6 +97,11 @@ $DOTPATH/.config/git/ignore  -- global ignore
 ~/venvs/default  -- デフォルトで使用する環境, 現在は3.8
 ```
 
+環境変数`USE_ANACONDA` がtrueなら、`PATH_CONDA_SH`で指定されたファイルを読み込み、さらに`DEFAULT_ENV_CONDA`が指定されていればactivateする。
+（例：`PATH_CONDA_SH="~/anaconda3/etc/profile.d/conda.sh"`）
+
+`USE_ANACONDA` がtrueならvenv/defaultはactivateされない
+
 ### Neovim
 
 設定フォルダは`$DOTPATH/nvim`においている。  

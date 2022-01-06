@@ -181,11 +181,6 @@ alias i=ipython
 # TODO: 対処療法的なのでちゃんとmsysとlinuxを判別したい
 PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
 PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
-if [[ -n $(command -v cygpath) ]]; then
-    alias activate_default='source "$PYTHON_DEFAULT_VENV/Scripts/activate"'
-else
-    alias activate_default='source "$PYTHON_DEFAULT_VENV/bin/activate"'
-fi
 __fzf_activate_python_venv() {
     target=$(\ls "$PYTHON_VENV_DIR" | fzf --select-1)
     if [[ -d "$PYTHON_VENV_DIR/$target" ]]; then
@@ -198,7 +193,16 @@ __fzf_activate_python_venv() {
         fi
     fi
 }
-alias activate=__fzf_activate_python_venv
+if "${USE_ANACONDA:-false}"
+    :  # if true, anaconda make an `activate` executable in PATH.
+else
+    alias activate=__fzf_activate_python_venv
+    if [[ -n $(command -v cygpath) ]]; then
+        alias activate_default='source "$PYTHON_DEFAULT_VENV/Scripts/activate"'
+    else
+        alias activate_default='source "$PYTHON_DEFAULT_VENV/bin/activate"'
+    fi
+fi
 
 # esapy
 alias esafu='esa up --no-browser "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'

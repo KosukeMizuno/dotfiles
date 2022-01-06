@@ -30,8 +30,13 @@ export PATH="$GOBIN:$PATH"
 export PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
 export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
 export PATH="$HOME/.poetry/bin:$PATH"
-if [[ -e "$PYTHON_DEFAULT_VENV/bin/activate" ]]; then
-    source "$PYTHON_DEFAULT_VENV/bin/activate"
-elif [[ -e "$PYTHON_DEFAULT_VENV/Scripts/activate" ]]; then
-    source "$PYTHON_DEFAULT_VENV/Scripts/activate"
+if "${USE_ANACONDA:-false}" && [[ -e "$PATH_CONDA_SH" ]]; then
+    source "$PATH_CONDA_SH"
+    [[ -n "$DEFAULT_ENV_CONDA" ]] && conda activate "$DEFAULT_ENV_CONDA"
+else
+    if [[ -e "$PYTHON_DEFAULT_VENV/bin/activate" ]]; then
+        source "$PYTHON_DEFAULT_VENV/bin/activate"
+    elif [[ -e "$PYTHON_DEFAULT_VENV/Scripts/activate" ]]; then
+        source "$PYTHON_DEFAULT_VENV/Scripts/activate"
+    fi
 fi
