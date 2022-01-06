@@ -58,10 +58,10 @@
 - Install python
   - 3.8.10 -> https://www.python.org/downloads/windows/
   - `py -3.8 -m venv "$PYTHON_DEFAULT_VENV"`
-  - `(source "$PYTHON_DEFAULT_VENV/Scripts/activate" && pip install --upgrade pip autopep8 isort && pip install jupyterlab nbdime && pip install numpy scipy matplotlib cython tqdm better_exceptions numba && pip install qutip)`
+  - `(source "$PYTHON_DEFAULT_VENV/Scripts/activate" && python -m pip install --upgrade pip autopep8 isort && pip install jupyterlab nbdime && pip install numpy scipy matplotlib cython tqdm better_exceptions numba && pip install qutip)`
 
 - Install nvim
   - `py -3.8 -m venv "$PREFIX/opt/python3_nvim"`
-  - `"$PREFIX/opt/python3_nvim/Scripts/pip.exe install --upgrade pip neovim pynvim"`
-  - `(source "$PREFIX/opt/python3_nvim/Scripts/activate" && pip install --upgrade pip neovim pynvim)`
+  - `(source "$PREFIX/opt/python3_nvim/Scripts/activate" && python -m pip install --upgrade pip neovim pynvim)`
+  - `ghq get Shougo/dein`
   - Install neovim: `https://github.com/neovim/neovim/releases/tag/stable`

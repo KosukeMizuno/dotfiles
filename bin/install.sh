@@ -273,7 +273,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
     default_pip=$PYTHON_DEFAULT_VENV/bin/pip
     if [[ -x $default_pip ]]; then
         $default_pip install --upgrade pip autopep8 isort
-        $default_pip install jupyterlab nbdime
+        $default_pip install jupyterlab nbdime ipywidgets
         $default_pip install numpy scipy matplotlib cython tqdm better_exceptions numba
         $default_pip install qutip
     fi
@@ -330,6 +330,7 @@ if ${DOTINSTALL_NVIM:-true}; then
                 "$PREFIX/bin/python3.8" -m venv "$VENV_FOR_NEOVIM"
             fi
             "$VENV_FOR_NEOVIM/bin/pip" install --upgrade pip neovim pynvim
+            "$VENV_FOR_NEOVIM/bin/pip" install --upgrade "python-language-server[all]"
         else
             echo "python3 was not found. Creating venv for nvim failed." 1>&2
         fi
