@@ -193,7 +193,7 @@ __fzf_activate_python_venv() {
         fi
     fi
 }
-if "${USE_ANACONDA:-false}"
+if "${USE_ANACONDA:-false}"; then
     :  # if true, anaconda make an `activate` executable in PATH.
 else
     alias activate=__fzf_activate_python_venv
