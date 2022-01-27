@@ -276,6 +276,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
         $default_pip install jupyterlab nbdime ipywidgets
         $default_pip install numpy scipy matplotlib cython tqdm better_exceptions numba
         $default_pip install qutip
+        $default_pip install tkdialog-wrapper
     fi
 fi
 
