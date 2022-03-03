@@ -6,6 +6,7 @@ import gc
 import importlib
 import itertools
 from itertools import product
+import json
 import math
 import os
 from pathlib import Path
@@ -21,7 +22,7 @@ import tkinter.filedialog
 # import third-party libraries
 try:
     import numpy as np
-    from numpy import pi, sqrt
+    from numpy import pi, sqrt, isclose
     np.set_printoptions(linewidth=175)
 except ImportError:
     pass
@@ -31,6 +32,11 @@ try:
     from scipy.constants import physical_constants
     from scipy.optimize import curve_fit, minimize
     from scipy.fft import fft, fftfreq, fftshift
+except ImportError:
+    pass
+
+try:
+    import pandas as pd
 except ImportError:
     pass
 
