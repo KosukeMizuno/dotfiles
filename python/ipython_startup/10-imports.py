@@ -49,6 +49,11 @@ except ImportError:
     pass
 
 try:
+    from tqdm.auto import tqdm
+except ImportError:
+    pass
+
+try:
     import cloudpickle
 except ImportError:
     pass

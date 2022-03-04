@@ -27,21 +27,6 @@ def is_jupyter():
     return _get_runtime_env() == 'jupyter'
 
 
-# load tqdm
-if is_jupyter():
-    try:
-        from tqdm import tqdm_notebook as tqdm
-    except ImportError:
-        try:
-            from tqdm import tqdm
-        except ImportError:
-            pass
-else:
-    try:
-        from tqdm import tqdm
-    except ImportError:
-        pass
-
 # load widgets
 try:
     from ipywidgets import clear_output, display
