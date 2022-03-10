@@ -19,11 +19,24 @@ import time
 import tkinter as tk
 import tkinter.filedialog
 
+# typing
+try:
+    from typing import (
+        Any, NoReturn, Union, Optional,
+        Literal, Tuple, List, Dict, Set,  # Note: 3.9以降非推奨らしい
+        Callable, Iterator, Generator, Sequence
+    )
+    from typing import overload  # >=3.9
+except ImportError:
+    pass
+
 # import third-party libraries
 try:
     import numpy as np
     from numpy import pi, sqrt, isclose
     np.set_printoptions(linewidth=175)
+
+    from numpy.typing import ArrayLike, NDArray
 except ImportError:
     pass
 
