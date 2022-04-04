@@ -10,7 +10,8 @@ fi
 source "$DOTPATH/sh/common.sh"
 
 # prompt
-[[ -n $(command -v starship) ]] && eval "$(starship init bash)"
+# Note: 重すぎるので、starhipはやめる... 代替を探したい
+#[[ -n $(command -v starship) ]] && eval "$(starship init bash)"
 
 # alias
 source "$DOTPATH/sh/alias.sh"

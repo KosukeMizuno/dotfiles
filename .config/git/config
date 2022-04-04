@@ -15,6 +15,9 @@
 	co = !git branch -a --color=always | fzf --ansi --reverse --cycle --height 40% --prompt 'CHECKOUT BRANCH>' --preview 'echo {} | tr -d \"(*\" | sed \"s/^[ \\t]*//\" | cut -d \" \" -f 1 | xargs git log --first-parent --oneline --pretty=preview --date=short --color=always' | tr -d '(*' | awk '{print $1}' | xargs --no-run-if-empty git checkout
 	fs = !git lol --color=always | fzf --ansi --reverse --height 100% --preview 'echo {} | sed -r \"s/^.+\\s([a-f0-9]{7,})\\s.+$/\\1/\" | xargs git show --color=always' | sed -r 's/^.+\\s([a-f0-9]{7,})\\s.+$/\\1/' | xargs --no-run-if-empty git show
 
+	# show revision
+	sha = "!f() { git rev-parse \"${1-HEAD}\"; }; f"
+
 [pretty]
 	lol = format:%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset
 	preview = format:%Cgreen%cd%Creset %C(yellow)%d%Creset %s %C(bold blue)<%an>%Creset
