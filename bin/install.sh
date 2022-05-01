@@ -264,7 +264,7 @@ if ${DOTINSTALL_PYTHON:-true}; then
     # poetry
     [[ -e "$HOME/.poetry/env" ]] && source "$HOME/.poetry/env"
     if [[ -z $(command -v poetry) ]]; then
-        curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+        curl -sSL https://install.python-poetry.org | python3 -
         source "$HOME/.poetry/env"
     fi
 
