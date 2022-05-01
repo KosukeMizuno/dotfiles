@@ -193,7 +193,7 @@ if ${DOTINSTALL_RUST:-true}; then
     }
 
     if [[ ! -e "$HOME/.cargo/env" ]]; then
-        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
         rustup install stable
         rustup default stable
     fi
