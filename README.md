@@ -12,12 +12,25 @@ Multi-platform dotfiles with automatic instalation and deploying scripts.
 
 If you are in proxy environment, set `HTTP_PROXY` before `make`.
 
+- Update package manager & install dependencies
+  - for Ubuntu
+    ```sh
+    sudo apt update && sudo apt upgrade -y
+    sudo apt-get install build-essential gdb lcov pkg-config \
+      libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
+      libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
+      lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+    ```
 - Clone & install
   ```sh
   export DOTPATH=$HOME/dotfiles
-  git clone --recursive <this repo> $DOTPATH
+  git clone --recursive "https://github.com/KosukeMizuno/dotfiles.git" "$DOTPATH"
   cd $DOTPATH
   make
+  ```
+- Make a symlink to dotfiles folder in the ghq install folder.
+  ```sh
+  ln -s "$DOTPATH" "$(ghq root)/github.com/KosukeMizuno/dotfiles"
   ```
 - Then, make zsh a default shell if permission is available.
   ```sh
