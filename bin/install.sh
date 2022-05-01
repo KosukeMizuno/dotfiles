@@ -272,13 +272,13 @@ if ${DOTINSTALL_PYTHON:-true}; then
     # python tools, jupyter
     # TODO: requirements.txtベースにしたい
     default_pip=$PYTHON_DEFAULT_VENV/bin/pip
-    if [[ -x $default_pip ]]; then
-        $default_pip install --upgrade pip autopep8 isort
-        $default_pip install jupyterlab nbdime ipywidgets
-        $default_pip install numpy scipy matplotlib cython tqdm better_exceptions numba
-        $default_pip install qutip
-        $default_pip install tkdialog-wrapper
-    fi
+    (. "$PYTHON_DEFAULT_VENV/bin/activate" && {
+        pip install --upgrade pip autopep8 isort
+        pip install jupyterlab nbdime ipywidgets
+        pip install numpy scipy matplotlib cython tqdm better_exceptions numba
+        pip install qutip
+        pip install tkdialog-wrapper
+    })
 fi
 
 ## Perl
@@ -308,7 +308,7 @@ if ${DOTINSTALL_NVIM:-true}; then
         git fetch
 
         # check update & build
-        NVIM_TARGET_BRANCH="v0.5.0"
+        NVIM_TARGET_BRANCH="stable"
         echo "neovim HEAD: $(git rev-parse HEAD)"
         echo "neovim $NVIM_TARGET_BRANCH: $(git rev-parse $NVIM_TARGET_BRANCH)"
         # TODO: v0.5.0になってHEADより古いので、今の条件だと常にビルドが走ってしまう
@@ -331,8 +331,10 @@ if ${DOTINSTALL_NVIM:-true}; then
             if [[ ! -d "$VENV_FOR_NEOVIM" ]]; then
                 "$PREFIX/bin/python3.8" -m venv "$VENV_FOR_NEOVIM"
             fi
-            "$VENV_FOR_NEOVIM/bin/pip" install --upgrade pip neovim pynvim
-            "$VENV_FOR_NEOVIM/bin/pip" install --upgrade "python-language-server[all]"
+            (. "$VENV_FOR_NEOVIM/bin/activate" && {
+                pip install --upgrade pip neovim pynvim
+                pip install --upgrade "python-language-server[all]"
+            })
         else
             echo "python3 was not found. Creating venv for nvim failed." 1>&2
         fi
