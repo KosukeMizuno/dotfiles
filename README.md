@@ -20,7 +20,7 @@ If you are in proxy environment, set `HTTP_PROXY` before `make`.
       libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
       libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
       lzma lzma-dev tk-dev uuid-dev zlib1g-dev
-    sudo apt install autoconf autotools-dev cmake
+    sudo apt install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl doxygen
     ```
 - Clone & install
   ```sh
@@ -120,11 +120,9 @@ $DOTPATH/.config/git/ignore  -- global ignore
 
 設定フォルダは`$DOTPATH/nvim`においている。  
 Note: `$DOTPATH/.config/nvim`ではないので注意。よくアクセスするので浅いところにした。
-
 git管理しない設定ファイルは`$DOTPATH/nvim/set_credential.vim`（あればinit.vimで読まれる）
 
 vim用のpython3(venv)は`$PREFIX/opt/python3_nvim`においた。
-python2って要る？
 
 `init.vim`の検証用に設定フォルダの切り替えスクリプトを用意した: `./bin/relink_nvim_config`
 `$XDG_CONFIG_HOME/nvim`に`$DOTPATH/nvim` or `$DOTPATH/nvim_test`へのリンクがはられる。
