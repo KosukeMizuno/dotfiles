@@ -16,10 +16,11 @@ If you are in proxy environment, set `HTTP_PROXY` before `make`.
   - for Ubuntu
     ```sh
     sudo apt update && sudo apt upgrade -y
-    sudo apt-get install build-essential gdb lcov pkg-config \
+    sudo apt install build-essential gdb lcov pkg-config \
       libbz2-dev libffi-dev libgdbm-dev libgdbm-compat-dev liblzma-dev \
       libncurses5-dev libreadline6-dev libsqlite3-dev libssl-dev \
-      lzma lzma-dev tk-dev uuid-dev zlib1g-dev autoconf autotools-dev
+      lzma lzma-dev tk-dev uuid-dev zlib1g-dev
+    sudo apt install autoconf autotools-dev cmake
     ```
 - Clone & install
   ```sh
