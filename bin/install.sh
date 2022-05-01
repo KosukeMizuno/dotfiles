@@ -227,6 +227,7 @@ if ${DOTINSTALL_NODEJS:-true}; then
     }
     install_npm tldr
     install_npm yarn
+    install_npm textlint
     npm install -g neovim
     asdf reshim nodejs
 fi
