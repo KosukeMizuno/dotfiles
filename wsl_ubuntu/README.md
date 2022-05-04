@@ -10,8 +10,9 @@ sudo etckeeper init
 
 https://scratchpad.jp/ubuntu-on-windows11-11/
 
-- PATHを引き継がないようにする
-- cronを初めから立ち上がるようにする
+- [x] PATHを引き継がないようにする
+- [ ] cronを初めから立ち上がるようにする
+  - 再起動してもcronが走ってない。。なぜ？
 
 # hwclockを自動化
 
