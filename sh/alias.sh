@@ -90,6 +90,15 @@ alias x=open_filer
 # ripgrep: 隠しファイルは検索対象にする、ただしgitignoreは遵守
 alias rg="rg --hidden --glob \!.git "
 
+#### for WSL ####
+if [[ -n "$PATH_TO_WSL" ]]; then
+    alias code="$PATH_TO_WSL/code"
+    alias gocopy="$PATH_TO_WSL/gocopy"
+    alias gopaste="$PATH_TO_WSL/gopaste"
+    alias explorer="/mnt/c/Windows/explorer.exe"
+    alias cmd="/mnt/c/Windows/System32/cmd.exe"
+fi
+
 #### TMUX ####
 alias t="tmux"
 alias ta="tmux a"
