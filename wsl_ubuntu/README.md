@@ -18,5 +18,5 @@ https://scratchpad.jp/ubuntu-on-windows11-11/
 
 https://zenn.dev/kaityo256/articles/wsl_cron_hwclock
 
-- hwclockがパスワード不要で呼べるようにする
-- cronからhwclockを自動で呼ぶ
+- [x] hwclockがパスワード不要で呼べるようにする
+- [x] cronからhwclockを自動で呼ぶ

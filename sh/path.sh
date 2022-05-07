@@ -2,11 +2,20 @@
 # setup enviromnental variables related with PATH
 # shellcheck disable=SC2148,SC1091
 
+export PREFIX="${PREFIX:-$HOME/.local}"
+
 # asdf
 [[ -e "$HOME/.asdf/asdf.sh" ]] && source "$HOME/.asdf/asdf.sh"
 
+# RUST
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# GOLANG
+export GOPATH="$PREFIX/opt/go"
+export GOBIN="$GOPATH/bin"
+export PATH="$GOBIN:$PATH"
+
 # user built things
-export PREFIX="${PREFIX:-$HOME/.local}"
 export PATH="$PREFIX/bin:$PATH"
 LD_LIBRARY_PATH=$(echo "$PREFIX/lib64:$PREFIX/lib:$LD_LIBRARY_PATH" | sed 's/:$//')
 LD_RUN_PATH=$(echo "$PREFIX/lib64:$PREFIX/lib:$LD_RUN_PATH" | sed 's/:$//')
@@ -17,14 +26,6 @@ export LD_LIBRARY_PATH LD_RUN_PATH PKG_CONFIG_PATH
 export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
-
-# RUST
-export PATH="$HOME/.cargo/bin:$PATH"
-
-# GOLANG
-export GOPATH="$PREFIX/opt/go"
-export GOBIN="$GOPATH/bin"
-export PATH="$GOBIN:$PATH"
 
 # PYTHON
 export PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
