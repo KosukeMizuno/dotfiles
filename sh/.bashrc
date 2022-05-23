@@ -1,6 +1,11 @@
 #### BASHRC ####
 # shellcheck disable=SC1091,SC2148
 
+# do nothing if rsh
+# NOTE: This return should be at the top of `~/.bashrc`
+#       https://superuser.com/questions/1685376/how-to-distinguish-between-rsync-and-ssh-access-in-a-bashrc-script
+[[ $- == *i* ]] || return 0
+
 # Source global definitions
 if [ -f /etc/bashrc ]; then
     source "/etc/bashrc"
