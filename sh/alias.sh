@@ -73,16 +73,17 @@ fi
 ## TODO: こいつは実行可能ファイルに切り出したほうが便利
 open_filer() {
     if [[ $# -eq 0 ]]; then
-        TARGET=$PWD
+        TARGET="$PWD"
     else
-        TARGET=$1
+        TARGET="$1"
     fi
 
     if $("$IS_MINGW"); then
         TARGET=$(cygpath -w "$TARGET")
         explorer.exe "$TARGET"
     elif $("$IS_WSL"); then
-        explorer "$TARGET"
+        TARGET=$(wslpath -w "$TARGET")
+        /mnt/c/Windows/explorer.exe "$TARGET"
     elif $("$IS_NATIVE_LINUX"); then
         [[ -n $(command -v "xdg-open") ]] && xdg-open "$TARGET"
     else
@@ -95,10 +96,10 @@ alias x=open_filer
 alias rg="rg --hidden --glob \!.git "
 
 #### for WSL ####
-if $("$IS_WSL") && [[ -n "$PATH_TO_WSL" ]]; then
-    alias code="$PATH_TO_WSL/code"
-    alias gocopy="$PATH_TO_WSL/gocopy"
-    alias gopaste="$PATH_TO_WSL/gopaste"
+if $("$IS_WSL") && [[ -n "$USERPROFILE" ]]; then
+    alias code="$USERPROFILE/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
+    alias gocopy="$USERPROFILE/.local/bin/gocopy"
+    alias gopaste="$USERPROFILE/.local/bin/gopaste"
     alias explorer="/mnt/c/Windows/explorer.exe"
     alias cmd="/mnt/c/Windows/System32/cmd.exe"
 fi
@@ -112,6 +113,8 @@ alias tl="tmux ls"
 # 最新を破棄＆古いセッションファイルを最新にして読み込めるようにする
 # TODO: 書き直し
 tmux-select-resurrect-session() {
+    return 1;
+
     TMUXRESURRECTDIR="$HOME/.tmux/resurrect"
     unlink "$TMUXRESURRECTDIR/last"
     PREVCMD="cat $TMUXRESURRECTDIR/{}"
