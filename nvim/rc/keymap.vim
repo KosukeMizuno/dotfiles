@@ -9,9 +9,9 @@
 """" ヘルパー関数 """"  {{{1
 
 " IME off
-if executable('imeoff.exe')
-  command! ImeOff call system('imeoff.exe')
-elseif executable('xvkbd')
+if executable('zenhan')  " for wsl & mingw
+  command! ImeOff call system('zenhan 0')
+elseif executable('xvkbd')  " for Ubuntu
   command! ImeOff call system('xvkbd -text "\[Muhenkan]"')
 else
   command! ImeOff :
