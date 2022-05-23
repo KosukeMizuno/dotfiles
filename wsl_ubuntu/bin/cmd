@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# a wrapper script
+EXECUTABLE="/mnt/c/Windows/System32/cmd.exe"
+"$EXECUTABLE" "$@"
+
+# vim: set ft=sh:

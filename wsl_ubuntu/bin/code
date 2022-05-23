@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# a wrapper script
+EXECUTABLE="$USERPROFILE/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
+sh "$EXECUTABLE" "$@"
+
+# vim: set ft=sh:

@@ -83,7 +83,7 @@ open_filer() {
         explorer.exe "$TARGET"
     elif $("$IS_WSL"); then
         TARGET=$(wslpath -w "$TARGET")
-        /mnt/c/Windows/explorer.exe "$TARGET"
+        explorer "$TARGET"  # $DOTPATH/wsl_ubuntu/bin/explorer
     elif $("$IS_NATIVE_LINUX"); then
         [[ -n $(command -v "xdg-open") ]] && xdg-open "$TARGET"
     else
@@ -95,14 +95,6 @@ alias x=open_filer
 # ripgrep: 隠しファイルは検索対象にする、ただしgitignoreは遵守
 alias rg="rg --hidden --glob \!.git "
 
-#### for WSL ####
-if $("$IS_WSL") && [[ -n "$USERPROFILE" ]]; then
-    alias code="$USERPROFILE/AppData/Local/Programs/Microsoft\ VS\ Code/bin/code"
-    alias gocopy="$USERPROFILE/.local/bin/gocopy"
-    alias gopaste="$USERPROFILE/.local/bin/gopaste"
-    alias explorer="/mnt/c/Windows/explorer.exe"
-    alias cmd="/mnt/c/Windows/System32/cmd.exe"
-fi
 
 #### TMUX ####
 alias t="tmux"

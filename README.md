@@ -45,10 +45,7 @@ Set `HTTP_PROXY` before `make` if needed.
 
 Editing japanese language with vim,
 
-- Windows (mingw):
-  - Nothing is needed.
-  - [pepo-le/win-ime-con.nvim](https://github.com/pepo-le/win-ime-con.nvim) set IME off at leaving the insert mode.
-- Windows (wsl):
+- Windows (mingw & wsl):
   - `scoop install zenhan`
 - Ubuntu:
   - Install `xvkbd` by apt.

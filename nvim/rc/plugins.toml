@@ -356,13 +356,6 @@ i = ['<C-r>', '<Plug>(peekaboo)']
 
 #### 編集補助 ####  {{{1
 
-# [[plugins]]
-# repo = 'pepo-le/win-ime-con.nvim'
-# if = 'has("win64")'
-# hook_add = '''
-# let g:win_ime_con_mode=0
-# '''
-
 [[plugins]]
 repo = 'monaqa/dial.nvim'  # {{{
 lazy = 1

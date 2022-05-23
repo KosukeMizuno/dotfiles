@@ -44,6 +44,6 @@ fi
 
 # PATH for each environments
 if $("$IS_WSL"); then
-    export PATH="$PATH:$DOTPATH/wsl_ubuntu/bin"
+    export PATH="$DOTPATH/wsl_ubuntu/bin:$PATH"
 fi
 
