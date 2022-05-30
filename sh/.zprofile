@@ -29,6 +29,7 @@ fi
 
 # dotfiles
 export DOTPATH="${DOTPATH:-$HOME/dotfiles}"
+source "$DOTPATH/sh/common.sh"
 source "$DOTPATH/sh/path.sh"
 
 # suppress stopping on ssh

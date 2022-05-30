@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# a wrapper script of zenhan installed via scoop for nvim
+EXECUTABLE="$USERPROFILE/scoop/apps/zenhan/current/zenhan.exe"
+"$EXECUTABLE" "$@"
+
+# vim: set ft=sh:

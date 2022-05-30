@@ -41,3 +41,9 @@ else
         source "$PYTHON_DEFAULT_VENV/Scripts/activate"
     fi
 fi
+
+# PATH for each environments
+if $("$IS_WSL"); then
+    export PATH="$DOTPATH/wsl_ubuntu/bin:$PATH"
+fi
+
