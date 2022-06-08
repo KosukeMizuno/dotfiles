@@ -570,28 +570,28 @@ call submode#map(       'joined-x', 'n', 'rx', 'p', '<Plug>(joined-p)')
 
 
 #### エディタの見た目に関するもの ####  {{{1
-[[plugins]]
-repo = 'nvim-treesitter/nvim-treesitter'  #{{{
-if = 'has("nvim-0.5")'
-lazy = 1
-on_event = 'BufRead'
-hook_source = '''
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    disable = {
-      'lua',
-      'toml',
-      'bash',
-    }
-  }
-}
-EOF
-'''
-hook_post_update = '''
-  TSUpdate
-'''  # }}}
+# [[plugins]]
+# repo = 'nvim-treesitter/nvim-treesitter'  #{{{
+# if = 'has("nvim-0.5")'
+# lazy = 1
+# on_event = 'BufRead'
+# hook_source = '''
+# lua <<EOF
+# require'nvim-treesitter.configs'.setup {
+#   highlight = {
+#     enable = true,
+#     disable = {
+#       'lua',
+#       'toml',
+#       'bash',
+#     }
+#   }
+# }
+# EOF
+# '''
+# hook_post_update = '''
+#   TSUpdate
+# '''  # }}}
 
 [[plugins]]
 # rtp内に移植して改造
