@@ -1,34 +1,21 @@
 {
-    "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
+    // Add custom actions and keybindings to this array.
+    // To unbind a key combination from your defaults.json, set the command to "unbound".
+    // To learn more about actions and keybindings, visit https://aka.ms/terminal-keybindings
     "actions": 
     [
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "right"
-            },
-            "keys": "alt+right"
-        },
-        {
-            "command": 
-            {
-                "action": "moveFocus",
-                "direction": "left"
-            },
-            "keys": "alt+left"
-        },
         {
             "command": "find",
             "keys": "ctrl+shift+f"
         },
         {
-            "command": 
-            {
-                "action": "nextTab"
-            },
+            "command": "nextTab",
             "keys": "alt+shift+l"
+        },
+        {
+            "command": "prevTab",
+            "keys": "alt+shift+h"
         },
         {
             "command": 
@@ -42,6 +29,14 @@
             "command": 
             {
                 "action": "moveFocus",
+                "direction": "up"
+            },
+            "keys": "alt+shift+k"
+        },
+        {
+            "command": 
+            {
+                "action": "moveFocus",
                 "direction": "down"
             },
             "keys": "alt+down"
@@ -49,17 +44,18 @@
         {
             "command": 
             {
-                "action": "prevTab"
+                "action": "moveFocus",
+                "direction": "left"
             },
-            "keys": "alt+shift+h"
+            "keys": "alt+left"
         },
         {
             "command": 
             {
                 "action": "moveFocus",
-                "direction": "up"
+                "direction": "right"
             },
-            "keys": "alt+shift+k"
+            "keys": "alt+right"
         },
         {
             "command": 
@@ -82,20 +78,19 @@
     {
         "defaults": 
         {
-            "font": 
-            {
-                "face": "Cica",
-                "size": 14
-            }
+            "fontFace": "Cica",
+            "fontSize": 14
         },
         "list": 
         [
             {
+                "commandline": "powershell.exe",
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
                 "name": "Windows PowerShell"
             },
             {
+                "commandline": "cmd.exe",
                 "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
                 "hidden": false,
                 "name": "\u30b3\u30de\u30f3\u30c9 \u30d7\u30ed\u30f3\u30d7\u30c8"
@@ -107,54 +102,18 @@
                 "source": "Windows.Terminal.Azure"
             },
             {
+                "acrylicOpacity": 0.90000000000000002,
                 "antialiasingMode": "cleartype",
-                "commandline": "C:\\Program Files\\Git\\bin\\bash.exe --cd-to-home --login",
+                "commandline": "C:\\Program Files\\Git\\bin\\bash.exe --login",
+                "startingDirectory" : "%USERPROFILE%",
                 "experimental.retroTerminalEffect": false,
-                "font": 
-                {
-                    "face": "HackGenNerd Console",
-                    "size": 14,
-                    "weight": "medium"
-                },
-                "guid": "{cc5f7056-0543-5698-994c-d0f03bf12778}",
+                "fontFace": "HackGenNerd Console",
+                "fontSize": 14,
+                "fontWeight": "medium",
                 "name": "bash",
-                "opacity": 90,
+                "icon" : "C:\\Program Files\\Git\\mingw64\\share\\git\\git-for-windows.ico",
                 "padding": "0",
                 "useAcrylic": true
-            },
-            {
-                "guid": "{7e79b9cc-30ea-5560-b969-955fc5cdc6bd}",
-                "hidden": false,
-                "name": "Developer Command Prompt for VS 2019 (2)",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{8f198e93-378b-50dc-9ed3-d4075d01b16c}",
-                "hidden": false,
-                "name": "Developer PowerShell for VS 2019 (2)",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{74fd1531-04dc-52f3-8d1f-e669759808a8}",
-                "hidden": true,
-                "name": "Developer Command Prompt for VS 2019",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "guid": "{c8c36400-0df5-51a5-8ba0-dfa32fe29cc9}",
-                "hidden": true,
-                "name": "Developer PowerShell for VS 2019",
-                "source": "Windows.Terminal.VisualStudio"
-            },
-            {
-                "font": 
-                {
-                    "face": "HackGenNerd Console"
-                },
-                "guid": "{07b52e3e-de2c-5db4-bd2d-ba144ed6c273}",
-                "hidden": false,
-                "name": "Ubuntu-20.04",
-                "source": "Windows.Terminal.Wsl"
             }
         ]
     },
