@@ -22,6 +22,8 @@ import tkinter as tk
 import tkinter.filedialog
 
 from logging import getLogger, DEBUG, INFO, WARN, WARNING
+logger = getLogger('__main__')
+logger.setLevel(INFO)
 
 # typing
 try:
