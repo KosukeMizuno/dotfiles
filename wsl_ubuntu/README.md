@@ -30,14 +30,11 @@ Windows側の`$PREFIX/bin_wsl`に使いたいバイナリorそれへのリンク
 など
 
 以下のようにシステム環境変数を設定
-- `PATH_TO_WSL=$PREFIX/bin_wsl`
-- `WSLENV=PATH_TO_WSL/ul`
+- `WSLENV=USERPROFILE/up`
 
 注意：
 Windows側のフォルダをPATHに含めると補完が重くなるので、aliasをひとつずつ貼っている。新しく追加するときは`sh/path.sh`の変更が必要となる。
-`PATH_TO_WSL`を設定しているのは、Windows側のホームフォルダの場所をどうやって得るか知らなかったのでこうしてみた。
 
-TODO: `WSLENV=USERPROFILE/ul`として引き継げる事に気づいたけどめんどいのでそのうち書き換える
 
 参考：https://docs.microsoft.com/ja-jp/windows/wsl/filesystems#wslenv-flags
 

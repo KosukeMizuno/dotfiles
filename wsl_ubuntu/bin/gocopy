@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# a wrapper script
+EXECUTABLE="$USERPROFILE/.local/opt/go/bin/gocopy.exe"
+cat - | "$EXECUTABLE" "$@"
+
+# vim: set ft=sh:

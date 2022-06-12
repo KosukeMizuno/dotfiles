@@ -18,10 +18,10 @@ fi
 # echo "Sourcing zshrc"
 
 # common
-source "$DOTPATH/sh/common.sh"
+[ -n "$DOTPATH" ] && source "$DOTPATH/sh/common.sh"
 
 # alias
-source "$DOTPATH/sh/alias.sh"
+[ -n "$DOTPATH" ] && source "$DOTPATH/sh/alias.sh"
 
 # load local bashrc
 if [ -e "$HOME/.shrc_local" ]; then

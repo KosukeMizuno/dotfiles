@@ -1,8 +1,9 @@
 # KosukeMizuno/DOTFILES
 
-Multi-platform dotfiles with automatic instalation and deploying scripts.
+Multi-platform dotfiles with automatically installing and deploying scripts.
 
 - [ ] windows
+- [x] wsl
 - [x] centos
 - [ ] other linux system
 
@@ -10,9 +11,9 @@ Multi-platform dotfiles with automatic instalation and deploying scripts.
 
 ### Building CLI environment
 
-If you are in proxy environment, set `HTTP_PROXY` before `make`.
+Set `HTTP_PROXY` before `make` if needed.
 
-- Update package manager & install dependencies
+- Update a package manager and install dependencies
   - for Ubuntu
     ```sh
     sudo apt update && sudo apt upgrade -y
@@ -26,14 +27,14 @@ If you are in proxy environment, set `HTTP_PROXY` before `make`.
   ```sh
   export DOTPATH=$HOME/dotfiles
   git clone --recursive "https://github.com/KosukeMizuno/dotfiles.git" "$DOTPATH"
-  cd $DOTPATH
+  cd "$DOTPATH"
   make
   ```
-- Make a symlink to dotfiles folder in the ghq install folder.
+- Make a symlink to the dotfiles directory into the ghq folder.
   ```sh
   ln -s "$DOTPATH" "$(ghq root)/github.com/KosukeMizuno/dotfiles"
   ```
-- Then, make zsh a default shell if permission is available.
+- Then, make zsh a default shell if you can sudo.
   ```sh
   echo $HOME/.local/bin/zsh >> /etc/shells
   chsh -s $HOME/.local/bin/zsh
@@ -42,13 +43,12 @@ If you are in proxy environment, set `HTTP_PROXY` before `make`.
 
 ### IME
 
-Editing japanese language with vim, 
+Editing japanese language with vim,
 
-- Windows:
-  - ~~`imeoff.exe` (by AutoHotKey) should be executable.~~
-  - This program is no longer required.
+- Windows (mingw & wsl):
+  - `scoop install zenhan`
 - Ubuntu:
-  - `xvkbd` should be installed
+  - Install `xvkbd` by apt.
   - `Muhenkan` key should make IME off whenever it is sent (this key will be sent at InsertLeave event).
 
 
@@ -59,7 +59,7 @@ Editing japanese language with vim,
 
 ## Directory Structure
 
-Defaults and recommendations: 
+Defaults and recommendations:
 - `$DOTPATH=$HOME/dotfiles`
 - `$PREFIX=$HOME/.local`
 - `$PYTHON_DEFAULT_VENV=$HOME/venvs/default`
@@ -70,6 +70,8 @@ Defaults and recommendations:
 $PREFIX/bin -- とりあえずPATHを通したいものやコンパイル済みバイナリはココへ入れる
 $PREFIX/src -- 自分でコンパイルするもの置き場
 $PREFIX/opt -- 自分でコンパイルしないもの, vim用python_venvなど
+
+$DOTPATH/wsl_ubuntu/bin -- wsl環境でだけPATHを通したいものを入れておく（ラッパースクリプトなど）
 ```
 
 ### git
@@ -105,7 +107,7 @@ $DOTPATH/.config/git/ignore  -- global ignore
 
 ### Python
 
-仮想環境は`~/venvs/`に置く。
+いつでも使いたい仮想環境は`~/venvs/`に置く。
 
 ```
 ~/venvs/default  -- デフォルトで使用する環境, 現在は3.8
