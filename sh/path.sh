@@ -28,6 +28,7 @@ export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
 export XDG_CACHE_HOME="${XDG_CACHE_HOME:-$HOME/.cache}"
 
 # PYTHON
+: PYTHONUTF8=${PYTHONUTF8=1}
 export PYTHON_VENV_DIR="${PYTHON_VENV_DIR:-$HOME/venvs}"
 export PYTHON_DEFAULT_VENV="${PYTHON_DEFAULT_VENV:-$PYTHON_VENV_DIR/default}"
 export PATH="$HOME/.poetry/bin:$PATH"

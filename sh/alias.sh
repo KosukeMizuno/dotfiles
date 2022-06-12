@@ -91,7 +91,7 @@ alias x=open_filer
 alias rg="rg --hidden --glob \!.git "
 
 #### for WSL ####
-if [[ -n "$PATH_TO_WSL" ]]; then
+if ${IS_WSL:-false}; then
     alias code="$PATH_TO_WSL/code"
     alias gocopy="$PATH_TO_WSL/gocopy"
     alias gopaste="$PATH_TO_WSL/gopaste"
