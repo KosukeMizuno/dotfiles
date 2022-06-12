@@ -33,6 +33,7 @@
   - `~/dotfiles/.config/git/config_local_template` -> `~/.gitconfig_local`
   - `~/dotfiles/nvim` -> `~/.config/nvim`
   - `~/dotfiles/python/ipython_startup` -> `~/.ipython/profile_default/startup`
+- Copy setting templates
   - `~/dotfiles/windows/windowsterminal/setting.json` -> `~/AppData/Local/Microsoft/Windows Terminal/setting.json`
 - シェル環境準備
   - `~/.local/` とそれ以下に `bin`, `opt`, `share`, `src` を作成

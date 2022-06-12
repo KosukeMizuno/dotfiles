@@ -1,7 +1,7 @@
 from __future__ import annotations  # importing __future__ must be at the top line.
 
 # import standard libraries
-import datetime
+from datetime import datetime, timezone
 import functools
 from functools import partial
 import gc
@@ -18,8 +18,6 @@ import re
 import subprocess
 import sys
 import time
-import tkinter as tk
-import tkinter.filedialog
 
 from logging import getLogger, DEBUG, INFO, WARN, WARNING
 logger = getLogger('__main__')
@@ -27,12 +25,8 @@ logger.setLevel(INFO)
 
 # typing
 try:
-    from typing import (
-        Any, NoReturn, Union, Optional,
-        Literal, Tuple, List, Dict, Set,  # Note: 3.9以降非推奨らしい
-        Callable, Iterator, Iterable, Generator, Sequence
-    )
-    from typing import overload  # >=3.9
+    from typing_extensions import *
+    from typing import *
 except (ImportError, AttributeError, ModuleNotFoundError):
     pass
 
@@ -45,12 +39,10 @@ except (ImportError, AttributeError, ModuleNotFoundError):
     pass
 
 try:
-    from numpy.typing import NDArray
+    # pip install nptyping
+    from nptyping import *
 except (ImportError, AttributeError, ModuleNotFoundError):
-    try:
-        from nptyping import NDArray
-    except (ImportError, AttributeError, ModuleNotFoundError):
-        pass
+    pass
 
 try:
     from scipy import constants
@@ -74,23 +66,40 @@ except (ImportError, AttributeError, ModuleNotFoundError):
     pass
 
 try:
+    # pip install tqdm
     from tqdm.auto import tqdm
 except (ImportError, AttributeError, ModuleNotFoundError):
     pass
 
 try:
+    # pip install cloudpickle
     import cloudpickle
 except (ImportError, AttributeError, ModuleNotFoundError):
     pass
 
 try:
+    # pip install esapy
     import esapy
     from esapy import esapy_fold
 except (ImportError, AttributeError, ModuleNotFoundError):
     pass
 
 try:
+    # pip install better_exceptions
     import better_exceptions
     better_exceptions.MAX_LENGTH = None
 except (ImportError, AttributeError, ModuleNotFoundError):
     pass
+
+try:
+    # pip install tkdialog-wrapper
+    import tkdialog
+except (ImportError, AttributeError, ModuleNotFoundError):
+    pass
+
+try:
+    # pip install pytz
+    import pytz
+except (ImportError, AttributeError, ModuleNotFoundError):
+    pass
+
