@@ -470,10 +470,6 @@ nnoremap <expr> [TOGGLE]f
       \    ? "\<cmd>echo 'precious-unlocked'<CR>\<cmd>PreciousSwitchUnlock\<CR>"
       \    : "\<cmd>echo 'precious-locked'<CR>\<cmd>PreciousSwitchLock\<CR>"
 
-" ビジュアルモードで選択範囲拡大／縮小
-xmap + <Plug>(expand_region_expand)
-xmap _ <Plug>(expand_region_shrink)
-
 " ビジュアルモードでのインデントを連続入力できるようにする＆２回押しが必要にする
 xnoremap > <Nop>
 xnoremap < <Nop>
@@ -486,8 +482,8 @@ nmap <C-x> <Plug>(dial-decrement)
 "" ビジュアルモードでのインクリメント/デクリメントを連続入力可にする
 vmap <C-a> <Plug>(dial-increment)gv
 vmap <C-x> <Plug>(dial-decrement)gv
-xmap g<C-a> <Plug>(dial-increment-additional)gv
-xmap g<C-x> <Plug>(dial-decrement-additional)gv
+xmap g<C-a> g<Plug>(dial-increment)gv
+xmap g<C-x> g<Plug>(dial-decrement)gv
 
 " gmをマークにする（go mark *）
 "" memo: もとのgmは画面幅の真ん中にカーソルを持ってくる

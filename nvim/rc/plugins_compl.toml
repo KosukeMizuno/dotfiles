@@ -22,9 +22,6 @@ repo = 'Shougo/neco-vim'
 lazy = 1
 on_ft = 'vim'
 
-[[plugins]]
-repo = 'fszymanski/deoplete-emoji'
-
 
 #### Neosnippet ####
 [[plugins]]

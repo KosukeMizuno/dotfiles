@@ -316,29 +316,19 @@ on_map = {n='<Plug>', x='<Plug>'}
 on_lua = 'dial'
 hook_post_source = '''
 lua << EOF
-local dial = require("dial")
-
-dial.config.searchlist.normal = {
-    "number#decimal#int",
-    "number#hex",
-    "color#hex",
-    "date#[%Y/%m/%d]",
-    "date#[%Y-%m-%d]",
-    "date#[%H:%M:%S]",
-    "date#[%H:%M]",
-    "markup#markdown#header"
-}
-dial.config.searchlist.visual = {
-    "number#decimal#int",
-    "number#hex",
-    "color#hex",
-    "date#[%Y/%m/%d]",
-    "date#[%Y-%m-%d]",
-    "date#[%H:%M:%S]",
-    "date#[%H:%M]",
-    "char#alph#small#word",
-    "char#alph#capital#word",
-    "markup#markdown#header"
+local augend = require("dial.augend")
+require("dial.config").augends:register_group{
+  default = {
+    augend.integer.alias.decimal,
+    augend.integer.alias.hex,
+    augend.date.alias["%m/%d"],
+    augend.date.alias["%Y/%m/%d"],
+    augend.date.alias["%Y-%m-%d"],
+    augend.date.alias["%H:%M:%S"],
+    augend.date.alias["%H:%M"],
+    augend.constant.alias.alpha,
+    augend.misc.alias.markdown_header,
+  },
 }
 EOF
 '''  # }}}

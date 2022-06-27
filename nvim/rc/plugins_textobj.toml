@@ -118,11 +118,6 @@ omap in <Plug>(textobj-numeral-i)
 '''
 
 [[plugins]]
-repo = 'terryma/vim-expand-region'
-lazy = 1
-on_map = {n='<Plug>(expand_region_', v='<Plug>(expand_region_'}
-
-[[plugins]]
 repo = 'mattn/vim-textobj-url'
 lazy = 1
 on_map = {x=['au', 'iu'], o=['au', 'iu']}
