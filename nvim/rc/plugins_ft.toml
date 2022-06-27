@@ -245,11 +245,7 @@ neosnippet = '''  " {{{2
 python = '''  " {{{2
   setlocal nowrap
 
-  if has('nvim-0.5')
-    setlocal foldexpr=nvim_treesitter#foldexpr()
-  else
-    setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
-  endif
+  setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
   setlocal foldmethod=expr
 
   let s:pyls_config = {'pyls': {'plugins': {
