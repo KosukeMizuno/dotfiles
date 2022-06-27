@@ -536,10 +536,6 @@ nnoremap <Leader>t <cmd>Switch<CR>
 " F5 で Goyo
 nnoremap <F5> :<C-u>Goyo<CR>
 
-" vim-easy-align
-nmap gA <Plug>(EasyAlign)
-xmap gA <Plug>(EasyAlign)
-
 " linediff
 xnoremap <Leader>d :Linediff<CR>
 
@@ -693,9 +689,7 @@ function! s:on_lsp_buffer_enabled() abort  " {{{
   nmap <silent><buffer> ]w <Plug>(lsp-next-warning)zv
 
   nmap <buffer> <Leader>K  <Plug>(lsp-hover)
-  if has('nvim-0.5') && &tagfunc ==# ''
-    setlocal tagfunc=lsp#tagfunc
-  endif
+  setlocal tagfunc=lsp#tagfunc
   nnoremap <buffer> <Plug>(toggle_vista) <cmd>Vista vim_lsp<CR>
 
   echom "LSP enabled: ft=".. &ft .. ", " .. expand("%")
@@ -750,34 +744,14 @@ xnoremap [WEB] <Nop>
 nmap <Leader>/ [WEB]
 xmap <Leader>/ [WEB]
 
-"" 単語を入力してgoogle検索する
-nnoremap [WEB]/g :<C-u>OpenBrowserSearch -google<Space>
-nnoremap [WEB]/w :<C-u>OpenBrowserSearch -weblio<Space>
-nnoremap [WEB]/a :<C-u>OpenBrowserSearch -alc<Space>
 "" カーソル下の単語を検索する
-nnoremap <expr> [WEB]g ":\<C-u>OpenBrowserSearch -google ".expand('<cword>')."\<CR>"
+nnoremap <expr> [WEB]/ ":\<C-u>OpenBrowserSearch -google ".expand('<cword>')."\<CR>"
 nnoremap <expr> [WEB]w ":\<C-u>OpenBrowserSearch -weblio ".expand('<cword>')."\<CR>"
-nnoremap <expr> [WEB]a ":\<C-u>OpenBrowserSearch -alc ".expand('<cword>')."\<CR>"
 "" ビジュアルモードで選択した部分を検索する
-xnoremap [WEB]g "zy:<C-u>OpenBrowserSearch <C-r>z<CR>
+xnoremap [WEB]/ "zy:<C-u>OpenBrowserSearch <C-r>z<CR>
 xnoremap [WEB]w "zy:<C-u>OpenBrowserSearch -weblio <C-r>z<CR>
-xnoremap [WEB]a "zy:<C-u>OpenBrowserSearch -alc <C-r>z<CR>
 " }}}
 
-" translate a sentence under cursor  {{{
-" TODO: 今動いてないはず。。。wslからの移植時に動かなくなってるのでは
-"" transコマンドは`brew install translate-shell`で用意しておく
-command! TranslateShell execute '!cat "~/.vimbuffer" | trans {en=ja} --no-ansi'
-command! TranslateShellDict execute '!cat "~/.vimbuffer" | trans {en=ja} -d --no-ansi'
-"" 文を翻訳：ノーマルモードならその行、ビジュアルなら選択範囲を翻訳する
-xnoremap [WEB]t "zy:<C-u>BufferRegZ<CR>:Capture TranslateShell<CR>
-nnoremap [WEB]t V"zy:<C-u>BufferRegZ<CR>:Capture TranslateShell<CR>
-"" 単語を翻訳（辞書モード）
-xnoremap [WEB]d "zy:<C-u>BufferRegZ<CR>:Capture TranslateShellDict<CR>
-nnoremap [WEB]d "zyiw:<C-u>BufferRegZ<CR>:Capture TranslateShellDict<CR>
-nnoremap [WEB]/de :<C-u>Capture !trans --no-ansi -d {en=ja}<Space>
-nnoremap [WEB]/dj :<C-u>Capture !trans --no-ansi -d {ja=en}<Space>
-" }}}
 
 " Fern
 nnoremap <C-e> <cmd>Fern . -drawer -reveal=%<CR>
@@ -963,17 +937,6 @@ nnoremap [CtrlP]q :<C-u>cclose<CR>:CtrlPQuickfix<CR>
 nnoremap [CtrlP]h :<C-u>CtrlPHelp<CR>
 nnoremap [CtrlP]g :<C-u>CtrlPGhq<CR>
 nnoremap [CtrlP]t :<C-u>CtrlPTag<CR>
-
-nnoremap [Denite] <cmd>Denite source -start-filter<CR>
-nmap <Leader>; <SID>(mark-k)[Denite]
-nnoremap [Denite]u <cmd>Denite file_mru -start-filter<CR>
-nnoremap [Denite]y <cmd>Denite neoyank<CR>
-nnoremap [Denite]m <cmd>Denite mark<CR>
-nnoremap [Denite]r <cmd>Denite register<CR>
-nnoremap [Denite]c <cmd>Denite command -start-filter<CR>
-nnoremap [Denite]p <cmd>Denite command -start-filter<CR>
-nnoremap [Denite]; <cmd>Denite command_history -start-filter<CR>
-nnoremap [Denite]l <cmd>Denite line -start-filter<CR>
 
 """" Terminal mode (Deol) """"  {{{1
 

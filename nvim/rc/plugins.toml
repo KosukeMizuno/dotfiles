@@ -177,53 +177,6 @@ let g:ctrlp_ghq_cache_enabled = 0
 
 # }}}
 
-[[plugins]]  # Denite.nvim  {{{2
-repo = 'Shougo/denite.nvim'  # {{{3
-lazy = 1
-on_cmd = ['Denite', 'DeniteCursorWord', 'DeniteBufferDir', 'DeniteProjectDir']
-on_func  = ['denite#']
-hook_post_update = '''
-UpdateRemotePlugins
-'''
-hook_source = '''
-'''  # }}}
-[plugins.ftplugin]
-denite = '''  " {{{3
-  nnoremap <silent><buffer><expr> <Space><Space> denite#do_map('toggle_select')
-
-  nnoremap <silent><buffer><expr> qw denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <Space>w denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <Esc><Esc> denite#do_map('quit')
-
-  nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-  " nnoremap <silent><buffer><expr> d denite#do_map('do_action', 'delete')
-  " nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
-  nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
-'''  # }}}
-denite-filter = '''  " {{{3
-  " inoremap <silent><buffer> <ESC> <ESC>
-  " imap <silent><buffer> jj <Plug>(denite_filter_quit)
-
-  nnoremap <silent><buffer><expr> <Esc><Esc> denite#do_map('quit')
-  nnoremap <silent><buffer><expr> qw denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <Space>w denite#do_map('quit')
-  nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
-  inoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
-'''  # }}}
-
-[[plugins]]
-repo = 'Shougo/neomru.vim'
-lazy = 1
-on_source = 'denite.nvim'
-
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-lazy = 1
-on_source = 'denite.nvim'
-
-# }}}
-
 [[plugins]]
 repo = 'jremmen/vim-ripgrep'
 lazy = 1
@@ -418,11 +371,6 @@ repo = 'tyru/caw.vim'
 lazy = 1
 on_map = {n='gc', x='gc'}
 
-[[plugins]]
-repo = 'junegunn/vim-easy-align'
-lazy = 1
-on_map = {n='<Plug>(Easy', x='<Plug>(Easy'}
-on_cmd = 'EasyAlign'
 
 #### etc ####  {{{1
 
@@ -570,28 +518,6 @@ call submode#map(       'joined-x', 'n', 'rx', 'p', '<Plug>(joined-p)')
 
 
 #### エディタの見た目に関するもの ####  {{{1
-# [[plugins]]
-# repo = 'nvim-treesitter/nvim-treesitter'  #{{{
-# if = 'has("nvim-0.5")'
-# lazy = 1
-# on_event = 'BufRead'
-# hook_source = '''
-# lua <<EOF
-# require'nvim-treesitter.configs'.setup {
-#   highlight = {
-#     enable = true,
-#     disable = {
-#       'lua',
-#       'toml',
-#       'bash',
-#     }
-#   }
-# }
-# EOF
-# '''
-# hook_post_update = '''
-#   TSUpdate
-# '''  # }}}
 
 [[plugins]]
 # rtp内に移植して改造
@@ -737,7 +663,6 @@ let g:airline#extensions#tabline#buffer_nr_show = 0
 
 [[plugins]]
 repo = 'romgrk/barbar.nvim'
-if = 'has("nvim-0.5")'
 hook_add = '''
 let bufferline = get(g:, 'bufferline', {})
 if g:rc_enable_icon

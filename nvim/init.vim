@@ -129,9 +129,7 @@ if has('vim_starting') || g:force_reload_myrc
   set nospell             " デフォルトではスペルチェック無し
   set spelllang=en,cjk    " 日本語をスペルチェックから除外
   set spellfile=$HOME/.config/nvim/spell/en.utf-8.add
-  if has('nvim-0.5')
-    set spelloptions=camel  " CamelCasedは分割してスペルチェック
-  endif
+  set spelloptions=camel  " CamelCasedは分割してスペルチェック
 endif
 
 " インデント基本設定  {{{2
@@ -212,10 +210,10 @@ command! CheckHealth call dein#source() | checkhealth
 
 " Dein shortcuts
 command! DeinReCache call dein#recache_runtimepath()
-if exists('g:dein#install_github_api_token')
-  command! DeinUpdate call dein#check_update(v:true)
-else
+if empty(get(g:, 'dein#install_github_api_token', ''))
   command! DeinUpdate call dein#update()
+else
+  command! DeinUpdate call dein#check_update(v:true)
 endif
 
 " profiling for log file by 'vim --startuptime'
