@@ -27,6 +27,8 @@ urlencode() {
 alias cdtemp='cd "$(mktemp -d)"'
 # dotfilesに移動
 alias cdot='cd "${DOTPATH:-$HOME/dotfiles}"'
+# dotfilesに移動しつつgit pull
+alias cdotpl='cd "${DOTPATH:-$HOME/dotfiles}" && git pull'
 
 # PATHを一覧で出す
 echo_path() {
