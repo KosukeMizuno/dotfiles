@@ -152,7 +152,7 @@ if has('vim_starting') || g:force_reload_myrc
 
   set list
   set listchars=tab:»-,extends:»,precedes:«,nbsp:%
-  set conceallevel=2
+  " set conceallevel=2
 
   " set scrolloff=4  " -> drzel/vim-scrolloff-fractionで制御させる
   set sidescrolloff=8

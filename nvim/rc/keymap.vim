@@ -45,7 +45,7 @@ function! s:clear_things (clear_marker, clear_scrollbar)  " {{{
   GitMessengerClose
 
   echo ""
-  redraw!
+  execute "normal! \<C-L>"
 endfunction  " }}}
 command! ClearWindow call s:clear_things(v:true, v:false)
 
@@ -404,15 +404,15 @@ inoremap <silent> じｊ <C-g>U<Right>
 inoremap <expr> <SID>(insert_autoindent) len(getline('.')) ? '' : '<ESC>"_cc'
 imap jl <cmd>normal! gk<CR><SID>(insert_autoindent)
 
-" ;の次にスペース以外を打つことはほとんどないのでマップ起点にする
-inoremap <silent> ;; ;
-inoremap <silent> ;h <C-g>U<Left>
-inoremap <silent> ;j <C-g>U<Down>
-inoremap <silent> ;k <C-g>U<Up>
-inoremap <silent> ;l <C-g>U<Right>
-
-" quickrun起点
-imap <silent> ;r <ESC><Leader>r
+" " ;の次にスペース以外を打つことはほとんどないのでマップ起点にする
+" inoremap <silent> ;; ;
+" inoremap <silent> ;h <C-g>U<Left>
+" inoremap <silent> ;j <C-g>U<Down>
+" inoremap <silent> ;k <C-g>U<Up>
+" inoremap <silent> ;l <C-g>U<Right>
+" 
+" " quickrun起点
+" imap <silent> ;r <ESC><Leader>r
 
 "" インサートモードを抜けた時に IME off する
 "" マルチバイト文字検索した後にも抜けれるようにする

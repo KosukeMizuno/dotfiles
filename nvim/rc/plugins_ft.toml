@@ -302,9 +302,12 @@ repo = 'rust-lang/rust.vim'
 lazy = 1
 on_ft = 'rust'
 hook_source = '''
-let g:rustfmt_autosave = 1
+  let g:rustfmt_autosave = 1
+  setlocal foldexpr=lsp#ui#vim#folding#foldexpr()
+  setlocal foldmethod=expr
 '''
 
 [plugins.ftplugin]
 rust = '''
+  nmap <buffer> K  <Plug>(lsp-hover)
 '''

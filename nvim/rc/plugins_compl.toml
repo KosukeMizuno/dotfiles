@@ -55,6 +55,13 @@ let g:lsp_document_code_actions_signs_enabled = 1
 let g:lsp_document_code_actions_signs_delay = 0
 '''
 
+[plugins.ftplugin] # TODO: lsphoverの中でconcealcursor=ncにしたいけどうまくいかねえ
+lsp-hover = '''
+echom "aaaaa"
+setlocal conceallevel=2
+setlocal concealcursor=nc
+'''
+
 [[plugins]]
 repo = 'mattn/vim-lsp-settings'
 
