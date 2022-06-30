@@ -214,6 +214,14 @@ else
     fi
 fi
 
+# pip seach, see https://github.com/victorgarric/pip_search
+alias pip='function _pip(){
+if [[ $1 = "search" ]] && [[ -n $(command -v "pip_search") ]]; then
+        pip_search "$2";
+    else pip "$@";
+    fi;
+};_pip'
+
 # esapy
 alias esafu='esa up --no-browser "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'
 alias esafr='esa reset "$(esa ls | fzf | sed -r "s/(.+)\\| (.+)/\\2/")"'
