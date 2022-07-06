@@ -232,6 +232,13 @@ if ${DOTINSTALL_NODEJS:-true}; then
     asdf reshim nodejs
 fi
 
+## Deno
+if ${DOTINSTALL_DENO:-true}; then
+    if [[ -z $(command -v "deno") ]]; then
+        curl -fsSL https://deno.land/x/install/install.sh | sh
+    fi
+fi
+
 ## Python
 if ${DOTINSTALL_PYTHON:-true}; then
     # python

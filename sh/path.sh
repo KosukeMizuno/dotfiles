@@ -15,6 +15,10 @@ export GOPATH="$PREFIX/opt/go"
 export GOBIN="$GOPATH/bin"
 export PATH="$GOBIN:$PATH"
 
+# DENO
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
 # user built things
 export PATH="$PREFIX/bin:$PATH"
 LD_LIBRARY_PATH=$(echo "$PREFIX/lib64:$PREFIX/lib:$LD_LIBRARY_PATH" | sed 's/:$//')

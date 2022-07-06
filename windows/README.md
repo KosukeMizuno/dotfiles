@@ -50,6 +50,8 @@
   - Install rust (いろいろscoopでいれるから要らないんじゃね？)
     - Install [Visual Studio C++ Build tools](https://visualstudio.microsoft.com/ja/visual-cpp-build-tools/)
     - Install [rustup](https://www.rust-lang.org/tools/install)
+  - Install deno
+    - <https://deno.land/manual/getting_started/installation>
 
 - Install scoop
   - https://scoop.sh/
