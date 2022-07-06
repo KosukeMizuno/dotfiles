@@ -649,6 +649,10 @@ on_cmd = ['GitMessenger', 'GitMessengerClose']
 
 
 #### Library ####  {{{1
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'
+
 [[plugins]]
 repo = 'godlygeek/tabular'
 lazy = 1
