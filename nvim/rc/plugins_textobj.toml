@@ -1,4 +1,5 @@
 #### TEXTOBJ ####
+
 [[plugins]]
 repo = 'kana/vim-textobj-user'
 
@@ -24,32 +25,6 @@ lazy = 1
 on_map = {x=['al', 'il'], o=['al', 'il']}
 
 [[plugins]]
-## カーソル位置と同じインデント
-# ai, ii, aI, iI
-repo = 'kana/vim-textobj-indent'
-lazy = 1
-[plugins.on_map]
-x=['ai', 'ii', 'aI', 'iI']
-o=['ai', 'ii', 'aI', 'iI']
-
-[[plugins]]
-## 折りたたみ
-# az, iz
-repo = 'kana/vim-textobj-fold'
-lazy = 1
-on_map = {x=['az', 'iz'], o=['az', 'iz']}
-
-[[plugins]]
-## 矩形範囲
-# Aw AW As Ap Ab AB At A< A> A[ A] A( A) A{ A} A" A' A`
-# Iw IW Is Ip Ib IB It I< I> I[ I] I( I) I{ I} I" I' I`
-repo = 'osyo-manga/vim-textobj-blockwise'
-lazy = 1
-[plugins.on_map]
-x=['Aw', 'AW', 'As', 'Ap', 'Ab', 'AB', 'At', 'A<', 'A>', 'A[', 'A]', 'A(', 'A)', 'A{', 'A}', 'A"', "A'", 'A`']
-o=['Aw', 'AW', 'As', 'Ap', 'Ab', 'AB', 'At', 'A<', 'A>', 'A[', 'A]', 'A(', 'A)', 'A{', 'A}', 'A"', "A'", 'A`']
-
-[[plugins]]
 ## 連続したスペース
 # aS, iS
 repo = 'saihoooooooo/vim-textobj-space'
@@ -69,15 +44,6 @@ on_ft = ['c', 'java', 'vim']
 repo = 'sgur/vim-textobj-parameter'
 lazy = 1
 on_map = {x=['a,', 'i,'], o=['a,', 'i,']}
-
-[[plugins]]
-## デリミタ区切り
-# ad, id
-repo = 'machakann/vim-textobj-delimited'
-lazy = 1
-[plugins.on_map]
-x=['ad', 'id', 'aD', 'iD']
-o=['ad', 'id', 'aD', 'iD']
 
 [[plugins]]
 ## コメント
@@ -103,7 +69,7 @@ lazy = 1
 on_ft = 'toml'
 
 [[plugins]]
-## number  {{{
+## number
 # an: dicimal number in various notation, e.g., 11, 3.14, -5, +6.02e23
 # in: dicimal digits in integer
 repo = 'tkhren/vim-textobj-numeral'
@@ -122,23 +88,9 @@ repo = 'mattn/vim-textobj-url'
 lazy = 1
 on_map = {x=['au', 'iu'], o=['au', 'iu']}
 
-[[plugins]]
-repo = 'glts/vim-textobj-indblock'
-lazy = 1
-[plugins.on_map]
-x=['ao', 'io', 'aO', 'iO']
-o=['ao', 'io', 'aO', 'iO']
-
-[[plugins]]
-repo = 'anyakichi/vim-textobj-xbrackets'
-lazy = 1
-[plugins.on_map]
-x=['iv', 'iysb', 'iys(', 'ixsB', 'ixs{', 'iys){', 'ixB', 'ix{', 'iy[', 'ixs){', 'ix<', 'iys[', 'i0', 'i9', 'ixb', 'ix)', 'ix(', 'iyB', 'iy{', 'iVb', 'iV)', 'iV(', 'ixs[', 'ixs<', 'ix[', 'iVB', 'iV}', 'iV{', 'ixsb', 'ixs(', 'iy<', 'iys<', 'iysB', 'iys{', 'iyb', 'iy(']
-o=['iv', 'iysb', 'iys(', 'ixsB', 'ixs{', 'iys){', 'ixB', 'ix{', 'iy[', 'ixs){', 'ix<', 'iys[', 'i0', 'i9', 'ixb', 'ix)', 'ix(', 'iyB', 'iy{', 'iVb', 'iV)', 'iV(', 'ixs[', 'ixs<', 'ix[', 'iVB', 'iV}', 'iV{', 'ixsb', 'ixs(', 'iy<', 'iys<', 'iysB', 'iys{', 'iyb', 'iy(']
-
-
 
 #### OPERATOR ####
+
 [[plugins]]
 repo = 'kana/vim-operator-user'
 

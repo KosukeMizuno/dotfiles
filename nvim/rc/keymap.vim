@@ -321,9 +321,11 @@ if has('win64') && has('nvim')
 endif
 
 " バッファ閉じる
+" TODO: 普通にxaでいいんじゃないか？
 nnoremap <Leader>w :<C-u>Sayonara!<CR>
 
 " Ctrl+hjkl でvimウィンドウ移動
+" TODO: なれたけど微妙なきがする
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -410,8 +412,9 @@ imap jl <cmd>normal! gk<CR><SID>(insert_autoindent)
 " inoremap <silent> ;j <C-g>U<Down>
 " inoremap <silent> ;k <C-g>U<Up>
 " inoremap <silent> ;l <C-g>U<Right>
-" 
+
 " " quickrun起点
+" TODO: なんかマップが欲しい
 " imap <silent> ;r <ESC><Leader>r
 
 "" インサートモードを抜けた時に IME off する
@@ -524,16 +527,8 @@ nmap <expr> <C-o> mode(1)=="niI" ? "o" : "\<C-o>"
 
 " Undo-tree
 "" default のUはややこしいので潰してOK
-nnoremap U <cmd>MundoToggle<CR>
-
-" switch.vim
-nnoremap <Leader>t <cmd>Switch<CR>
-
-" F5 で Goyo
-nnoremap <F5> :<C-u>Goyo<CR>
-
-" linediff
-xnoremap <Leader>d :Linediff<CR>
+"" 使ってないし何故か動いてないので mundo をやめた
+nnoremap U <Nop>
 
 
 """" 補完 """"  {{{1
@@ -722,11 +717,8 @@ xnoremap / "zy:<C-u>SetHighlightReg z<CR>
 nnoremap <expr> n v:hlsearch ? "nzv" : ":SetHighlightReg /\<CR>"
 nnoremap <expr> N v:hlsearch ? "Nzv" : ":SetHighlightReg /\<CR>"
 
-" verymagic
-nnoremap g/ /\v
-cnoremap <C-z> <Home>\v<End>
-
 " Ctrl+F でripgrepの入力待状態にする
+" TODO: なんか動きが変 クオート見直すべき？
 nnoremap <C-f> <cmd>ToggleQLtoQ<CR>:<C-u>Rg<Space>''<Left>
 xnoremap <C-f> <cmd>ToggleQLtoQ<CR>"zy:<C-u>Rg '<C-r>z'<CR>
 " Space -> Ctrl+F でカーソル下ワードをripgrepする

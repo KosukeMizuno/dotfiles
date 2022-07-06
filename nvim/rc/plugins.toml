@@ -334,14 +334,6 @@ EOF
 '''  # }}}
 
 [[plugins]]
-repo = 'AndrewRadev/switch.vim'  # {{{
-lazy = 1
-on_cmd = ['Switch', 'SwitchReverse', 'SwitchExtend']
-hook_source = '''
-let g:switch_mapping = ''
-'''  # }}}
-
-[[plugins]]
 repo = 'osyo-manga/vim-jplus'
 lazy = 1
 on_map = {n='<Plug>(jplus-', x='<Plug>(jplus-'}
@@ -350,11 +342,6 @@ on_map = {n='<Plug>(jplus-', x='<Plug>(jplus-'}
 repo = 'reedes/vim-litecorrect'
 lazy = 1
 on_func = 'litecorrect#init'
-
-[[plugins]]
-repo = 'simnalamburt/vim-mundo'
-lazy = 1
-on_cmd = ['MundoToggle']
 
 [[plugins]]
 repo = 'tyru/caw.vim'
@@ -400,11 +387,6 @@ let g:deol#custom_map = {
       \ 'quit': 'qw',
       \ }
 '''
-
-[[plugins]]
-repo = 'AndrewRadev/linediff.vim'
-lazy = 1
-on_cmd = ['Linediff']
 
 [[plugins]]
 repo = 'liuchengxu/vim-which-key'
@@ -586,46 +568,6 @@ let g:scrolloff_absolute_filetypes = ['qf']
 let g:scrolloff_absolute_value = 0
 '''
 
-[[plugins]]
-repo = 'junegunn/goyo.vim'  # {{{
-lazy = 1
-on_cmd = ['Goyo', 'Goyo!']
-hook_source = '''
-let g:goyo_width=100
-let g:goyo_height=75
-
-function! s:goyo_enter()
-  if executable('tmux') && strlen($TMUX)
-    silent !tmux set status off
-  endif
-  set noshowmode
-  set noshowcmd
-  set cmdheight=1
-
-  " set scrolloff=999
-  let g:_scrolloff_fraction = g:scrolloff_fraction
-  let g:scrolloff_fraction = 1
-endfunction
-
-function! s:goyo_leave()
-  if executable('tmux') && strlen($TMUX)
-    silent !tmux set status on
-  endif
-  set showmode
-  set showcmd
-  set cmdheight=2
-
-  " set scrolloff=5
-  let g:scrolloff_fraction = g:_scrolloff_fraction
-endfunction
-
-augroup MyGoyoEvents
-  autocmd!
-  autocmd User GoyoEnter nested call <SID>goyo_enter()
-  autocmd User GoyoLeave nested call <SID>goyo_leave()
-augroup END
-'''
-# }}}
 
 ## STATUS LINE  {{{2
 # TODO: なんか軽いやつに乗り換えたい
